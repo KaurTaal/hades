@@ -1,0 +1,37 @@
+@import 'src/assets/scss/_variables.scss';
+
+
+
+.document-list-container {
+  display: flex;
+  flex-direction: column;
+  background-color: $body-bg;
+}
+
+accordion-group {
+  ::ng-deep {
+    div {
+      & > div.panel-heading.card-header.panel-enabled {
+        background-color: rgb(168, 167, 167); // change the background of every accordion heading
+        margin-bottom: 0.3rem;
+        border: unset;
+
+        &:hover {
+          color: $text-color;
+          border-color: transparent;
+          box-shadow: $hover-effect;
+          transition: $hover-effect-transition;
+        }
+
+        .btn {
+          color: $text-color; // change the accordion heading buttons style
+          border: unset;
+        }
+      }
+    }
+    .card {
+      background-color: $body-bg;
+      border: unset;
+    }
+  }
+}

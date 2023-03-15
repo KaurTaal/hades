@@ -1,0 +1,14 @@
+<div class="document-editor-container">
+  <div class="btn-group">
+    <button class="btn btn-primary save-btn">Salvesta <i class="fa-solid fa-floppy-disk"></i></button>
+    <button class="btn btn-primary delete-btn">Kustuta <i class="fa-solid fa-trash"></i></button>
+  </div>
+
+
+  <editor
+    [ngModel]="document"
+    [init]="editorConfig"
+    apiKey="{{API_KEY}}"
+  ></editor>
+
+</div>

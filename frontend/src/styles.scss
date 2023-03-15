@@ -1,0 +1,26 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'src/assets/scss/_variables.scss';
+
+/* Importing Bootstrap SCSS file. */
+@import "./node_modules/bootstrap/scss/bootstrap";
+
+/* Importing Datepicker SCSS file. */
+@import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";
+
+
+
+
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: $body-bg;
+}
+
+footer {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 6px;
+  text-align: center;
+}

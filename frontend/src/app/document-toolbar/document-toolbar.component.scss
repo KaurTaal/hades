@@ -1,0 +1,128 @@
+@import 'src/assets/scss/_variables.scss';
+
+.tool-bar-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: lavender;
+  padding-right: 3rem;
+
+  div:last-of-type {
+    margin-left: auto;
+  }
+}
+
+.upload-btn {
+  color: $text-color;
+  background-color: transparent;
+  border-color: transparent;
+
+  font-size: 1.5rem;
+
+  &:hover {
+    background-color: transparent;
+    color: $text-color;
+    border-color: transparent;
+    box-shadow: $hover-effect;
+  }
+
+  i {
+    color: #088c08;
+  }
+}
+
+.filter-left-margin {
+  margin-left: $nav-and-toolbar-margin-left;
+}
+
+button {
+  color: $text-color;
+  background-color: white;
+  border-color: transparent;
+
+  &:hover {
+    background-color: white;
+    color: $text-color;
+    border-color: transparent;
+    box-shadow: $hover-effect;
+  }
+}
+
+.btn-primary {
+  --bs-btn-active-color:  $text-color;
+  --bs-btn-active-bg: white;
+  --bs-btn-active-border-color: rgba(52, 62, 82, 0.29);
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+
+.year-select{
+
+}
+
+/* Type tabs */
+.type-select {
+  display: flex;
+
+}
+
+::ng-deep .type-select .nav-item {
+  margin-right: 0.2rem;
+
+}
+
+::ng-deep .nav-pills .nav-link.active,
+::ng-deep .nav-pills .show > .nav-link {
+  color: $text-color;
+  background-color: rgb(147, 218, 232);
+
+  &:hover {
+    box-shadow: $hover-effect;
+    transition: $hover-effect-transition;
+  }
+}
+
+::ng-deep .type-select .nav-link:not(.active) {
+  background-color: $main-background-color;
+  color: $text-color;
+  &:hover {
+    box-shadow: $hover-effect;
+    transition: $hover-effect-transition;
+  }
+}
+
+/* Text search */
+.doc-text-search {
+
+}
+
+.input-group-text {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+  i {
+    line-height: inherit;
+  }
+}
+
+.form-control {
+  border-bottom-right-radius: 0.375rem !important;
+  border-top-right-radius: 0.375rem !important;
+  background-color: white;
+  &:focus {
+    box-shadow: unset;
+    border-color: #ced4da; /* Same as when not focused */
+  }
+  &:hover {
+    box-shadow: $hover-effect;
+    transition: $hover-effect-transition;
+  }
+}
+
+
+/* Week select */
+
+.week-select {
+
+}

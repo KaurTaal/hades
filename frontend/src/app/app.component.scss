@@ -1,0 +1,15 @@
+.app-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  min-height: 100%;
+}
+
+.app-menu {
+}
+
+.app-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
