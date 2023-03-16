@@ -11,11 +11,6 @@ import { NavbarComponent } from './navbar/navbar.component';
 import {TabsModule} from "ngx-bootstrap/tabs";
 import { ManualsComponent } from './manuals/manuals.component';
 import {AccordionModule} from "ngx-bootstrap/accordion";
-import { PracticumsComponent } from './practicums/practicums.component';
-import { HomeworksComponent } from './homeworks/homeworks.component';
-import { AssessmentsComponent } from './assessments/assessments.component';
-import { ExamsComponent } from './exams/exams.component';
-import { ExtraComponent } from './extra/extra.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { TextDocEditorComponent } from './text-doc-editor/text-doc-editor.component';
 import { DocumentListComponent } from './document-list/document-list.component';
@@ -26,6 +21,10 @@ import {TypeaheadModule} from "ngx-bootstrap/typeahead";
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FileUploadModalComponent } from './modals/file-upload-modal/file-upload-modal.component';
 import { BsModalService } from 'ngx-bootstrap/modal';
+import { UsersComponent } from './users/users.component';
+import {MatSelectModule} from "@angular/material/select";
+import {NgMultiSelectDropDownModule} from "ng-multiselect-dropdown";
+import { ExercisesComponent } from './exercises/exercises.component';
 
 @NgModule({
   declarations: [
@@ -33,15 +32,12 @@ import { BsModalService } from 'ngx-bootstrap/modal';
     MenuComponent,
     NavbarComponent,
     ManualsComponent,
-    PracticumsComponent,
-    HomeworksComponent,
-    AssessmentsComponent,
-    ExamsComponent,
-    ExtraComponent,
     TextDocEditorComponent,
     DocumentListComponent,
     DocumentToolbarComponent,
     FileUploadModalComponent,
+    UsersComponent,
+    ExercisesComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,6 +53,8 @@ import { BsModalService } from 'ngx-bootstrap/modal';
     BsDropdownModule,
     TypeaheadModule,
     ModalModule.forRoot(),
+    MatSelectModule,
+    NgMultiSelectDropDownModule.forRoot(),
   ],
   providers: [
     BsModalService

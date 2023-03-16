@@ -11,11 +11,9 @@ export class NavbarComponent {
 
   }
   MANUALS: string = '/manuals';
-  PRACTICUMS: string = '/practicums';
-  HOMEWORKS: string = '/homeworks';
-  ASSESSMENTS: string = '/assessment';
-  EXAMS: string = '/exams';
-  EXTRA: string = '/extra';
+  EXERCISES: string = '/exercises';
+  USERS: string = '/users';
+
 
   isActive(activeRoute: string) {
     return this.router.url.includes(activeRoute);
