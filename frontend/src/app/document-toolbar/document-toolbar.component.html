@@ -1,5 +1,5 @@
 <div class="tool-bar-container">
-  <div *ngIf="filterYearSelect" [ngClass]="{'filter-left-margin': filterYearSelect}" class="year-select" >
+  <div *ngIf="filterYearSelect" [ngClass]="{'filter-left-margin': filterYearSelect}" class="year-select">
     <div class="btn-group" dropdown>
       <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
               aria-controls="dropdown-animated">
@@ -27,7 +27,7 @@
     </div>
   </div>
 
-  <div *ngIf="filterWeekSelect" [ngClass]="{'filter-left-margin': filterWeekSelect}" class="week-select" >
+  <div *ngIf="filterWeekSelect" [ngClass]="{'filter-left-margin': filterWeekSelect}" class="week-select">
     <div class="btn-group" dropdown>
       <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
               aria-controls="dropdown-animated">
@@ -42,13 +42,17 @@
     </div>
   </div>
 
-  <div *ngIf="filterTypeTab" [ngClass]="{'filter-left-margin': filterTypeTab}" class="type-select">
-    <tabset type="pills">
-      <tab heading="Ülesanded"></tab>
-      <tab heading="Näidislahendused"></tab>
-      <tab heading="Automaatkontrollid"></tab>
-    </tabset>
+
+  <div *ngIf="filterLabelSelect" [ngClass]="{'filter-left-margin': filterLabelSelect}" class="label-select">
+    <ng-multiselect-dropdown
+      [placeholder]="'Vali märksõnad'"
+      [settings]="dropdownSettings"
+      [data]="dropdownList"
+      [(ngModel)]="selectedItems"
+    ></ng-multiselect-dropdown>
   </div>
+
+
 
   <div class="filter-left-margin">
     <button class="btn btn-primary upload-btn" (click)="openFileUploadModal()">
@@ -56,5 +60,3 @@
     </button>
   </div>
 </div>
-
-

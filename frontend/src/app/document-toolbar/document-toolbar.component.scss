@@ -62,37 +62,6 @@ button {
 
 }
 
-/* Type tabs */
-.type-select {
-  display: flex;
-
-}
-
-::ng-deep .type-select .nav-item {
-  margin-right: 0.2rem;
-
-}
-
-::ng-deep .nav-pills .nav-link.active,
-::ng-deep .nav-pills .show > .nav-link {
-  color: $text-color;
-  background-color: rgb(147, 218, 232);
-
-  &:hover {
-    box-shadow: $hover-effect;
-    transition: $hover-effect-transition;
-  }
-}
-
-::ng-deep .type-select .nav-link:not(.active) {
-  background-color: $main-background-color;
-  color: $text-color;
-  &:hover {
-    box-shadow: $hover-effect;
-    transition: $hover-effect-transition;
-  }
-}
-
 /* Text search */
 .doc-text-search {
 
@@ -125,4 +94,19 @@ button {
 
 .week-select {
 
+}
+
+
+/* Label select */
+.label-select {
+  background-color: white;
+  border-radius: 0.3rem;
+  &:hover {
+    box-shadow: $hover-effect;
+    transition: $hover-effect-transition;
+  }
+}
+:host ::ng-deep .multiselect-dropdown .dropdown-btn {
+  border: unset !important;
+  padding: 6px 24px 6px 12px !important;
 }
