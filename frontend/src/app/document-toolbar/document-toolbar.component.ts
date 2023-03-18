@@ -3,6 +3,8 @@ import {BsDropdownConfig} from "ngx-bootstrap/dropdown";
 import {FileUploadModalComponent} from "../modals/file-upload-modal/file-upload-modal.component";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {BsModalService} from "ngx-bootstrap/modal";
+import {LabelService} from "../services/label.service";
+import {Label} from "../classes/Label";
 
 
 @Component({
@@ -21,7 +23,7 @@ export class DocumentToolbarComponent implements OnInit{
   @Input()
   filterLabelSelect?: boolean;
 
-  dropdownList: any[] = [];
+  labelList: Label[] = [];
   selectedItems: any = [];
   dropdownSettings: any = {};
 
@@ -40,26 +42,30 @@ export class DocumentToolbarComponent implements OnInit{
   ];
 
   constructor(private modalService: BsModalService,
+              private labelService: LabelService,
               private formBuilder: FormBuilder) {
 
   }
 
   ngOnInit() {
-    this.dropdownList = [
-      { item_id: 1, item_text: 'Mumbai' },
+
+    /*
+    { item_id: 1, item_text: 'Mumbai' },
       { item_id: 2, item_text: 'Bangaluru' },
       { item_id: 3, item_text: 'Pune' },
       { item_id: 4, item_text: 'Navsari' },
       { item_id: 5, item_text: 'New Delhi' }
-    ];
-    this.selectedItems = [
-      { item_id: 3, item_text: 'Pune' },
-      { item_id: 4, item_text: 'Navsari' }
-    ];
+     */
+
+    this.labelService.getAllLabels().subscribe(res => {
+      this.labelList = res;
+      console.log(this.labelList)
+    });
+
     this.dropdownSettings = {
       singleSelection: false,
-      idField: 'item_id',
-      textField: 'item_text',
+      idField: 'labelId',
+      textField: 'name',
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
       itemsShowLimit: 3,

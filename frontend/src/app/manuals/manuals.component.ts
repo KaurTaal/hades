@@ -1,4 +1,5 @@
-import {Component, Output} from '@angular/core';
+import {Component, OnInit, Output} from '@angular/core';
+import {ManualService} from "../services/manual.service";
 
 
 
@@ -7,7 +8,7 @@ import {Component, Output} from '@angular/core';
   templateUrl: './manuals.component.html',
   styleUrls: ['./manuals.component.scss']
 })
-export class ManualsComponent {
+export class ManualsComponent implements OnInit{
   @Output()
   allManualsList: any =  [
     {
@@ -723,6 +724,15 @@ export class ManualsComponent {
           </tr>`
     }
   ];
+
+  constructor(private manualService: ManualService) {
+  }
+
+  ngOnInit() {
+    this.manualService.getManualsList().subscribe(res => {
+      console.log(res)
+    })
+  }
 
   public getAllManualsList() {
     this.allManualsList = [];

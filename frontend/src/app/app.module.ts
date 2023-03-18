@@ -25,6 +25,7 @@ import { UsersComponent } from './users/users.component';
 import {MatSelectModule} from "@angular/material/select";
 import {NgMultiSelectDropDownModule} from "ng-multiselect-dropdown";
 import { ExercisesComponent } from './exercises/exercises.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { ExercisesComponent } from './exercises/exercises.component';
     ModalModule.forRoot(),
     MatSelectModule,
     NgMultiSelectDropDownModule.forRoot(),
+    HttpClientModule
   ],
   providers: [
     BsModalService

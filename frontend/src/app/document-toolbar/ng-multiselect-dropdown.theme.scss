@@ -5,6 +5,7 @@ $disable-background-color: #eceeef;
 .multiselect-dropdown {
   position: relative;
   width: 100%;
+  min-width: 10rem !important;
   font-size: inherit;
   font-family: inherit;
   .dropdown-btn {
