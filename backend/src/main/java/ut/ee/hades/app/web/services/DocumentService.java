@@ -7,9 +7,8 @@ import ut.ee.hades.app.web.model.dto.TereDTO;
 import java.io.IOException;
 import java.util.List;
 
-public interface ManualService {
-
+public interface DocumentService {
     List<TereDTO> getManualsList();
 
-    ManualDocumentDTO createManual(MultipartFile manualDocumentDTO) throws IOException;
+    ManualDocumentDTO uploadManual(MultipartFile manualDocumentDTO) throws IOException;
 }

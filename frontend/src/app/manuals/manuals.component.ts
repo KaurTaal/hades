@@ -2,15 +2,14 @@ import {Component, OnInit, Output} from '@angular/core';
 import {ManualService} from "../services/manual.service";
 
 
-
 @Component({
   selector: 'app-manuals',
   templateUrl: './manuals.component.html',
   styleUrls: ['./manuals.component.scss']
 })
-export class ManualsComponent implements OnInit{
+export class ManualsComponent implements OnInit {
   @Output()
-  allManualsList: any =  [
+  allManualsList: any = [
     {
       name: "I KT arvest. juhend",
       text: "<h2 style='margin-top:18.0pt;margin-right:0cm;margin-bottom:6.0pt;margin-left:0cm;line-height:115%;font-size:21px;font-family:\"Arial\",sans-serif;font-weight:normal;'>Juhend T&Uuml; kursuse &ldquo;Programmeerimine&rdquo; I kontrollt&ouml;&ouml; arvestusliku osa koostamiseks</h2>\n" +
@@ -203,525 +202,45 @@ export class ManualsComponent implements OnInit{
     },
     {
       name: "Hindamismaatriksite mustand",
-      text: `<table border="0" cellpadding="0" cellspacing="0" id="sheet0" class="sheet0 gridlines">
-        <col class="col0">
-        <col class="col1">
-        <col class="col2">
-        <col class="col3">
-        <col class="col4">
-        <col class="col5">
-        <col class="col6">
-        <col class="col7">
-        <col class="col8">
-        <col class="col9">
-        <col class="col10">
-        <col class="col11">
-        <col class="col12">
-        <col class="col13">
-        <col class="col14">
-        <col class="col15">
-        <col class="col16">
-        <col class="col17">
-        <col class="col18">
-        <col class="col19">
-        <col class="col20">
-        <col class="col21">
-        <col class="col22">
-        <col class="col23">
-        <col class="col24">
-        <col class="col25">
-        <tbody>
-          <tr class="row0">
-            <td class="column0 style1 s">Komponent</td>
-            <td class="column1 style2 null"></td>
-            <td class="column2 style2 null"></td>
-            <td class="column3 style2 null"></td>
-            <td class="column4 style3 s">Maksimum</td>
-            <td class="column5 style4 s">Hindaja kommentaar</td>
-            <td class="column6 style5 s">Mustandi kommentaar</td>
-            <td class="column7 style6 null"></td>
-            <td class="column8 style6 null"></td>
-            <td class="column9 style6 null"></td>
-            <td class="column10 style6 null"></td>
-            <td class="column11 style6 null"></td>
-            <td class="column12 style6 null"></td>
-            <td class="column13 style6 null"></td>
-            <td class="column14 style6 null"></td>
-            <td class="column15 style6 null"></td>
-            <td class="column16 style6 null"></td>
-            <td class="column17 style6 null"></td>
-            <td class="column18 style6 null"></td>
-            <td class="column19 style6 null"></td>
-            <td class="column20 style6 null"></td>
-            <td class="column21 style6 null"></td>
-            <td class="column22 style6 null"></td>
-            <td class="column23 style6 null"></td>
-            <td class="column24 style6 null"></td>
-            <td class="column25 style6 null"></td>
-          </tr>
-          <tr class="row1">
-            <td class="column0 style7 s">loetava faili avamine ja sulgemine</td>
-            <td class="column1 style8 s"><span style="color:#000000; font-family:'Arial'; font-size:11pt">faili pole avatud<br />
-</span><span style="font-weight:bold; color:#000000; font-family:'Arial'; font-size:11pt">0 p</span></td>
-            <td class="column2 style9 s"><span style="color:#000000; font-family:'Arial'; font-size:11pt">faili pole sulgetud <br />
-</span><span style="font-weight:bold; color:#000000; font-family:'Arial'; font-size:11pt">0 p</span></td>
-            <td class="column3 style10 null"></td>
-            <td class="column4 style11 s"><span style="color:#000000; font-family:'Arial'; font-size:11pt">korrektselt avatud ja sulgetud<br />
-</span><span style="font-weight:bold; color:#000000; font-family:'Arial'; font-size:11pt">0,5 p</span></td>
-            <td class="column5 style12 null"></td>
-            <td class="column6 style6 null"></td>
-            <td class="column7 style6 null"></td>
-            <td class="column8 style6 null"></td>
-            <td class="column9 style6 null"></td>
-            <td class="column10 style6 null"></td>
-            <td class="column11 style6 null"></td>
-            <td class="column12 style6 null"></td>
-            <td class="column13 style6 null"></td>
-            <td class="column14 style6 null"></td>
-            <td class="column15 style6 null"></td>
-            <td class="column16 style6 null"></td>
-            <td class="column17 style6 null"></td>
-            <td class="column18 style6 null"></td>
-            <td class="column19 style6 null"></td>
-            <td class="column20 style6 null"></td>
-            <td class="column21 style6 null"></td>
-            <td class="column22 style6 null"></td>
-            <td class="column23 style6 null"></td>
-            <td class="column24 style6 null"></td>
-            <td class="column25 style6 null"></td>
-          </tr>
-          <tr class="row2">
-            <td class="column0 style7 s">kirjutatava faili avamine ja sulgemine</td>
-            <td class="column1 style13 s"><span style="color:#000000; font-family:'Arial'; font-size:11pt">faili pole avatud<br />
-</span><span style="font-weight:bold; color:#000000; font-family:'Arial'; font-size:11pt">0 p</span></td>
-            <td class="column2 style6 s"><span style="color:#000000; font-family:'Arial'; font-size:11pt">faili pole sulgetud <br />
-</span><span style="font-weight:bold; color:#000000; font-family:'Arial'; font-size:11pt">0 p</span></td>
-            <td class="column3 style14 null"></td>
-            <td class="column4 style11 s"><span style="color:#000000; font-family:'Arial'; font-size:11pt">korrektselt avatud ja sulgetud<br />
-</span><span style="font-weight:bold; color:#000000; font-family:'Arial'; font-size:11pt">0,5 p</span></td>
-            <td class="column5 style15 null"></td>
-            <td class="column6 style6 null"></td>
-            <td class="column7 style6 null"></td>
-            <td class="column8 style6 null"></td>
-            <td class="column9 style6 null"></td>
-            <td class="column10 style6 null"></td>
-            <td class="column11 style6 null"></td>
-            <td class="column12 style6 null"></td>
-            <td class="column13 style6 null"></td>
-            <td class="column14 style6 null"></td>
-            <td class="column15 style6 null"></td>
-            <td class="column16 style6 null"></td>
-            <td class="column17 style6 null"></td>
-            <td class="column18 style6 null"></td>
-            <td class="column19 style6 null"></td>
-            <td class="column20 style6 null"></td>
-            <td class="column21 style6 null"></td>
-            <td class="column22 style6 null"></td>
-            <td class="column23 style6 null"></td>
-            <td class="column24 style6 null"></td>
-            <td class="column25 style6 null"></td>
-          </tr>
-          <tr class="row3">
-            <td class="column0 style7 s">failist lugemine tsükli abil</td>
-            <td class="column1 style13 s"><span style="color:#000000; font-family:'Arial'; font-size:11pt">failist lugemine puudu <br />
-</span><span style="font-weight:bold; color:#000000; font-family:'Arial'; font-size:11pt">0 p</span></td>
-            <td class="column2 style6 s"><span style="color:#000000; font-family:'Arial'; font-size:11pt">failist loetud ilma tsüklit kasutamata<br />
-</span><span style="font-weight:bold; color:#000000; font-family:'Arial'; font-size:11pt">0 p</span></td>
-            <td class="column3 style14 s"><span style="color:#000000; font-family:'Arial'; font-size:11pt">tsükkel on lõpmatu ja program jookseb kokku<br />
-</span><span style="font-weight:bold; color:#000000; font-family:'Arial'; font-size:11pt">0 p</span></td>
-            <td class="column4 style11 s"><span style="color:#000000; font-family:'Arial'; font-size:11pt">failist loetud korrektselt<br />
-</span><span style="font-weight:bold; color:#000000; font-family:'Arial'; font-size:11pt">1 p</span></td>
-            <td class="column5 style15 null"></td>
-            <td class="column6 style6 null"></td>
-            <td class="column7 style6 null"></td>
-            <td class="column8 style6 null"></td>
-            <td class="column9 style6 null"></td>
-            <td class="column10 style6 null"></td>
-            <td class="column11 style6 null"></td>
-            <td class="column12 style6 null"></td>
-            <td class="column13 style6 null"></td>
-            <td class="column14 style6 null"></td>
-            <td class="column15 style6 null"></td>
-            <td class="column16 style6 null"></td>
-            <td class="column17 style6 null"></td>
-            <td class="column18 style6 null"></td>
-            <td class="column19 style6 null"></td>
-            <td class="column20 style6 null"></td>
-            <td class="column21 style6 null"></td>
-            <td class="column22 style6 null"></td>
-            <td class="column23 style6 null"></td>
-            <td class="column24 style6 null"></td>
-            <td class="column25 style6 null"></td>
-          </tr>
-          <tr class="row4">
-            <td class="column0 style7 s"><span style="font-weight:bold; color:#000000; font-family:'Arial'; font-size:11pt">tüübiteisendused </span><span style="font-style:italic; color:#000000; font-family:'Arial'; font-size:11pt">(kui 1)</span></td>
-            <td class="column1 style13 s"><span style="color:#000000; font-family:'Arial'; font-size:11pt">tüübitesiendus tegemata või valesti<br />
-</span><span style="font-weight:bold; color:#000000; font-family:'Arial'; font-size:11pt">0 p</span></td>
-            <td class="column2 style6 null"></td>
-            <td class="column3 style14 null"></td>
-            <td class="column4 style11 s"><span style="color:#000000; font-family:'Arial'; font-size:11pt">tüübiteisendus tehtud korrektselt<br />
-</span><span style="font-weight:bold; color:#000000; font-family:'Arial'; font-size:11pt">1 p</span></td>
-            <td class="column5 style15 null"></td>
-            <td class="column6 style5 s">vali see</td>
-            <td class="column7 style6 null"></td>
-            <td class="column8 style6 null"></td>
-            <td class="column9 style6 null"></td>
-            <td class="column10 style6 null"></td>
-            <td class="column11 style6 null"></td>
-            <td class="column12 style6 null"></td>
-            <td class="column13 style6 null"></td>
-            <td class="column14 style6 null"></td>
-            <td class="column15 style6 null"></td>
-            <td class="column16 style6 null"></td>
-            <td class="column17 style6 null"></td>
-            <td class="column18 style6 null"></td>
-            <td class="column19 style6 null"></td>
-            <td class="column20 style6 null"></td>
-            <td class="column21 style6 null"></td>
-            <td class="column22 style6 null"></td>
-            <td class="column23 style6 null"></td>
-            <td class="column24 style6 null"></td>
-            <td class="column25 style6 null"></td>
-          </tr>
-          <tr class="row5">
-            <td class="column0 style7 s"><span style="font-weight:bold; color:#000000; font-family:'Arial'; font-size:11pt">tüübiteisendused </span><span style="font-style:italic; color:#000000; font-family:'Arial'; font-size:11pt">(kui mitu)</span></td>
-            <td class="column1 style13 s"><span style="color:#000000; font-family:'Arial'; font-size:11pt">rohkem kui 1 teisendus tegemata või valesti<br />
-</span><span style="font-weight:bold; color:#000000; font-family:'Arial'; font-size:11pt">0 p</span></td>
-            <td class="column2 style6 s"><span style="color:#000000; font-family:'Arial'; font-size:11pt">1 teisendus tegemata või valesti<br />
-</span><span style="font-weight:bold; color:#000000; font-family:'Arial'; font-size:11pt">0,5 p</span></td>
-            <td class="column3 style14 null"></td>
-            <td class="column4 style11 s"><span style="color:#000000; font-family:'Arial'; font-size:11pt">tüübiteisendus tehtud korrektselt<br />
-</span><span style="font-weight:bold; color:#000000; font-family:'Arial'; font-size:11pt">1 p</span></td>
-            <td class="column5 style15 null"></td>
-            <td class="column6 style5 s">või vali see (olenevalt ülesandest)</td>
-            <td class="column7 style6 null"></td>
-            <td class="column8 style6 null"></td>
-            <td class="column9 style6 null"></td>
-            <td class="column10 style6 null"></td>
-            <td class="column11 style6 null"></td>
-            <td class="column12 style6 null"></td>
-            <td class="column13 style6 null"></td>
-            <td class="column14 style6 null"></td>
-            <td class="column15 style6 null"></td>
-            <td class="column16 style6 null"></td>
-            <td class="column17 style6 null"></td>
-            <td class="column18 style6 null"></td>
-            <td class="column19 style6 null"></td>
-            <td class="column20 style6 null"></td>
-            <td class="column21 style6 null"></td>
-            <td class="column22 style6 null"></td>
-            <td class="column23 style6 null"></td>
-            <td class="column24 style6 null"></td>
-            <td class="column25 style6 null"></td>
-          </tr>
-          <tr class="row6">
-            <td class="column0 style7 s">faili kirjutamine</td>
-            <td class="column1 style13 s"><span style="color:#000000; font-family:'Arial'; font-size:11pt">faili kirjutamine puudu<br />
-</span><span style="font-weight:bold; color:#000000; font-family:'Arial'; font-size:11pt">0 p</span></td>
-            <td class="column2 style6 s"><span style="color:#000000; font-family:'Arial'; font-size:11pt">failis vale või puudulik informatsioon<br />
-</span><span style="font-weight:bold; color:#000000; font-family:'Arial'; font-size:11pt">0 p</span></td>
-            <td class="column3 style14 s"><span style="color:#000000; font-family:'Arial'; font-size:11pt">failis õige informatsioon, kuid vales vormistuses<br />
-</span><span style="font-weight:bold; color:#000000; font-family:'Arial'; font-size:11pt">0,5 p</span></td>
-            <td class="column4 style11 s"><span style="color:#000000; font-family:'Arial'; font-size:11pt">korrektselt faili kirjutatud<br />
-</span><span style="font-weight:bold; color:#000000; font-family:'Arial'; font-size:11pt">1 p</span></td>
-            <td class="column5 style15 null"></td>
-            <td class="column6 style6 null"></td>
-            <td class="column7 style6 null"></td>
-            <td class="column8 style6 null"></td>
-            <td class="column9 style6 null"></td>
-            <td class="column10 style6 null"></td>
-            <td class="column11 style6 null"></td>
-            <td class="column12 style6 null"></td>
-            <td class="column13 style6 null"></td>
-            <td class="column14 style6 null"></td>
-            <td class="column15 style6 null"></td>
-            <td class="column16 style6 null"></td>
-            <td class="column17 style6 null"></td>
-            <td class="column18 style6 null"></td>
-            <td class="column19 style6 null"></td>
-            <td class="column20 style6 null"></td>
-            <td class="column21 style6 null"></td>
-            <td class="column22 style6 null"></td>
-            <td class="column23 style6 null"></td>
-            <td class="column24 style6 null"></td>
-            <td class="column25 style6 null"></td>
-          </tr>
-          <tr class="row7">
-            <td class="column0 style7 s">tingimuslaused</td>
-            <td class="column1 style13 null"></td>
-            <td class="column2 style6 null"></td>
-            <td class="column3 style14 null"></td>
-            <td class="column4 style11 s"><span style="color:#000000; font-family:'Arial'; font-size:11pt">kõik tingimuslaused korrektsed<br />
-</span><span style="font-weight:bold; color:#000000; font-family:'Arial'; font-size:11pt">1-2 p</span></td>
-            <td class="column5 style15 null"></td>
-            <td class="column6 style5 s">oleneb ülesandest</td>
-            <td class="column7 style6 null"></td>
-            <td class="column8 style6 null"></td>
-            <td class="column9 style6 null"></td>
-            <td class="column10 style6 null"></td>
-            <td class="column11 style6 null"></td>
-            <td class="column12 style6 null"></td>
-            <td class="column13 style6 null"></td>
-            <td class="column14 style6 null"></td>
-            <td class="column15 style6 null"></td>
-            <td class="column16 style6 null"></td>
-            <td class="column17 style6 null"></td>
-            <td class="column18 style6 null"></td>
-            <td class="column19 style6 null"></td>
-            <td class="column20 style6 null"></td>
-            <td class="column21 style6 null"></td>
-            <td class="column22 style6 null"></td>
-            <td class="column23 style6 null"></td>
-            <td class="column24 style6 null"></td>
-            <td class="column25 style6 null"></td>
-          </tr>
-          <tr class="row8">
-            <td class="column0 style7 s">arvutused</td>
-            <td class="column1 style13 null"></td>
-            <td class="column2 style6 null"></td>
-            <td class="column3 style14 null"></td>
-            <td class="column4 style11 s"><span style="color:#000000; font-family:'Arial'; font-size:11pt">kõik arvutused korrektsed<br />
-</span><span style="font-weight:bold; color:#000000; font-family:'Arial'; font-size:11pt">2-3 p</span></td>
-            <td class="column5 style15 null"></td>
-            <td class="column6 style5 s">oleneb ülesandest</td>
-            <td class="column7 style6 null"></td>
-            <td class="column8 style6 null"></td>
-            <td class="column9 style6 null"></td>
-            <td class="column10 style6 null"></td>
-            <td class="column11 style6 null"></td>
-            <td class="column12 style6 null"></td>
-            <td class="column13 style6 null"></td>
-            <td class="column14 style6 null"></td>
-            <td class="column15 style6 null"></td>
-            <td class="column16 style6 null"></td>
-            <td class="column17 style6 null"></td>
-            <td class="column18 style6 null"></td>
-            <td class="column19 style6 null"></td>
-            <td class="column20 style6 null"></td>
-            <td class="column21 style6 null"></td>
-            <td class="column22 style6 null"></td>
-            <td class="column23 style6 null"></td>
-            <td class="column24 style6 null"></td>
-            <td class="column25 style6 null"></td>
-          </tr>
-          <tr class="row9">
-            <td class="column0 style7 s">kasutajalt sisendi küsimine</td>
-            <td class="column1 style13 s"><span style="color:#000000; font-family:'Arial'; font-size:11pt">sisendi küsimine puudu või valesti<br />
-</span><span style="font-weight:bold; color:#000000; font-family:'Arial'; font-size:11pt">0 p</span></td>
-            <td class="column2 style6 s"><span style="color:#000000; font-family:'Arial'; font-size:11pt">sisendit pole põhjendatult programmi töös kasutatud<br />
-</span><span style="font-weight:bold; color:#000000; font-family:'Arial'; font-size:11pt">0 p</span></td>
-            <td class="column3 style14 null"></td>
-            <td class="column4 style11 s"><span style="color:#000000; font-family:'Arial'; font-size:11pt">sisendi küsimine korrektne<br />
-</span><span style="font-weight:bold; color:#000000; font-family:'Arial'; font-size:11pt">0,5 p</span></td>
-            <td class="column5 style15 null"></td>
-            <td class="column6 style6 null"></td>
-            <td class="column7 style6 null"></td>
-            <td class="column8 style6 null"></td>
-            <td class="column9 style6 null"></td>
-            <td class="column10 style6 null"></td>
-            <td class="column11 style6 null"></td>
-            <td class="column12 style6 null"></td>
-            <td class="column13 style6 null"></td>
-            <td class="column14 style6 null"></td>
-            <td class="column15 style6 null"></td>
-            <td class="column16 style6 null"></td>
-            <td class="column17 style6 null"></td>
-            <td class="column18 style6 null"></td>
-            <td class="column19 style6 null"></td>
-            <td class="column20 style6 null"></td>
-            <td class="column21 style6 null"></td>
-            <td class="column22 style6 null"></td>
-            <td class="column23 style6 null"></td>
-            <td class="column24 style6 null"></td>
-            <td class="column25 style6 null"></td>
-          </tr>
-          <tr class="row10">
-            <td class="column0 style16 s">kasutajale info väljastamine</td>
-            <td class="column1 style17 null"></td>
-            <td class="column2 style18 null"></td>
-            <td class="column3 style19 null"></td>
-            <td class="column4 style20 s"><span style="color:#000000; font-family:'Arial'; font-size:11pt">kõik väljundid korrektsed<br />
-</span><span style="font-weight:bold; color:#000000; font-family:'Arial'; font-size:11pt">1,5 p</span></td>
-            <td class="column5 style21 null"></td>
-            <td class="column6 style5 s">oleneb ülesandest</td>
-            <td class="column7 style6 null"></td>
-            <td class="column8 style6 null"></td>
-            <td class="column9 style6 null"></td>
-            <td class="column10 style6 null"></td>
-            <td class="column11 style6 null"></td>
-            <td class="column12 style6 null"></td>
-            <td class="column13 style6 null"></td>
-            <td class="column14 style6 null"></td>
-            <td class="column15 style6 null"></td>
-            <td class="column16 style6 null"></td>
-            <td class="column17 style6 null"></td>
-            <td class="column18 style6 null"></td>
-            <td class="column19 style6 null"></td>
-            <td class="column20 style6 null"></td>
-            <td class="column21 style6 null"></td>
-            <td class="column22 style6 null"></td>
-            <td class="column23 style6 null"></td>
-            <td class="column24 style6 null"></td>
-            <td class="column25 style6 null"></td>
-          </tr>
-          <tr class="row11">
-            <td class="column0 style22 null"></td>
-            <td class="column1 style6 null"></td>
-            <td class="column2 style6 null"></td>
-            <td class="column3 style6 null"></td>
-            <td class="column4 style6 null"></td>
-            <td class="column5 style6 null"></td>
-            <td class="column6 style6 null"></td>
-            <td class="column7 style6 null"></td>
-            <td class="column8 style6 null"></td>
-            <td class="column9 style6 null"></td>
-            <td class="column10 style6 null"></td>
-            <td class="column11 style6 null"></td>
-            <td class="column12 style6 null"></td>
-            <td class="column13 style6 null"></td>
-            <td class="column14 style6 null"></td>
-            <td class="column15 style6 null"></td>
-            <td class="column16 style6 null"></td>
-            <td class="column17 style6 null"></td>
-            <td class="column18 style6 null"></td>
-            <td class="column19 style6 null"></td>
-            <td class="column20 style6 null"></td>
-            <td class="column21 style6 null"></td>
-            <td class="column22 style6 null"></td>
-            <td class="column23 style6 null"></td>
-            <td class="column24 style6 null"></td>
-            <td class="column25 style6 null"></td>
-          </tr>
-          <tr class="row12">
-            <td class="column0 style23 s style0" colspan="6"><a href="https://docs.google.com/document/d/1bfpfoKpWVE1GZlAA5dT6D7DftC2PALbHRaOYYpFQir8/edit" title=""><span style="font-style:italic; color:#000000; font-family:'Calibri'; font-size:11pt">Küsimuste korral vaata KT juhendit: </span><span style="text-decoration:underline; font-style:italic; color:#1155CC; font-family:'Calibri'; font-size:11pt">https://docs.google.com/document/d/1bfpfoKpWVE1GZlAA5dT6D7DftC2PALbHRaOYYpFQir8/edit#</span><span style="font-style:italic; color:#000000; font-family:'Calibri'; font-size:11pt"> </span></a></td>
-            <td class="column6 style6 null"></td>
-            <td class="column7 style6 null"></td>
-            <td class="column8 style6 null"></td>
-            <td class="column9 style6 null"></td>
-            <td class="column10 style6 null"></td>
-            <td class="column11 style6 null"></td>
-            <td class="column12 style6 null"></td>
-            <td class="column13 style6 null"></td>
-            <td class="column14 style6 null"></td>
-            <td class="column15 style6 null"></td>
-            <td class="column16 style6 null"></td>
-            <td class="column17 style6 null"></td>
-            <td class="column18 style6 null"></td>
-            <td class="column19 style6 null"></td>
-            <td class="column20 style6 null"></td>
-            <td class="column21 style6 null"></td>
-            <td class="column22 style6 null"></td>
-            <td class="column23 style6 null"></td>
-            <td class="column24 style6 null"></td>
-            <td class="column25 style6 null"></td>
-          </tr>
-          <tr class="row13">
-            <td class="column0 style5 null"></td>
-            <td class="column1 style5 null"></td>
-            <td class="column2 style5 null"></td>
-            <td class="column3 style5 null"></td>
-            <td class="column4 style5 null"></td>
-            <td class="column5 style5 null"></td>
-            <td class="column6 style6 null"></td>
-            <td class="column7 style6 null"></td>
-            <td class="column8 style6 null"></td>
-            <td class="column9 style6 null"></td>
-            <td class="column10 style6 null"></td>
-            <td class="column11 style6 null"></td>
-            <td class="column12 style6 null"></td>
-            <td class="column13 style6 null"></td>
-            <td class="column14 style6 null"></td>
-            <td class="column15 style6 null"></td>
-            <td class="column16 style6 null"></td>
-            <td class="column17 style6 null"></td>
-            <td class="column18 style6 null"></td>
-            <td class="column19 style6 null"></td>
-            <td class="column20 style6 null"></td>
-            <td class="column21 style6 null"></td>
-            <td class="column22 style6 null"></td>
-            <td class="column23 style6 null"></td>
-            <td class="column24 style6 null"></td>
-            <td class="column25 style6 null"></td>
-          </tr>
-          <tr class="row14">
-            <td class="column0 style5 s style0" colspan="6">Kui veateate tõttu on 0 punkti komponendi eest, kas selle jaoks peaks olema oma lahter? Või lihtsalt märgib, et valesti/puudu vms ja paneb kommentaari?</td>
-            <td class="column6 style6 null"></td>
-            <td class="column7 style6 null"></td>
-            <td class="column8 style6 null"></td>
-            <td class="column9 style6 null"></td>
-            <td class="column10 style6 null"></td>
-            <td class="column11 style6 null"></td>
-            <td class="column12 style6 null"></td>
-            <td class="column13 style6 null"></td>
-            <td class="column14 style6 null"></td>
-            <td class="column15 style6 null"></td>
-            <td class="column16 style6 null"></td>
-            <td class="column17 style6 null"></td>
-            <td class="column18 style6 null"></td>
-            <td class="column19 style6 null"></td>
-            <td class="column20 style6 null"></td>
-            <td class="column21 style6 null"></td>
-            <td class="column22 style6 null"></td>
-            <td class="column23 style6 null"></td>
-            <td class="column24 style6 null"></td>
-            <td class="column25 style6 null"></td>
-          </tr>
-          <tr class="row15">
-            <td class="column0 style22 null"></td>
-            <td class="column1 style6 null"></td>
-            <td class="column2 style6 null"></td>
-            <td class="column3 style6 null"></td>
-            <td class="column4 style6 null"></td>
-            <td class="column5 style6 null"></td>
-            <td class="column6 style6 null"></td>
-            <td class="column7 style6 null"></td>
-            <td class="column8 style6 null"></td>
-            <td class="column9 style6 null"></td>
-            <td class="column10 style6 null"></td>
-            <td class="column11 style6 null"></td>
-            <td class="column12 style6 null"></td>
-            <td class="column13 style6 null"></td>
-            <td class="column14 style6 null"></td>
-            <td class="column15 style6 null"></td>
-            <td class="column16 style6 null"></td>
-            <td class="column17 style6 null"></td>
-            <td class="column18 style6 null"></td>
-            <td class="column19 style6 null"></td>
-            <td class="column20 style6 null"></td>
-            <td class="column21 style6 null"></td>
-            <td class="column22 style6 null"></td>
-            <td class="column23 style6 null"></td>
-            <td class="column24 style6 null"></td>
-            <td class="column25 style6 null"></td>
-          </tr>
-          <tr class="row16">
-            <td class="column0 style22 null"></td>
-            <td class="column1 style6 null"></td>
-            <td class="column2 style6 null"></td>
-            <td class="column3 style6 null"></td>
-            <td class="column4 style6 null"></td>
-            <td class="column5 style6 null"></td>
-            <td class="column6 style6 null"></td>
-            <td class="column7 style6 null"></td>
-            <td class="column8 style6 null"></td>
-            <td class="column9 style6 null"></td>
-            <td class="column10 style6 null"></td>
-            <td class="column11 style6 null"></td>
-            <td class="column12 style6 null"></td>
-            <td class="column13 style6 null"></td>
-            <td class="column14 style6 null"></td>
-            <td class="column15 style6 null"></td>
-            <td class="column16 style6 null"></td>
-            <td class="column17 style6 null"></td>
-            <td class="column18 style6 null"></td>
-            <td class="column19 style6 null"></td>
-            <td class="column20 style6 null"></td>
-            <td class="column21 style6 null"></td>
-            <td class="column22 style6 null"></td>
-            <td class="column23 style6 null"></td>
-            <td class="column24 style6 null"></td>
-            <td class="column25 style6 null"></td>
-          </tr>`
+      text: `Kokkuvõte sisulisest analüüsist:
+· 1. ülesanne
+
+\tI variant
+\tII variant
+\tIII variant
+
+\tmaiustuse liigi küsimine
+\tkuu küsimine
+\tfailinime küsimine
+
+\t2 rea kaupa lugemine
+\t3 rea kaupa lugemine
+\t2 rea kaupa lugemine
+
+\tkorduvad
+\tkorduvad
+\tiga kuupäev ainult 1 kord
+
+\tveatuvastus sisendis
+\tpole vaja tuvastada viga sisendis
+\tpole vaja tuvastada viga sisendis
+
+\tkõige lihtsamad arvutused (summaarne liitmine, võrdlemine), kõige vähem muutujaid
+\tkõige keerulisem ülesande tekst,
+rohkem arvutusi, kõige rohkem muutujaid
+\tveidi keerulisemad arvutused (jooksvalt kõrgeima leidmine nt)
+
+
+
+· 2. ülesanne
+
+\tI variant
+\tII variant
+\tIII variant
+
+\tselgelt kõige lihtsam
+\tEsimesest tsipa keerulisem, sest on vaja eelarve ise kokku lüüa
+\tEsimesest tsipa keerulisem, sest 2. fun puhul vaja rohkem korrutada ja arvud nii palju suuremad, et vb raskem hoomata (näidetes)`
     }
   ];
 
