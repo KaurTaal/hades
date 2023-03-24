@@ -4,7 +4,8 @@ public enum RestApiOperations {
 
     GET_ALL_LABELS("getAllLabels"),
     GET_ALL_MANUALS("getAllManuals"),
-    CREATE_MANUAL("createManual");
+    CREATE_MANUAL("createManual"),
+    DELETE_MANUAL("deleteManual");
 
     private final String name;
 

@@ -9,16 +9,17 @@
       </tabset>
     </div>
 
-    <div>
+    <div class="action-btn-group">
       <button class="btn btn-primary save-btn">Salvesta <i class="fa-solid fa-floppy-disk"></i></button>
-      <button class="btn btn-primary delete-btn">Kustuta <i class="fa-solid fa-trash"></i></button>
+      <button class="btn btn-primary export-btn">Lae alla <i class="fa-solid fa-file-export"></i></button>
+      <button class="btn btn-primary delete-btn" (click)="deleteManual(document)">Kustuta <i class="fa-solid fa-trash"></i></button>
     </div>
 
   </div>
 
 
   <editor
-    [ngModel]="document"
+    [ngModel]="document.text"
     [init]="editorConfig"
     apiKey="{{API_KEY}}"
   ></editor>

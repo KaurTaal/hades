@@ -8,7 +8,7 @@
           <div class="pull-left float-left">{{doc.name}}</div>
           <span class="float-right pull-right"><i class="fa-solid fa-arrow-down-long"></i></span>
         </button>
-        <app-text-doc-editor [document]="doc.text"></app-text-doc-editor>
+        <app-text-doc-editor [document]="doc" (deletedDocument)="documentDeleted($event)" ></app-text-doc-editor>
       </accordion-group>
     </ng-container>
   </accordion>

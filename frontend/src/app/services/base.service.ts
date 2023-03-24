@@ -14,4 +14,11 @@ export class BaseService {
       map(response => response.object.map((obj: any) => new clazz(obj)))
     );
   }
+
+  post<T>(url: string, file: FormData, clazz: new (obj: any) => T): Observable<T> {
+    return this.http.post<any>(url, file).pipe(
+      map(response => new clazz(response.object))
+    );
+  }
+
 }

@@ -1,11 +1,16 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ManualService} from "../services/manual.service";
+import {SharedDataService} from "../services/shared-data.service";
+import {DocEditorService} from "../services/doc-editor.service";
 
 @Component({
   selector: 'app-text-doc-editor',
-  templateUrl: './text-doc-editor.component.html',
-  styleUrls: ['./text-doc-editor.component.scss']
+  templateUrl: './doc-editor.component.html',
+  styleUrls: ['./doc-editor.component.scss']
 })
-export class TextDocEditorComponent implements OnInit {
+export class DocEditorComponent implements OnInit {
+  @Output()
+  deletedDocument = new EventEmitter<any>();
   @Input()
   document: any;
 
@@ -42,11 +47,18 @@ export class TextDocEditorComponent implements OnInit {
     autoresize_bottom_margin: 0,
   };
 
-
+  constructor(private docEditorService: DocEditorService) {
+  }
 
 
   ngOnInit() {
 
+  }
+
+  deleteManual(document: any){
+    this.docEditorService.deleteManualById(document.id).subscribe(() => {
+      this.deletedDocument.emit(document);
+    });
   }
 
 }

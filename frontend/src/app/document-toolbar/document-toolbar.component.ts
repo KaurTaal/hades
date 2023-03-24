@@ -59,7 +59,6 @@ export class DocumentToolbarComponent implements OnInit{
 
     this.labelService.getAllLabels().subscribe(res => {
       this.labelList = res;
-      console.log(this.labelList)
     });
 
     this.dropdownSettings = {

@@ -1,4 +1,4 @@
 
 
 <app-document-toolbar [filterTextSearch]="true" [filterYearSelect]="true"></app-document-toolbar>
-<app-document-list [documents]="allManualsList"></app-document-list>
+<app-document-list [documents]="allManualsList" (deletedDocumentEvent)="onDocumentDeleted($event)" ></app-document-list>

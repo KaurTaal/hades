@@ -1,9 +1,13 @@
 package ut.ee.hades.app.dao.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "label")
+@Getter
+@Setter
 public class LabelEntity {
 
     @Id
@@ -12,21 +16,4 @@ public class LabelEntity {
 
     @Column(name = "name")
     private String name;
-
-
-    public Long getLabelId() {
-        return labelId;
-    }
-
-    public void setLabelId(Long labelId) {
-        this.labelId = labelId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

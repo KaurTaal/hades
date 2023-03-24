@@ -12,7 +12,7 @@ import {TabsModule} from "ngx-bootstrap/tabs";
 import { ManualsComponent } from './manuals/manuals.component';
 import {AccordionModule} from "ngx-bootstrap/accordion";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import { TextDocEditorComponent } from './text-doc-editor/text-doc-editor.component';
+import { DocEditorComponent } from './doc-editor/doc-editor.component';
 import { DocumentListComponent } from './document-list/document-list.component';
 import {EditorModule} from "@tinymce/tinymce-angular";
 import { DocumentToolbarComponent } from './document-toolbar/document-toolbar.component';
@@ -33,7 +33,7 @@ import { HttpClientModule } from '@angular/common/http';
     MenuComponent,
     NavbarComponent,
     ManualsComponent,
-    TextDocEditorComponent,
+    DocEditorComponent,
     DocumentListComponent,
     DocumentToolbarComponent,
     FileUploadModalComponent,
