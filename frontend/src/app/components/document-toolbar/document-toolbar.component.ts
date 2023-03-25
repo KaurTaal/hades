@@ -58,14 +58,13 @@ export class DocumentToolbarComponent implements OnInit{
      */
 
     this.labelService.getAllLabels().subscribe(res => {
-      console.log(res)
       this.labelList = res;
     });
 
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'labelId',
-      textField: 'name',
+      textField: 'labelName',
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
       itemsShowLimit: 3,
