@@ -1,0 +1,15 @@
+<div class="document-list-container">
+  <accordion [isAnimated]="true">
+    <ng-container *ngFor="let doc of documents">
+      <accordion-group>
+        <button
+          class="btn justify-content-between d-flex w-100"
+          accordion-heading type="button">
+          <div class="pull-left float-left">{{doc.name}}</div>
+          <span class="float-right pull-right"><i class="fa-solid fa-arrow-down-long"></i></span>
+        </button>
+        <hades-doc-editor [document]="doc" (deletedDocument)="documentDeleteEvent($event)" ></hades-doc-editor>
+      </accordion-group>
+    </ng-container>
+  </accordion>
+</div>

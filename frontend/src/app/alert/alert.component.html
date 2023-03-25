@@ -1,0 +1,18 @@
+<div class="alerts-container">
+  <div *ngFor="let alert of alertBroker.getAllAlerts()"
+       class="alert"
+       [ngClass]="getClasses(alert)"
+  >
+    <div class="alert-container">
+      <fa-icon [icon]="resolveIcon(alert.type)"></fa-icon>
+      <div class="alert-text-content" [innerHTML]="alert.content"></div>
+      <i *ngIf="alert.dismissible" (click)="alertBroker.dismiss(alert)" class="fa-solid fa-xmark"></i>
+    </div>
+  </div>
+  <div *ngIf="showDismissAll()" class="d-flex justify-content-end">
+    <span
+      (click)="alertBroker.dismissAll()"
+      class="badge rounded-pill bg-primary cursor-pointer"
+    >Dismiss All</span>
+  </div>
+</div>
