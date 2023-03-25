@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
 import {Label} from "../classes/Label";
-import {BaseService} from "./base.service";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -9,10 +9,10 @@ import {BaseService} from "./base.service";
 export class LabelService {
   GET_ALL_LABELS: string = "/api/getAllLabels";
 
-  constructor(private baseService: BaseService) {
+  constructor(private http: HttpClient) {
   }
 
   getAllLabels(): Observable<Label[]> {
-    return this.baseService.get<Label>(this.GET_ALL_LABELS, Label);
+    return this.http.get<Label[]>(this.GET_ALL_LABELS);
   }
 }

@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ut.ee.hades.app.dao.entity.LabelEntity;
-import ut.ee.hades.app.enums.LabelType;
 
 @Data
 @AllArgsConstructor

@@ -17,5 +17,5 @@ public class ManualEntity {
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "document_id")
-    private DocumentEntity document;
+    private FileEntity document;
 }

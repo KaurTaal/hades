@@ -1,9 +1,7 @@
 package ut.ee.hades.app.enums;
 
 public enum ExceptionCodeEnum {
-    GENERAL_ERROR;
+    NOT_ALLOWED_FILE_TYPE,
+    TEST_ERROR,
 
-    public String getCode() {
-        return this.name();
-    }
 }

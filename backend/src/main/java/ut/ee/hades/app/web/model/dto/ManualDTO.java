@@ -13,7 +13,7 @@ import java.io.InputStream;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ManualDTO {
-    private Long manualDocId;
+    private Long manualId;
     private Long docId;
     private String contentHtml;
     private String name;
@@ -21,9 +21,9 @@ public class ManualDTO {
 
     public static ManualDTO map(ManualEntity manualDoc, InputStream stream) throws IOException {
         ManualDTO manualDTO = new ManualDTO();
-        manualDTO.setManualDocId(manualDoc.getId());
+        manualDTO.setManualId(manualDoc.getId());
         manualDTO.setDocId(manualDoc.getDocument().getId());
-        manualDTO.setName(manualDoc.getDocument().getFileName());
+        manualDTO.setName(manualDoc.getDocument().getName());
         manualDTO.setContentHtml(DocumentUtils.convertToHtml(stream));
         return manualDTO;
     }
