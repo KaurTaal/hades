@@ -1,17 +1,55 @@
-import { Component } from '@angular/core';
+import {Component, OnInit, Output} from '@angular/core';
+import {DocumentService} from "../../services/document.service";
+import {SharedDataService} from "../../services/shared-data.service";
+import {AlertBroker} from "../../alert/alert-broker";
+import {AlertType} from "../../alert/alert.model";
+import {Exercise} from "../../classes/Exercise";
+import {SuccessResponse} from "../../classes/enums/SuccessResponse";
 
 @Component({
   selector: 'hades-exercises',
   templateUrl: './exercises.component.html',
   styleUrls: ['./exercises.component.scss']
 })
-export class ExercisesComponent {
-  public allExercises?: any[];
+export class ExercisesComponent implements OnInit {
+  @Output()
+  public allExercisesList: Exercise[] = [];
+
+  constructor(
+              private sharedDataService: SharedDataService,
+              private documentService: DocumentService,
+              private alertBroker: AlertBroker) {
+  }
+
+  ngOnInit() {
+    this.getAllExercises();
+
+    this.sharedDataService.subscribeToUploadedExerciseFile(() => {
+      const addedExercise = this.sharedDataService.getUploadedExerciseData();
+      if (addedExercise) {
+        this.addUploadedExerciseToList(addedExercise);
+      }
+    })
+  }
 
   getAllExercises() {
-    this.allExercises = [
-      "",
-      ""
-    ]
+    this.documentService.getAllExercises().subscribe(res => {
+      for (const exercise of res) {
+        this.allExercisesList.push(exercise);
+      }
+    })
+  }
+
+
+  private addUploadedExerciseToList(addedExercise: Exercise) {
+    this.allExercisesList.push(addedExercise);
+    this.sharedDataService.setUploadedExercise(null);
+  }
+
+  onDocumentDelete(deletedExercise: Exercise) {
+    this.documentService.deleteExerciseById(deletedExercise.exerciseId).subscribe(() => {
+      this.alertBroker.add(SuccessResponse.EXERCISE_DELETE_SUCCESS, AlertType.SUCCESS);
+      this.allExercisesList = this.allExercisesList.filter((doc: Exercise) => doc.exerciseId !== deletedExercise.exerciseId);
+    });
   }
 }

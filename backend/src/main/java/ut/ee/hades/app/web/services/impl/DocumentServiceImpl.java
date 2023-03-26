@@ -8,22 +8,20 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import ut.ee.hades.app.dao.entity.FileEntity;
 import ut.ee.hades.app.dao.entity.ExerciseEntity;
+import ut.ee.hades.app.dao.entity.FileEntity;
 import ut.ee.hades.app.dao.entity.ManualEntity;
 import ut.ee.hades.app.dao.repository.DocumentRepository;
 import ut.ee.hades.app.dao.repository.ExerciseRepository;
 import ut.ee.hades.app.dao.repository.LabelRepository;
 import ut.ee.hades.app.dao.repository.ManualRepository;
-import ut.ee.hades.app.enums.ExceptionCodeEnum;
-import ut.ee.hades.app.exceptions.UiAlertDangerException;
 import ut.ee.hades.app.exceptions.UiAlertWarningException;
 import ut.ee.hades.app.util.AllowedMimeUtils;
 import ut.ee.hades.app.util.DocumentUtils;
 import ut.ee.hades.app.web.model.dto.ExerciseDTO;
 import ut.ee.hades.app.web.model.dto.ManualDTO;
-import ut.ee.hades.app.web.services.DownloadService;
 import ut.ee.hades.app.web.services.DocumentService;
+import ut.ee.hades.app.web.services.DownloadService;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -50,7 +48,7 @@ public class DocumentServiceImpl implements DocumentService {
 
         manualEntityList.forEach(manual -> {
             try {
-                manualDTOList.add(ManualDTO.map(manual, DocumentUtils.getInputStream(manual.getDocument().getContent())));
+                manualDTOList.add(ManualDTO.map(manual, DocumentUtils.getInputStream(manual.getFile().getContent())));
             } catch (IOException e) {
                 throw new UiAlertWarningException("ExceptionCodeEnum.TEST_ERROR");
             }
@@ -64,7 +62,7 @@ public class DocumentServiceImpl implements DocumentService {
 
         ManualEntity manualEntity = new ManualEntity();
         FileEntity fileEntity = prepareFileSave(uploadedFile);
-        manualEntity.setDocument(fileEntity);
+        manualEntity.setFile(fileEntity);
 
         documentRepository.save(fileEntity);
         manualRepository.save(manualEntity);
@@ -75,12 +73,32 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
+    public void deleteManualById(Long manualId) {
+        manualRepository.deleteById(manualId);
+    }
+
+    @Override
+    public List<ExerciseDTO> getAllExercises() {
+        List<ExerciseDTO> exerciseDTOS = new LinkedList<>();
+        List<ExerciseEntity> exerciseEntities = exerciseRepository.findAll();
+
+        exerciseEntities.forEach(exercise -> {
+            try {
+                exerciseDTOS.add(ExerciseDTO.map(exercise, DocumentUtils.getInputStream(exercise.getFile().getContent())));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        return exerciseDTOS;
+    }
+
+    @Override
     public ExerciseDTO createExercise(MultipartFile uploadedFile) throws IOException {
         validateFileType(uploadedFile);
 
         ExerciseEntity exerciseEntity = new ExerciseEntity();
         FileEntity fileEntity = prepareFileSave(uploadedFile);
-        exerciseEntity.setDocument(fileEntity);
+        exerciseEntity.setFile(fileEntity);
 
         documentRepository.save(fileEntity);
         exerciseRepository.save(exerciseEntity);
@@ -90,10 +108,7 @@ public class DocumentServiceImpl implements DocumentService {
         return ExerciseDTO.map(exerciseEntity, uploadedFile.getInputStream());
     }
 
-    @Override
-    public void deleteManualById(Long manualId) {
-        manualRepository.deleteById(manualId);
-    }
+
 
     @Override
     public void deleteExerciseById(Long exerciseId) {

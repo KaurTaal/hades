@@ -37,6 +37,11 @@ public class DocumentController {
         documentService.deleteManualById(manualId);
     }
 
+    @GetMapping(value = "/getAllExercises")
+    public @ResponseBody List<ExerciseDTO> getExercisesList() {
+        return documentService.getAllExercises();
+    }
+
     @PostMapping(value = "/createExercise", consumes = "multipart/form-data")
     public @ResponseBody ExerciseDTO saveExercise(@RequestParam("file") MultipartFile multipartFile) throws IOException {
         return documentService.createExercise(multipartFile);

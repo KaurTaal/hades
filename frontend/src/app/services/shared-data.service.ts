@@ -1,25 +1,43 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BehaviorSubject} from "rxjs";
+import {Exercise} from "../classes/Exercise";
+import {Manual} from "../classes/Manual";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SharedDataService {
-  private uploadedDoc: any = new BehaviorSubject<any>(null);
+  private uploadedExercise: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  private uploadedManual: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+
 
   constructor() { }
 
-
-  setUploadedDoc(data: any) {
-    this.uploadedDoc.next(data);
+  setUploadedManual(data: Manual | null) {
+    this.uploadedManual.next(data);
   }
 
-  getUploadedFileData() {
-    return this.uploadedDoc.value;
+  setUploadedExercise(data: Exercise | null) {
+    this.uploadedExercise.next(data);
   }
 
-  subscribeToUploadedFileData(callback: () => void) {
-    this.uploadedDoc.subscribe(() => {
+  getUploadedExerciseData() {
+    return this.uploadedExercise.value;
+  }
+
+  getUploadedManual() {
+    return this.uploadedManual.value;
+  }
+
+
+  subscribeToUploadedManualFile(callback: () => void) {
+    this.uploadedManual.subscribe(() => {
+      callback();
+    });
+  }
+
+  subscribeToUploadedExerciseFile(callback: () => void) {
+    this.uploadedExercise.subscribe(() => {
       callback();
     });
   }

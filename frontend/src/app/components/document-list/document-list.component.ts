@@ -1,4 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {DocumentType} from "../../classes/enums/DocumentType";
+import {BaseDocument} from "../../classes/BaseDocument";
 
 @Component({
   selector: 'hades-document-list',
@@ -7,16 +9,22 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 })
 export class DocumentListComponent {
   @Output()
-  deleteDocumentEvent = new EventEmitter<any>();
+  deletedManual = new EventEmitter<any>();
+  @Output()
+  deletedExercise = new EventEmitter<any>();
   @Input()
-  documents: any[] | undefined;
+  documents?: BaseDocument[];
   public oneAtATime: boolean = true;
 
 
-
-
-  documentDeleteEvent(deletedDoc: any) {
-    this.deleteDocumentEvent.emit(deletedDoc);
-    // this.documents = this.documents?.filter(doc => doc.id !== deletedDoc.id);
+  documentDeleteEvent(deletedDoc: BaseDocument) {
+    if (deletedDoc) {
+      if (deletedDoc.docType === DocumentType.MANUAL) {
+        this.deletedManual.emit(deletedDoc);
+      }
+      if (deletedDoc.docType === DocumentType.EXERCISE) {
+        this.deletedExercise.emit(deletedDoc);
+      }
+    }
   }
 }

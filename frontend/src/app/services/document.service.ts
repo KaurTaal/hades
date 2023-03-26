@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
 import {Manual} from "../classes/Manual";
 import {HttpClient} from "@angular/common/http";
 import {Exercise} from "../classes/Exercise";
@@ -30,6 +30,10 @@ export class DocumentService {
 
   createExercise(file: FormData): Observable<Exercise> {
     return this.http.post<Exercise>("api/createExercise", file);
+  }
+
+  deleteExerciseById(exerciseId: number) {
+    return this.http.delete(`api/deleteExercise/${exerciseId}`);
   }
 
 }

@@ -1,10 +1,10 @@
 import {Component, OnInit, Output} from '@angular/core';
 import {DocumentService} from "../../services/document.service";
 import {SharedDataService} from "../../services/shared-data.service";
-import {add} from "ngx-bootstrap/chronos";
 import {Manual} from "../../classes/Manual";
 import {AlertType} from "../../alert/alert.model";
 import {AlertBroker} from "../../alert/alert-broker";
+import {SuccessResponse} from "../../classes/enums/SuccessResponse";
 
 
 @Component({
@@ -14,9 +14,9 @@ import {AlertBroker} from "../../alert/alert-broker";
 })
 export class ManualsComponent implements OnInit {
   @Output()
-  allManualsList: any = [];
+  allManualsList: Manual[] = [];
 
-  constructor(private manualService: DocumentService,
+  constructor(
               private sharedDataService: SharedDataService,
               private documentService: DocumentService,
               private alertBroker: AlertBroker) {
@@ -25,31 +25,32 @@ export class ManualsComponent implements OnInit {
   ngOnInit() {
     this.getAllManuals();
 
-    this.sharedDataService.subscribeToUploadedFileData(() => {
-      const addedManual = this.sharedDataService.getUploadedFileData();
+    this.sharedDataService.subscribeToUploadedManualFile(() => {
+      const addedManual = this.sharedDataService.getUploadedManual();
       if (addedManual) {
-        this.addUploadedFileToList(addedManual);
+        this.addUploadedManualToList(addedManual);
       }
     })
   }
 
 
   private getAllManuals() {
-    this.manualService.getAllManuals().subscribe(res => {
+    this.documentService.getAllManuals().subscribe(res => {
       for (const manual of res) {
-        this.allManualsList.push({id: manual.manualId, docId: manual.fileId, name: manual.name, text: manual.contentHtml});
+        this.allManualsList.push(manual);
       }
     })
   }
 
-  private addUploadedFileToList(addedManual: any) {
-    this.allManualsList.push({id: addedManual.manualId, docId: addedManual.docId, name: addedManual.name, text: addedManual.contentHtml});
+  private addUploadedManualToList(addedManual: Manual) {
+    this.allManualsList.push(addedManual);
+    this.sharedDataService.setUploadedManual(null);
   }
 
-  onDocumentDelete(deletedManual: any) {
-    this.documentService.deleteManualById(deletedManual.id).subscribe(() => {
-      this.alertBroker.add("Dokument kustutatud", AlertType.SUCCESS);
-      this.allManualsList = this.allManualsList.filter((doc: any) => doc.id !== deletedManual.id);
+  onDocumentDelete(deletedManual: Manual) {
+    this.documentService.deleteManualById(deletedManual.manualId).subscribe(() => {
+      this.alertBroker.add(SuccessResponse.MANUAL_DELETE_SUCCESS, AlertType.SUCCESS);
+      this.allManualsList = this.allManualsList.filter((doc: Manual) => doc.manualId !== deletedManual.manualId);
     });
   }
 }

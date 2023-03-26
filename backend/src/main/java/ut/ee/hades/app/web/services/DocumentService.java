@@ -14,9 +14,11 @@ public interface DocumentService {
 
     ManualDTO createManual(MultipartFile uploadedFile) throws IOException;
 
-    ExerciseDTO createExercise(MultipartFile uploadedFile) throws IOException;
-
     void deleteManualById(Long manualId) throws IOException;
+
+    List<ExerciseDTO> getAllExercises();
+
+    ExerciseDTO createExercise(MultipartFile uploadedFile) throws IOException;
 
     void deleteExerciseById(Long exerciseId) throws IOException;
 

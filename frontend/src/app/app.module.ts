@@ -18,9 +18,8 @@ import {EditorModule} from "@tinymce/tinymce-angular";
 import {DocumentToolbarComponent} from './components/document-toolbar/document-toolbar.component';
 import {BsDropdownModule} from "ngx-bootstrap/dropdown";
 import {TypeaheadModule} from "ngx-bootstrap/typeahead";
-import {ModalModule} from 'ngx-bootstrap/modal';
+import {BsModalService, ModalModule} from 'ngx-bootstrap/modal';
 import {FileUploadModalComponent} from './modals/file-upload-modal/file-upload-modal.component';
-import {BsModalService} from 'ngx-bootstrap/modal';
 import {UsersComponent} from './components/users/users.component';
 import {MatSelectModule} from "@angular/material/select";
 import {NgMultiSelectDropDownModule} from "ng-multiselect-dropdown";
@@ -29,6 +28,9 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {HttpMiddleware} from "../core/http-middleware";
 import {AlertModule} from "ngx-bootstrap/alert";
 import {AlertComponent} from "./alert/alert.component";
+import {LoaderComponent} from './components/loader/loader.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {LoaderInterceptor} from "../core/loader.interceptor";
 
 @NgModule({
   declarations: [
@@ -43,6 +45,7 @@ import {AlertComponent} from "./alert/alert.component";
     UsersComponent,
     ExercisesComponent,
     AlertComponent,
+    LoaderComponent,
   ],
     imports: [
         BrowserModule,
@@ -61,11 +64,13 @@ import {AlertComponent} from "./alert/alert.component";
         MatSelectModule,
         NgMultiSelectDropDownModule.forRoot(),
         HttpClientModule,
-        AlertModule
+        AlertModule,
+        MatProgressSpinnerModule,
     ],
   providers: [
     BsModalService,
-    {provide: HTTP_INTERCEPTORS, useClass: HttpMiddleware, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: HttpMiddleware, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true},
   ],
   bootstrap: [AppComponent]
 })
