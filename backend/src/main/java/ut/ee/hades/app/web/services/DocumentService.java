@@ -18,6 +18,8 @@ public interface DocumentService {
 
     List<ExerciseDTO> getAllExercises();
 
+    void saveExercise(Long fileId, String modifiedHtmlContent);
+
     ExerciseDTO createExercise(MultipartFile uploadedFile) throws IOException;
 
     void deleteExerciseById(Long exerciseId) throws IOException;

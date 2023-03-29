@@ -10,7 +10,7 @@
     </div>
 
     <div class="action-btn-group">
-      <button class="btn btn-primary save-btn">Salvesta <i class="fa-solid fa-floppy-disk"></i></button>
+      <button class="btn btn-primary save-btn" (click)="saveDocument(document)">Salvesta <i class="fa-solid fa-floppy-disk"></i></button>
       <button class="btn btn-primary export-btn" (click)="downloadDocumentByFileId(document)">Lae alla <i class="fa-solid fa-file-export"></i></button>
       <button class="btn btn-primary delete-btn" (click)="deleteDocument(document)">Kustuta <i class="fa-solid fa-trash"></i></button>
     </div>
@@ -19,7 +19,7 @@
 
 
   <editor
-    [ngModel]="document.contentHtml"
+    [(ngModel)]="documentContent"
     [init]="editorConfig"
     apiKey="{{getEditorAPIKey()}}"
   ></editor>

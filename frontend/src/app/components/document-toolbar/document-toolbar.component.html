@@ -19,8 +19,8 @@
       <div class="input-group-prepend">
         <span class="input-group-text"><i class="fa fa-search"></i></span>
       </div>
-      <input [(ngModel)]="selected"
-             [typeahead]="states"
+      <input [(ngModel)]="textSearchValue"
+             [typeahead]="documentNameList"
              [isAnimated]="true"
              placeholder="Otsi..."
              class="form-control doc-text-search">
@@ -48,15 +48,25 @@
       [placeholder]="'Vali märksõnad'"
       [settings]="dropdownSettings"
       [data]="labelList"
-      [(ngModel)]="selectedItems"
+      [(ngModel)]="selectedLabels"
     ></ng-multiselect-dropdown>
   </div>
 
+  <div class="action-btn-container">
+    <div class="filter-left-margin">
+      <button class="btn btn-primary filter-btn" (click)="applyFilter()">
+        <i class="fa-solid fa-filter"></i>
+      </button>
+      <button class="btn btn-primary filter-btn" (click)="emptyFilter()">
+        <i class="fa-solid fa-filter-circle-xmark"></i>
+      </button>
+    </div>
 
-
-  <div class="filter-left-margin">
-    <button class="btn btn-primary upload-btn" (click)="openFileUploadModal()">
-      <i class="fa-solid fa-upload"></i>
-    </button>
+    <div class="filter-left-margin upload-btn">
+      <button class="btn btn-primary" (click)="openFileUploadModal()">
+        <i class="fa-solid fa-upload"></i>
+      </button>
+    </div>
   </div>
+
 </div>

@@ -12,8 +12,11 @@ import {BaseDocument} from "../../classes/BaseDocument";
 export class DocEditorComponent implements OnInit {
   @Output()
   deletedDocument = new EventEmitter<BaseDocument>();
+  @Output()
+  modifiedDocument = new EventEmitter<BaseDocument>();
   @Input()
   document: BaseDocument = new BaseDocument();
+  documentContent: string = '';
 
   readonly editorConfig = {
     plugins: 'code link image table codesample autoresize',
@@ -52,7 +55,12 @@ export class DocEditorComponent implements OnInit {
 
 
   ngOnInit() {
+    this.documentContent = this.document.contentHtml!;
+  }
 
+  saveDocument(document: BaseDocument) {
+    document.contentHtml = this.documentContent;
+    this.modifiedDocument.emit(document);
   }
 
   deleteDocument(document: BaseDocument) {

@@ -28,6 +28,13 @@ export class DocumentService {
     return this.http.get<Exercise[]>("api/getAllExercises");
   }
 
+  saveExercise(fileId: number, contentHtml: string) {
+    const body = {
+      "modifiedHtmlContent": contentHtml
+    };
+    return this.http.put(`api/saveExercise/${fileId}`, body);
+  }
+
   createExercise(file: FormData): Observable<Exercise> {
     return this.http.post<Exercise>("api/createExercise", file);
   }

@@ -74,22 +74,18 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public void deleteManualById(Long manualId) {
-        manualRepository.deleteById(manualId);
+        manualRepository.deleteById(manualId); //TODO Delete file aswell
     }
 
     @Override
     public List<ExerciseDTO> getAllExercises() {
-        List<ExerciseDTO> exerciseDTOS = new LinkedList<>();
         List<ExerciseEntity> exerciseEntities = exerciseRepository.findAll();
+        return ExerciseDTO.mapList(exerciseEntities);
+    }
 
-        exerciseEntities.forEach(exercise -> {
-            try {
-                exerciseDTOS.add(ExerciseDTO.map(exercise, DocumentUtils.getInputStream(exercise.getFile().getContent())));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        return exerciseDTOS;
+    @Override
+    public void saveExercise(Long fileId, String modifiedHtmlContent) {
+
     }
 
     @Override

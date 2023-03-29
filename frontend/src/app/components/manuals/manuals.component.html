@@ -1,4 +1,4 @@
 
 
 <hades-document-toolbar [filterTextSearch]="true" [filterYearSelect]="true"></hades-document-toolbar>
-<hades-document-list [documents]="allManualsList" (deletedManual)="onDocumentDelete($event)" ></hades-document-list>
+<hades-document-list [documents]="displayManualList" (modifiedManual)="onDocumentSave($event)" (deletedManual)="onDocumentDelete($event)" ></hades-document-list>
