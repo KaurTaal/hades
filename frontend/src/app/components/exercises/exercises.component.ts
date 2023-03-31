@@ -6,7 +6,8 @@ import {AlertType} from "../../alert/alert.model";
 import {Exercise} from "../../classes/Exercise";
 import {SuccessResponse} from "../../classes/enums/SuccessResponse";
 import {DocumentToolbarComponent} from "../document-toolbar/document-toolbar.component";
-import {Document, Packer, Paragraph} from "docx";
+import {MimeType} from "../../classes/enums/MimeType";
+import {ExerciseService} from "../../services/exercise.service";
 
 @Component({
   selector: 'hades-exercises',
@@ -24,6 +25,7 @@ export class ExercisesComponent implements OnInit {
   constructor(
     private sharedDataService: SharedDataService,
     private documentService: DocumentService,
+    private exerciseService: ExerciseService,
     private alertBroker: AlertBroker,) {
   }
 
@@ -42,7 +44,7 @@ export class ExercisesComponent implements OnInit {
 
 
   getAllExercises() {
-    this.documentService.getAllExercises().subscribe(res => {
+    this.exerciseService.getAllExercises().subscribe(res => {
       for (const exercise of res) {
         this.allExercisesList.push(exercise);
       }
@@ -54,12 +56,12 @@ export class ExercisesComponent implements OnInit {
   private addUploadedExerciseToList(addedExercise: Exercise) {
     this.allExercisesList.push(addedExercise);
 
-    this.updateDisplayList(true);
+    this.updateDisplayList();
     this.sharedDataService.setUploadedExercise(null);
   }
 
   onDocumentDelete(deletedExercise: Exercise) {
-    this.documentService.deleteExerciseById(deletedExercise.exerciseId).subscribe(() => {
+    this.exerciseService.deleteExerciseById(deletedExercise.exerciseId).subscribe(() => {
       this.alertBroker.add(SuccessResponse.EXERCISE_DELETE_SUCCESS, AlertType.SUCCESS);
       this.allExercisesList = this.allExercisesList.filter((doc: Exercise) => doc.exerciseId !== deletedExercise.exerciseId);
       this.updateDisplayList();
@@ -67,34 +69,20 @@ export class ExercisesComponent implements OnInit {
   }
 
   onDocumentSave(modifiedExercise: Exercise) {
-    let asDocx = this.prepareDocx(modifiedExercise);
-    Packer.toBlob(asDocx).then(result => {
-      if (modifiedExercise.name && modifiedExercise.fileId) {
-        const file = new File([result], modifiedExercise.name, {type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"});
+    this.documentService.getNewDocx(modifiedExercise.contentHtml).subscribe(res => {
+      if (res.body) {
+        let file = new File([res.body], modifiedExercise.name, {type: MimeType.DOCX});
         let formData = new FormData();
         formData.append("file", file);
-        this.documentService.saveExercise(modifiedExercise.fileId, formData).subscribe(res => {
-          console.log("saved")
+        this.documentService.saveEditedFile(modifiedExercise.fileId, formData).subscribe(() => {
+          this.alertBroker.add(SuccessResponse.EXERCISE_EDIT_SUCCESS, AlertType.SUCCESS);
         })
       }
     });
   }
 
-  private prepareDocx(modifiedDoc: Exercise) {
-    return new Document({
-      sections: [{
-        properties: {},
-        children: [
-          new Paragraph({
-            text: modifiedDoc.contentHtml,
-          })
-        ],
-      }],
-    });
-  }
 
-
-  private updateDisplayList(emptyFilter?: boolean) {
+  private updateDisplayList() {
     this.displayExerciseList = this.allExercisesList;
     this.sharedDataService.updateDocumentDisplayListForToolbar(this.displayExerciseList);
 

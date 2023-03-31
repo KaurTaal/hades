@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {BsModalRef} from "ngx-bootstrap/modal";
 import {DocumentService} from "../../services/document.service";
 import {SharedDataService} from "../../services/shared-data.service";
@@ -7,13 +7,15 @@ import {DocumentType} from "../../classes/enums/DocumentType";
 import {AlertBroker} from "../../alert/alert-broker";
 import {SuccessResponse} from "../../classes/enums/SuccessResponse";
 import {AlertType} from "../../alert/alert.model";
+import {ExerciseService} from "../../services/exercise.service";
+import {ManualService} from "../../services/manual.service";
 
 @Component({
   selector: 'hades-file-upload-modal',
   templateUrl: './file-upload-modal.component.html',
   styleUrls: ['./file-upload-modal.component.scss']
 })
-export class FileUploadModalComponent implements OnInit {
+export class FileUploadModalComponent {
   title = 'Faili üleslaadimine';
 
   uploadedFile?: FormData;
@@ -56,14 +58,13 @@ export class FileUploadModalComponent implements OnInit {
 
   constructor(public bsModalRef: BsModalRef,
               private documentService: DocumentService,
+              private exerciseService: ExerciseService,
+              private manualService: ManualService,
               private sharedDataService: SharedDataService,
               private alertBroker: AlertBroker) {
 
   }
 
-  ngOnInit(): void {
-
-  }
 
   initForm(): FormGroup {
     return new FormGroup({
@@ -101,10 +102,10 @@ export class FileUploadModalComponent implements OnInit {
   submitFile() {
     if (this.uploadedFile && this.getSelectedFileType) {
       if (this.getSelectedFileType() === DocumentType.MANUAL) {
-        this.documentService.createManual(this.uploadedFile).subscribe(res => this.sharedDataService.setUploadedManual(res));
+        this.manualService.createManual(this.uploadedFile).subscribe(res => this.sharedDataService.setUploadedManual(res));
         this.alertBroker.add(SuccessResponse.MANUAL_SAVE_SUCCESS, AlertType.SUCCESS);
       } else if (this.getSelectedFileType() === DocumentType.EXERCISE) {
-        this.documentService.createExercise(this.uploadedFile).subscribe(res => this.sharedDataService.setUploadedExercise(res));
+        this.exerciseService.createExercise(this.uploadedFile).subscribe(res => this.sharedDataService.setUploadedExercise(res));
         this.alertBroker.add(SuccessResponse.EXERCISE_SAVE_SUCCESS, AlertType.SUCCESS);
       }
     }

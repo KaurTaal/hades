@@ -1,8 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Manual} from "../classes/Manual";
-import {HttpClient} from "@angular/common/http";
-import {Exercise} from "../classes/Exercise";
+import {HttpClient, HttpResponse} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -12,32 +10,15 @@ export class DocumentService {
 
   }
 
-  getAllManuals(): Observable<Manual[]> {
-    return this.http.get<Manual[]>("api/getAllManuals");
+  saveEditedFile(fileId: number, file: FormData) {
+    return this.http.put(`api/saveEditedFile/${fileId}`, file);
   }
 
-  createManual(file: FormData): Observable<Manual> {
-    return this.http.post<Manual>("api/createManual", file);
-  }
-
-  deleteManualById(manualId: number) {
-    return this.http.delete(`api/deleteManual/${manualId}`);
-  }
-
-  getAllExercises(): Observable<Exercise[]> {
-    return this.http.get<Exercise[]>("api/getAllExercises");
-  }
-
-  saveExercise(fileId: number, file: FormData) {
-    return this.http.put(`api/saveExercise/${fileId}`, file);
-  }
-
-  createExercise(file: FormData): Observable<Exercise> {
-    return this.http.post<Exercise>("api/createExercise", file);
-  }
-
-  deleteExerciseById(exerciseId: number) {
-    return this.http.delete(`api/deleteExercise/${exerciseId}`);
+  getNewDocx(newContent: string): Observable<HttpResponse<Blob>> {
+    return this.http.post<Blob>(`api/getNewDocx`, newContent, {
+      observe: 'response',
+      responseType: 'blob' as 'json'
+    })
   }
 
 }

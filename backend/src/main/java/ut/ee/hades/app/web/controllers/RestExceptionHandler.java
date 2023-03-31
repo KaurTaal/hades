@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import ut.ee.hades.app.exceptions.UiAlertException;
+import ut.ee.hades.app.exceptions.ui.UiAlertException;
 import ut.ee.hades.app.web.model.UiAlert;
 
 @Slf4j
