@@ -1,4 +1,4 @@
-package ut.ee.hades.app.exceptions;
+package ut.ee.hades.app.exceptions.ui;
 
 import lombok.Getter;
 import ut.ee.hades.app.web.model.UiAlert;

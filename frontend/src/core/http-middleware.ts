@@ -14,6 +14,7 @@ export class HttpMiddleware implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req)
       .pipe(catchError((error) => {
+        console.log(error)
         this.alertBroker.add("Oops!", AlertType.DANGER);
         return throwError(() => error);
       }))

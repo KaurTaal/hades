@@ -25,6 +25,9 @@ dependencies {
 
     implementation "org.zwobble.mammoth:mammoth:1.5.0"
 
+    implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '5.2.2'
+    implementation 'org.jsoup:jsoup:1.15.4'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 //    testImplementation 'org.springframework.security:spring-security-test'
 

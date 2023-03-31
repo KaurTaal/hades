@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import ut.ee.hades.app.dao.entity.FileEntity;
 
 @Repository
-public interface DocumentRepository extends JpaRepository<FileEntity, Long> {
+public interface FileRepository extends JpaRepository<FileEntity, Long> {
 }

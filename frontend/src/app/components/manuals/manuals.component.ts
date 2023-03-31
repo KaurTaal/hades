@@ -6,6 +6,8 @@ import {AlertType} from "../../alert/alert.model";
 import {AlertBroker} from "../../alert/alert-broker";
 import {SuccessResponse} from "../../classes/enums/SuccessResponse";
 import {DocumentToolbarComponent} from "../document-toolbar/document-toolbar.component";
+import {ManualService} from "../../services/manual.service";
+import {MimeType} from "../../classes/enums/MimeType";
 
 
 @Component({
@@ -23,6 +25,7 @@ export class ManualsComponent implements OnInit {
 
   constructor(
     private sharedDataService: SharedDataService,
+    private manualService: ManualService,
     private documentService: DocumentService,
     private alertBroker: AlertBroker) {
   }
@@ -42,7 +45,7 @@ export class ManualsComponent implements OnInit {
 
 
   private getAllManuals() {
-    this.documentService.getAllManuals().subscribe(res => {
+    this.manualService.getAllManuals().subscribe(res => {
       for (const manual of res) {
         this.allManualsList.push(manual);
       }
@@ -53,12 +56,12 @@ export class ManualsComponent implements OnInit {
   private addUploadedManualToList(addedManual: Manual) {
     this.allManualsList.push(addedManual);
 
-    this.updateDisplayList(true);
+    this.updateDisplayList();
     this.sharedDataService.setUploadedManual(null);
   }
 
   onDocumentDelete(deletedManual: Manual) {
-    this.documentService.deleteManualById(deletedManual.manualId).subscribe(() => {
+    this.manualService.deleteManualById(deletedManual.manualId).subscribe(() => {
       this.alertBroker.add(SuccessResponse.MANUAL_DELETE_SUCCESS, AlertType.SUCCESS);
       this.allManualsList = this.allManualsList.filter((doc: Manual) => doc.manualId !== deletedManual.manualId);
       this.updateDisplayList();
@@ -66,10 +69,19 @@ export class ManualsComponent implements OnInit {
   }
 
   onDocumentSave(modifiedManual: Manual) {
-    console.log(modifiedManual);
+    this.documentService.getNewDocx(modifiedManual.contentHtml).subscribe(res => {
+      if (res.body) {
+        let file = new File([res.body], modifiedManual.name, {type: MimeType.DOCX});
+        let formData = new FormData();
+        formData.append("file", file);
+        this.documentService.saveEditedFile(modifiedManual.fileId, formData).subscribe(() => {
+          this.alertBroker.add(SuccessResponse.MANUAL_EDIT_SUCCESS, AlertType.SUCCESS);
+        })
+      }
+    });
   }
 
-  private updateDisplayList(emptyFilter?: boolean) {
+  private updateDisplayList() {
     this.displayManualList = this.allManualsList;
     this.sharedDataService.updateDocumentDisplayListForToolbar(this.displayManualList);
 

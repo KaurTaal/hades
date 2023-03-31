@@ -15,8 +15,8 @@ export class DocEditorComponent implements OnInit {
   @Output()
   modifiedDocument = new EventEmitter<BaseDocument>();
   @Input()
-  document: BaseDocument = new BaseDocument();
-  documentContent: string = '';
+  document: BaseDocument = new BaseDocument(-1, "", "", "");
+  editorContent: string = '';
 
   readonly editorConfig = {
     plugins: 'code link image table codesample autoresize',
@@ -28,25 +28,12 @@ export class DocEditorComponent implements OnInit {
         items: 'print'
       }
     },
-    content_style: 'html, body {' +
-      '        height: 100%;' +
-      '    }' +
-      '' +
-      '    html {' +
-      '        display: table;' +
-      '        margin: auto;' +
-      '    }' +
-      '' +
-      '    body {' +
-      '        display: table-cell;' +
-      '        vertical-align: middle;' +
-      '    }',
     code_dialog: true,
     codesample_languages: [
       {text: 'Python', value: 'python'},
       {text: 'Java', value: 'java'},
     ],
-    autoresize_bottom_margin: 0,
+    autoresize_bottom_margin: 40,
   };
 
   constructor(private documentService: DocumentService,
@@ -55,11 +42,11 @@ export class DocEditorComponent implements OnInit {
 
 
   ngOnInit() {
-    this.documentContent = this.document.contentHtml!;
+    this.editorContent = this.document.contentHtml!;
   }
 
   saveDocument(document: BaseDocument) {
-    document.contentHtml = this.documentContent;
+    document.contentHtml = this.editorContent;
     this.modifiedDocument.emit(document);
   }
 
