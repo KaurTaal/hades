@@ -57,8 +57,8 @@ public class DocumentController {
         return documentService.downloadDocumentById(docId);
     }
 
-    @PutMapping(path = "/saveExercise/{fileId}")
-    public @ResponseBody void saveExercise(@PathVariable long fileId, @RequestBody String modifiedHtmlContent) {
-        documentService.saveExercise(fileId, modifiedHtmlContent);
+    @PutMapping(path = "/saveExercise/{fileId}", consumes = "multipart/form-data")
+    public @ResponseBody void saveExercise(@PathVariable long fileId, @RequestParam("file") MultipartFile multipartFile) throws IOException {
+        documentService.saveExercise(fileId, multipartFile);
     }
 }

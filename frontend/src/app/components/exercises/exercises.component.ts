@@ -6,6 +6,7 @@ import {AlertType} from "../../alert/alert.model";
 import {Exercise} from "../../classes/Exercise";
 import {SuccessResponse} from "../../classes/enums/SuccessResponse";
 import {DocumentToolbarComponent} from "../document-toolbar/document-toolbar.component";
+import {Document, Packer, Paragraph} from "docx";
 
 @Component({
   selector: 'hades-exercises',
@@ -21,9 +22,9 @@ export class ExercisesComponent implements OnInit {
   displayExerciseList: Exercise[] = [];
 
   constructor(
-              private sharedDataService: SharedDataService,
-              private documentService: DocumentService,
-              private alertBroker: AlertBroker,) {
+    private sharedDataService: SharedDataService,
+    private documentService: DocumentService,
+    private alertBroker: AlertBroker,) {
   }
 
   ngOnInit() {
@@ -66,11 +67,30 @@ export class ExercisesComponent implements OnInit {
   }
 
   onDocumentSave(modifiedExercise: Exercise) {
-    if (modifiedExercise.fileId && modifiedExercise.contentHtml) {
-      this.documentService.saveExercise(modifiedExercise.fileId, modifiedExercise.contentHtml).subscribe(() => {
+    let asDocx = this.prepareDocx(modifiedExercise);
+    Packer.toBlob(asDocx).then(result => {
+      if (modifiedExercise.name && modifiedExercise.fileId) {
+        const file = new File([result], modifiedExercise.name, {type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"});
+        let formData = new FormData();
+        formData.append("file", file);
+        this.documentService.saveExercise(modifiedExercise.fileId, formData).subscribe(res => {
+          console.log("saved")
+        })
+      }
+    });
+  }
 
-      })
-    }
+  private prepareDocx(modifiedDoc: Exercise) {
+    return new Document({
+      sections: [{
+        properties: {},
+        children: [
+          new Paragraph({
+            text: modifiedDoc.contentHtml,
+          })
+        ],
+      }],
+    });
   }
 
 

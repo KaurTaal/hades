@@ -18,7 +18,7 @@ public interface DocumentService {
 
     List<ExerciseDTO> getAllExercises();
 
-    void saveExercise(Long fileId, String modifiedHtmlContent);
+    void saveExercise(Long fileId, MultipartFile modifiedFile) throws IOException;
 
     ExerciseDTO createExercise(MultipartFile uploadedFile) throws IOException;
 

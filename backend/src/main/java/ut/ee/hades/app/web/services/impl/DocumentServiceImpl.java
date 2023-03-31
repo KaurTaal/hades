@@ -84,8 +84,13 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public void saveExercise(Long fileId, String modifiedHtmlContent) {
+    public void saveExercise(Long fileId, MultipartFile modifiedFile) throws IOException {
+        FileEntity byId = documentRepository.getById(fileId);
 
+
+        byId.setContent(modifiedFile.getBytes());
+        byId.setSize(modifiedFile.getSize());
+        documentRepository.save(byId);
     }
 
     @Override
