@@ -1,9 +1,36 @@
-<div class="modal-header">
-  <h4 class="modal-title">Upload File</h4>
-  <button type="button" class="close" aria-label="Close" (click)="bsModalRef.hide()">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-<div class="modal-body">
-  <input type="file" name="file" (change)="onFileSelected($event)">
+<div class="container heading">
+  <h1>
+    {{title}}
+  </h1>
+
+  <hr>
+
+  <form [formGroup]="uploadFormGroup" class="upload-form">
+    <div class="form-group">
+      <label for="fileName"  [ngClass]="{'text-danger': fileName.touched && !fileName.valid}">Failinimi*</label>
+      <input type="text" class="form-control" id="fileName"
+             placeholder="Failinimi" formControlName="fileName" />
+    </div>
+
+    <div class="form-group">
+      <label for="type" [ngClass]="{'text-danger': type.touched && !type.valid}">Faili tüüp*</label>
+      <select id="type" formControlName="type" class="form-select">
+        <option disabled selected hidden >-- Vali dokumendi tüüp--</option>
+        <option *ngFor="let type of fileTypes" [value]="type.type">{{type.description}}</option>
+      </select>
+    </div>
+
+    <div *ngIf="isFileWithLabels()" class="form-group">
+      <label for="labels" [ngClass]="{'text-danger': labels.touched && !labels.valid}">Märksõnad*</label>
+      <input type="text" class="form-control" id="labels"
+             placeholder="Lisa märksõnad" formControlName="labels" />
+    </div>
+
+    <div class="form-group">
+      <label for="file" [ngClass]="{'text-danger': file.touched && !file.valid}">Fail*</label>
+      <input type="file" class="form-control" id="file" formControlName="file" (change)="fileSelected($event)" />
+    </div>
+
+    <button [disabled]="isFormValid()" (click)="submitFile()" class="btn btn-primary submit-btn" type="submit">Salvesta</button>
+  </form>
 </div>

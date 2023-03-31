@@ -5,6 +5,9 @@ import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {BsModalService} from "ngx-bootstrap/modal";
 import {LabelService} from "../../services/label.service";
 import {Label} from "../../classes/Label";
+import {BaseDocument} from "../../classes/BaseDocument";
+import {SharedDataService} from "../../services/shared-data.service";
+import {document} from "ngx-bootstrap/utils";
 
 
 @Component({
@@ -22,32 +25,27 @@ export class DocumentToolbarComponent implements OnInit{
   filterWeekSelect?: boolean;
   @Input()
   filterLabelSelect?: boolean;
+  documentDisplayList: BaseDocument[] = [];
 
   labelList: Label[] = [];
-  selectedItems: any = [];
+  selectedLabels: any = [];
   dropdownSettings: any = {};
-
-  selected?: string;
-  states: string[] = [
-    'Alabama',
-    'Alaska',
-    'Arizona',
-    'Arkansas',
-    'California',
-    'Colorado',
-    'Connecticut',
-    'Delaware',
-    'Florida',
-    'Georgia'
-  ];
+  textSearchValue: string = '';
+  documentNameList: string[] = [];
+  filteredDocumentList: BaseDocument[] = [];
 
   constructor(private modalService: BsModalService,
               private labelService: LabelService,
-              private formBuilder: FormBuilder) {
+              private sharedDataService: SharedDataService) {
 
   }
 
   ngOnInit() {
+
+    this.sharedDataService.getDocumentDisplayList().subscribe(documents => {
+      this.documentDisplayList = documents
+      this.initDocumentNameList();
+    });
 
     /*
     { item_id: 1, item_text: 'Mumbai' },
@@ -65,15 +63,38 @@ export class DocumentToolbarComponent implements OnInit{
       singleSelection: false,
       idField: 'labelId',
       textField: 'labelName',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
+      selectAllText: 'Vali kõik',
+      unSelectAllText: 'Tühjenda',
       itemsShowLimit: 3,
       allowSearchFilter: true
     };
   }
 
+  initDocumentNameList() {
+    this.documentNameList = this.documentDisplayList.filter(document => document && document.name).map(document => document.name as string);
+  }
+
+  applyFilter() {
+    this.filterDocumentsByTextSearch();
+
+
+    if (this.filteredDocumentList.length > 0) {
+      this.sharedDataService.updateFilteredDocumentList(this.filteredDocumentList);
+    }
+  }
+
+  emptyFilter() {
+    this.textSearchValue = "";
+
+    this.sharedDataService.updateFilteredDocumentList(this.documentDisplayList);
+  }
+
+  filterDocumentsByTextSearch() {
+    this.filteredDocumentList = this.documentDisplayList.filter(document => document.name === this.textSearchValue);
+  }
 
   openFileUploadModal() {
-    const modalRef = this.modalService.show(FileUploadModalComponent);
+    this.modalService.show(FileUploadModalComponent);
   }
+
 }

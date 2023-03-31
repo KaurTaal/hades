@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {DownloadService} from "../../services/download.service";
 import {DocumentService} from "../../services/document.service";
-import { environment } from "../../../environments/environment";
+import {environment} from "../../../environments/environment";
+import {BaseDocument} from "../../classes/BaseDocument";
 
 @Component({
   selector: 'hades-doc-editor',
@@ -10,9 +11,12 @@ import { environment } from "../../../environments/environment";
 })
 export class DocEditorComponent implements OnInit {
   @Output()
-  deletedDocument = new EventEmitter<any>();
+  deletedDocument = new EventEmitter<BaseDocument>();
+  @Output()
+  modifiedDocument = new EventEmitter<BaseDocument>();
   @Input()
-  document: any;
+  document: BaseDocument = new BaseDocument();
+  documentContent: string = '';
 
   readonly editorConfig = {
     plugins: 'code link image table codesample autoresize',
@@ -51,15 +55,22 @@ export class DocEditorComponent implements OnInit {
 
 
   ngOnInit() {
-
+    this.documentContent = this.document.contentHtml!;
   }
 
-  deleteManual(document: any) {
+  saveDocument(document: BaseDocument) {
+    document.contentHtml = this.documentContent;
+    this.modifiedDocument.emit(document);
+  }
+
+  deleteDocument(document: BaseDocument) {
     this.deletedDocument.emit(document);
   }
 
-  downloadDocument(document: any) {
-    this.downloadService.downloadFile(document.docId);
+  downloadDocumentByFileId(document: BaseDocument) {
+    if (document.fileId) {
+      this.downloadService.downloadFile(document.fileId);
+    }
   }
 
 

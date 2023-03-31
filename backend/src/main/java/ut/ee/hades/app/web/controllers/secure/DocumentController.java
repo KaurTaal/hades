@@ -37,8 +37,13 @@ public class DocumentController {
         documentService.deleteManualById(manualId);
     }
 
+    @GetMapping(value = "/getAllExercises")
+    public @ResponseBody List<ExerciseDTO> getExercisesList() {
+        return documentService.getAllExercises();
+    }
+
     @PostMapping(value = "/createExercise", consumes = "multipart/form-data")
-    public @ResponseBody ExerciseDTO saveExercise(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+    public @ResponseBody ExerciseDTO createExercise(@RequestParam("file") MultipartFile multipartFile) throws IOException {
         return documentService.createExercise(multipartFile);
     }
 
@@ -50,5 +55,10 @@ public class DocumentController {
     @GetMapping(path = "/download/{docId}")
     public ResponseEntity<Resource> downloadDocumentById(@PathVariable long docId) {
         return documentService.downloadDocumentById(docId);
+    }
+
+    @PutMapping(path = "/saveExercise/{fileId}", consumes = "multipart/form-data")
+    public @ResponseBody void saveExercise(@PathVariable long fileId, @RequestParam("file") MultipartFile multipartFile) throws IOException {
+        documentService.saveExercise(fileId, multipartFile);
     }
 }

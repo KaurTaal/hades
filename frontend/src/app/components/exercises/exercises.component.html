@@ -1,3 +1,3 @@
 
 <hades-document-toolbar [filterTextSearch]="true" [filterYearSelect]="true" [filterWeekSelect]="true" [filterLabelSelect]="true"></hades-document-toolbar>
-<hades-document-list [documents]="allExercises"></hades-document-list>
+<hades-document-list [documents]="displayExerciseList" (modifiedExercise)="onDocumentSave($event)" (deletedExercise)="onDocumentDelete($event)"></hades-document-list>

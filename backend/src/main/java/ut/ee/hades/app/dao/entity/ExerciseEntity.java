@@ -15,6 +15,6 @@ public class ExerciseEntity {
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinTable(name = "document", joinColumns = @JoinColumn(name = "id"))
-    private FileEntity document;
+    @JoinColumn(name = "document_id")
+    private FileEntity file;
 }

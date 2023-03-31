@@ -1,0 +1,36 @@
+@import 'src/assets/scss/variables';
+
+
+.heading {
+  padding-top: 0.5rem;
+}
+
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 0.5rem;
+  gap: 1rem;
+}
+
+
+.submit-btn {
+  width: 25%;
+  margin-left: auto;
+  color: $text-color;
+  border-color: transparent;
+  border-radius: 0.5rem;
+  background-color: $action-btn-bg;
+
+  &:hover {
+    background-color: $action-btn-bg;
+    color: $text-color;
+    border-color: transparent;
+    box-shadow: $hover-effect;
+  }
+}
+
+
+.form-group.required .control-label:after {
+  color: red;
+}

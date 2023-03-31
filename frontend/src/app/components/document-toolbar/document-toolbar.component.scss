@@ -15,24 +15,28 @@
   }
 }
 
-.upload-btn {
-  color: $text-color;
-  background-color: transparent;
-  border-color: transparent;
+.action-btn-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 2rem;
 
-  font-size: 1.5rem;
-
-  &:hover {
+  button {
     background-color: transparent;
-    color: $text-color;
     border-color: transparent;
-    box-shadow: $hover-effect;
+    font-size: 1.5rem;
+
+
   }
 
-  i {
-    color: #088c08;
+  .upload-btn {
+    i {
+      color: #14ad14;
+    }
   }
 }
+
 
 .filter-left-margin {
   margin-left: $nav-and-toolbar-margin-left;
@@ -109,4 +113,9 @@ button {
 :host ::ng-deep .multiselect-dropdown .dropdown-btn {
   border: unset !important;
   padding: 6px 24px 6px 12px !important;
+}
+
+::ng-deep .mat-typography {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: unset;
 }
