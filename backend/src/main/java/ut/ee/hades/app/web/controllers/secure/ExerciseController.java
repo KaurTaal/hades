@@ -26,8 +26,8 @@ public class ExerciseController {
     }
 
     @PostMapping(value = "/createExercise", consumes = "multipart/form-data")
-    public @ResponseBody ExerciseDTO createExercise(@RequestParam("file") MultipartFile multipartFile) throws IOException {
-        return exerciseService.createExercise(multipartFile);
+    public @ResponseBody ExerciseDTO createExercise(@RequestParam("file") MultipartFile multipartFile, @RequestParam("labels") List<String> labels) throws IOException {
+        return exerciseService.createExercise(multipartFile, labels);
     }
 
     @DeleteMapping(value = "/deleteExercise/{exerciseId}")

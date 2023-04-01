@@ -43,8 +43,8 @@ public class ManualDTO {
 
     public static ManualDTO map(ManualEntity manualDoc, InputStream stream) throws IOException {
         ManualDTO manualDTO = new ManualDTO();
-        manualDTO.setManualId(manualDoc.getId());
-        manualDTO.setFileId(manualDoc.getFile().getId());
+        manualDTO.setManualId(manualDoc.getManualId());
+        manualDTO.setFileId(manualDoc.getFile().getFileId());
         manualDTO.setName(manualDoc.getFile().getName());
         manualDTO.setContentHtml(DocumentUtils.convertToHtml(stream));
         return manualDTO;

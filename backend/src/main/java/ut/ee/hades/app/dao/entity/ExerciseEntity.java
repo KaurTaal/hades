@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "exercise_document")
 @Getter
@@ -12,9 +14,14 @@ public class ExerciseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long exerciseId;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "document_id")
+    @JoinColumn(name = "file_id")
     private FileEntity file;
+
+    @ManyToMany
+    @JoinTable(name = "exercise_m_label", joinColumns = @JoinColumn(name = "exercise_id"), inverseJoinColumns = @JoinColumn(name = "label_id"))
+    private List<LabelEntity> labelEntityList;
+
 }

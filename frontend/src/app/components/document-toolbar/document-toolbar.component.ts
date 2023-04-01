@@ -1,13 +1,13 @@
-import {AfterViewInit, Component, ElementRef, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {BsDropdownConfig} from "ngx-bootstrap/dropdown";
 import {FileUploadModalComponent} from "../../modals/file-upload-modal/file-upload-modal.component";
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {BsModalService} from "ngx-bootstrap/modal";
 import {LabelService} from "../../services/label.service";
 import {Label} from "../../classes/Label";
 import {BaseDocument} from "../../classes/BaseDocument";
 import {SharedDataService} from "../../services/shared-data.service";
-import {document} from "ngx-bootstrap/utils";
+import {Exercise} from "../../classes/Exercise";
+import {intersection} from "lodash";
 
 
 @Component({
@@ -25,14 +25,29 @@ export class DocumentToolbarComponent implements OnInit{
   filterWeekSelect?: boolean;
   @Input()
   filterLabelSelect?: boolean;
-  documentDisplayList: BaseDocument[] = [];
 
+  documentDisplayList: BaseDocument[] = [];
+  filteredDocumentLabelList: BaseDocument[] = [];
+  filteredDocumentNameSearchList: BaseDocument[] = [];
+
+  nameList: string[] = [];
   labelList: Label[] = [];
-  selectedLabels: any = [];
-  dropdownSettings: any = {};
-  textSearchValue: string = '';
-  documentNameList: string[] = [];
-  filteredDocumentList: BaseDocument[] = [];
+
+  selectedNameSearch: string = '';
+  selectedLabels: Label[] = [];
+
+
+  dropdownSettings = {
+    singleSelection: false,
+    idField: 'labelId',
+    textField: 'labelName',
+    selectAllText: 'Vali kõik',
+    unSelectAllText: 'Tühjenda',
+    itemsShowLimit: 3,
+    allowSearchFilter: true,
+    noDataAvailablePlaceholderText: "Märksõnad on lisamata"
+  };
+
 
   constructor(private modalService: BsModalService,
               private labelService: LabelService,
@@ -41,56 +56,85 @@ export class DocumentToolbarComponent implements OnInit{
   }
 
   ngOnInit() {
-
     this.sharedDataService.getDocumentDisplayList().subscribe(documents => {
       this.documentDisplayList = documents
       this.initDocumentNameList();
+      this.initLabelSelect();
     });
-
-    /*
-    { item_id: 1, item_text: 'Mumbai' },
-      { item_id: 2, item_text: 'Bangaluru' },
-      { item_id: 3, item_text: 'Pune' },
-      { item_id: 4, item_text: 'Navsari' },
-      { item_id: 5, item_text: 'New Delhi' }
-     */
-
-    this.labelService.getAllLabels().subscribe(res => {
-      this.labelList = res;
-    });
-
-    this.dropdownSettings = {
-      singleSelection: false,
-      idField: 'labelId',
-      textField: 'labelName',
-      selectAllText: 'Vali kõik',
-      unSelectAllText: 'Tühjenda',
-      itemsShowLimit: 3,
-      allowSearchFilter: true
-    };
   }
 
-  initDocumentNameList() {
-    this.documentNameList = this.documentDisplayList.filter(document => document && document.name).map(document => document.name as string);
-  }
+
 
   applyFilter() {
-    this.filterDocumentsByTextSearch();
+    if (!this.isEmptyFilters()) {
+      this.filterDocumentsByTextSearch();
+      this.filterDocumentsByLabel();
 
 
-    if (this.filteredDocumentList.length > 0) {
-      this.sharedDataService.updateFilteredDocumentList(this.filteredDocumentList);
+      this.sharedDataService.updateDocumentDisplayList(this.getCommonDocuments());
+      this.resetFilteredLists();
     }
   }
 
   emptyFilter() {
-    this.textSearchValue = "";
+    this.selectedNameSearch = "";
+    this.selectedLabels = [];
 
-    this.sharedDataService.updateFilteredDocumentList(this.documentDisplayList);
+    this.sharedDataService.updateDocumentDisplayList(this.documentDisplayList);
+    this.resetFilteredLists();
   }
 
-  filterDocumentsByTextSearch() {
-    this.filteredDocumentList = this.documentDisplayList.filter(document => document.name === this.textSearchValue);
+  private initDocumentNameList() {
+    this.nameList = this.documentDisplayList.filter(document => document && document.name).map(document => document.name);
+  }
+
+  private initLabelSelect() {
+    this.labelService.getAllLabels().subscribe(res => {
+      this.labelList = res;
+    });
+  }
+
+  private filterDocumentsByTextSearch() {
+    if (this.selectedNameSearch !== '') {
+      this.filteredDocumentNameSearchList = this.documentDisplayList.filter(document => document.name === this.selectedNameSearch);
+    }
+  }
+
+  private filterDocumentsByLabel() {
+    if (this.selectedLabels.length > 0) {
+      const documentsAsExercises = [... this.documentDisplayList as Exercise[]];
+      this.filteredDocumentLabelList = documentsAsExercises.filter(document => this.containsLabel(document.labelDTOList));
+    }
+  }
+
+  private containsLabel(documentLabels: Label[]): boolean {
+    for (let documentLabel of documentLabels) {
+      if (this.selectedLabels.find(selectedLabel => selectedLabel.labelId === documentLabel.labelId)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private isEmptyFilters(): boolean {
+    const noLabelSelected: boolean = this.selectedLabels.length === 0;
+    const noNameSearch: boolean = this.selectedNameSearch === '';
+
+    return noLabelSelected && noNameSearch;
+  }
+
+  private getCommonDocuments(): BaseDocument[] {
+    const filteredLists = [this.filteredDocumentLabelList, this.filteredDocumentNameSearchList];
+    const nonEmptyLists = filteredLists.filter(list => list.length > 0);
+    if (nonEmptyLists.length > 0) {
+      return intersection(...nonEmptyLists);
+    }
+    return [];
+  }
+
+  private resetFilteredLists() {
+    this.filteredDocumentNameSearchList = [];
+    this.filteredDocumentLabelList = [];
   }
 
   openFileUploadModal() {

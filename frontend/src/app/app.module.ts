@@ -31,6 +31,7 @@ import {AlertComponent} from "./alert/alert.component";
 import {LoaderComponent} from './components/loader/loader.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {LoaderInterceptor} from "../core/loader.interceptor";
+import {TagInputModule} from "ngx-chips";
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import {LoaderInterceptor} from "../core/loader.interceptor";
         HttpClientModule,
         AlertModule,
         MatProgressSpinnerModule,
+        TagInputModule,
     ],
   providers: [
     BsModalService,

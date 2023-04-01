@@ -19,8 +19,8 @@
       <div class="input-group-prepend">
         <span class="input-group-text"><i class="fa fa-search"></i></span>
       </div>
-      <input [(ngModel)]="textSearchValue"
-             [typeahead]="documentNameList"
+      <input [(ngModel)]="selectedNameSearch"
+             [typeahead]="nameList"
              [isAnimated]="true"
              placeholder="Otsi..."
              class="form-control doc-text-search">
@@ -49,6 +49,7 @@
       [settings]="dropdownSettings"
       [data]="labelList"
       [(ngModel)]="selectedLabels"
+
     ></ng-multiselect-dropdown>
   </div>
 

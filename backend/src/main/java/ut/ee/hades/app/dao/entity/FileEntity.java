@@ -12,7 +12,7 @@ public class FileEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long fileId;
 
     @Column(name = "content")
     private byte[] content;
