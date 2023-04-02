@@ -15,7 +15,7 @@ export class DocEditorComponent implements OnInit {
   @Output()
   modifiedDocument = new EventEmitter<BaseDocument>();
   @Input()
-  document: BaseDocument = new BaseDocument(-1, "", "", "");
+  document: BaseDocument = new BaseDocument(-1, "", "", "", -1);
   editorContent: string = '';
 
   readonly editorConfig = {

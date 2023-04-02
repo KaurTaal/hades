@@ -36,12 +36,13 @@ public class ManualServiceImpl implements ManualService {
 
 
     @Override
-    public ManualDTO createManual(MultipartFile uploadedFile) throws IOException {
+    public ManualDTO createManual(MultipartFile uploadedFile, Integer year) throws IOException {
         DocumentUtils.validateFileType(uploadedFile);
 
         ManualEntity manualEntity = new ManualEntity();
         FileEntity fileEntity = DocumentUtils.prepareFileSave(uploadedFile);
         manualEntity.setFile(fileEntity);
+        manualEntity.setYear(year);
 
         fileRepository.save(fileEntity);
         manualRepository.save(manualEntity);

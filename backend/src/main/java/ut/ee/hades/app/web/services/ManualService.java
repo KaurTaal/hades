@@ -10,7 +10,7 @@ public interface ManualService {
 
     List<ManualDTO> getAllManuals();
 
-    ManualDTO createManual(MultipartFile uploadedFile) throws IOException;
+    ManualDTO createManual(MultipartFile uploadedFile, Integer year) throws IOException;
 
     void deleteManualById(Long manualId) throws IOException;
 }

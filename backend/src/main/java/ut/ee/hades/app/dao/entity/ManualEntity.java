@@ -18,4 +18,7 @@ public class ManualEntity {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "file_id")
     private FileEntity file;
+
+    @Column(name = "year")
+    private Integer year;
 }

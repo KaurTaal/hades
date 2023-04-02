@@ -42,14 +42,13 @@ public class ExerciseServiceImpl implements ExerciseService {
     }
 
     @Override
-    public ExerciseDTO createExercise(MultipartFile uploadedFile, List<String> labels) throws IOException {
+    public ExerciseDTO createExercise(MultipartFile uploadedFile, List<String> labels, Integer year) throws IOException {
         DocumentUtils.validateFileType(uploadedFile);
-
-
 
         ExerciseEntity exerciseEntity = new ExerciseEntity();
         FileEntity fileEntity = DocumentUtils.prepareFileSave(uploadedFile);
         exerciseEntity.setFile(fileEntity);
+        exerciseEntity.setYear(year);
 
         if (!CollectionUtils.isEmpty(labels)) {
             exerciseEntity.setLabelEntityList(createExerciseLabelsList(labels));

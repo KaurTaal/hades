@@ -24,4 +24,7 @@ public class ExerciseEntity {
     @JoinTable(name = "exercise_m_label", joinColumns = @JoinColumn(name = "exercise_id"), inverseJoinColumns = @JoinColumn(name = "label_id"))
     private List<LabelEntity> labelEntityList;
 
+    @Column(name = "year")
+    private Integer year;
+
 }

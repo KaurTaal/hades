@@ -30,6 +30,10 @@ export class FileUploadModalComponent {
     [Validators.required]
   )
 
+  year: FormControl = new FormControl(
+    {value: this.getCurrentYear(), disabled: false}
+  )
+
   file: FormControl = new FormControl(
     {value: '', disabled: false},
     [Validators.required]
@@ -67,6 +71,7 @@ export class FileUploadModalComponent {
     return new FormGroup({
       labels: this.labels,
       type: this.type,
+      year: this.year,
       file: this.file
     })
   }
@@ -86,6 +91,7 @@ export class FileUploadModalComponent {
 
   addMetadata() {
     this.uploadedFile?.append("labels", this.getSelectedLabels().join(","));
+    this.uploadedFile?.append("year", this.getSelectedYear())
   }
 
   submitFile() {
@@ -110,8 +116,19 @@ export class FileUploadModalComponent {
     return this.uploadFormGroup.get("type")?.value;
   }
 
+  getSelectedYear(): string {
+    return this.uploadFormGroup.get("year")?.value;
+  }
+
   getSelectedLabels(): string[] {
     const inputLabels = this.uploadFormGroup.get("labels")?.value;
-    return inputLabels?.map((inputLabel: any) => inputLabel.value) || [];
+    if (inputLabels) {
+      return inputLabels?.map((inputLabel: any) => inputLabel.value) || [];
+    }
+    return [];
+  }
+
+  getCurrentYear() {
+    return new Date().getFullYear();
   }
 }

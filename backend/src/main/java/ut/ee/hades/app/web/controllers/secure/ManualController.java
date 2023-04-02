@@ -28,8 +28,8 @@ public class ManualController {
 
 
     @PostMapping(value = "/createManual", consumes = "multipart/form-data")
-    public @ResponseBody ManualDTO saveManual(@RequestParam("file") MultipartFile multipartFile) throws IOException {
-        return manualService.createManual(multipartFile);
+    public @ResponseBody ManualDTO saveManual(@RequestParam("file") MultipartFile multipartFile, @RequestParam("year") Integer year) throws IOException {
+        return manualService.createManual(multipartFile, year);
     }
 
     @DeleteMapping(value = "/deleteManual/{manualId}")

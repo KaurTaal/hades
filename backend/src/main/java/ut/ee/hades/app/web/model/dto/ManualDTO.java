@@ -22,6 +22,7 @@ public class ManualDTO {
     private Long fileId;
     private String contentHtml;
     private String name;
+    private Integer year;
     private final String docType = DocumentTypeEnum.MANUAL.getValue();
 
 
@@ -41,12 +42,13 @@ public class ManualDTO {
 
 
 
-    public static ManualDTO map(ManualEntity manualDoc, InputStream stream) throws IOException {
+    public static ManualDTO map(ManualEntity manualEntity, InputStream stream) throws IOException {
         ManualDTO manualDTO = new ManualDTO();
-        manualDTO.setManualId(manualDoc.getManualId());
-        manualDTO.setFileId(manualDoc.getFile().getFileId());
-        manualDTO.setName(manualDoc.getFile().getName());
+        manualDTO.setManualId(manualEntity.getManualId());
+        manualDTO.setFileId(manualEntity.getFile().getFileId());
+        manualDTO.setName(manualEntity.getFile().getName());
         manualDTO.setContentHtml(DocumentUtils.convertToHtml(stream));
+        manualDTO.setYear(manualEntity.getYear());
         return manualDTO;
     }
 

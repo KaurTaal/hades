@@ -10,7 +10,7 @@ public interface ExerciseService {
 
     List<ExerciseDTO> getAllExercises();
 
-    ExerciseDTO createExercise(MultipartFile uploadedFile, List<String> labels) throws IOException;
+    ExerciseDTO createExercise(MultipartFile uploadedFile, List<String> labels, Integer year) throws IOException;
 
     void deleteExerciseById(Long exerciseId) throws IOException;
 

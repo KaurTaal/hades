@@ -6,8 +6,8 @@ export class Exercise extends BaseDocument{
   exerciseId: number;
   labelDTOList: Label[];
 
-  constructor(exerciseId: number, labelList: Label[], fileId: number, contentHtml: string, name: string) {
-    super(fileId, contentHtml, name, DocumentType.EXERCISE);
+  constructor(exerciseId: number, labelList: Label[], fileId: number, contentHtml: string, name: string, year: number) {
+    super(fileId, contentHtml, name, DocumentType.EXERCISE, year);
     this.exerciseId = exerciseId;
     this.labelDTOList = labelList;
   }
