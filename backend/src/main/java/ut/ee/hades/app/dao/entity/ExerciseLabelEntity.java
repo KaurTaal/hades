@@ -4,17 +4,15 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+@Table(name = "exercise_m_label")
 @Entity
-@Table(name = "label")
 @Getter
 @Setter
-public class LabelEntity {
+public class ExerciseLabelEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long labelId;
+    private Long id;
 
-    @Column(name = "name")
-    private String name;
 
 }

@@ -1,44 +1,36 @@
 <div class="tool-bar-container">
   <div *ngIf="filterYearSelect" [ngClass]="{'filter-left-margin': filterYearSelect}" class="year-select">
-    <div class="btn-group" dropdown>
-      <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
-              aria-controls="dropdown-animated">
-        {{"2023"}} <span class="caret"></span>
-      </button>
-      <ul *dropdownMenu class="dropdown-menu"
-          role="menu" aria-labelledby="button-animated">
-        <li role="menuitem"><a class="dropdown-item">2022</a></li>
-        <li role="menuitem"><a class="dropdown-item">2021</a></li>
-        <li role="menuitem"><a class="dropdown-item">2020</a></li>
-      </ul>
+    <div class="btn-group year-select">
+      <ngx-select
+        [items]="yearList"
+        [(ngModel)]="selectedYear"
+        [allowClear]="true"
+        placeholder="Vali aasta"
+      ></ngx-select>
     </div>
   </div>
 
-  <div *ngIf="filterTextSearch" [ngClass]="{'filter-left-margin': filterTextSearch}" class="doc-text-search">
+  <div *ngIf="filterTextSearch" [ngClass]="{'filter-left-margin': filterTextSearch}">
     <div class="input-group">
       <div class="input-group-prepend">
         <span class="input-group-text"><i class="fa fa-search"></i></span>
       </div>
-      <input [(ngModel)]="textSearchValue"
-             [typeahead]="documentNameList"
-             [isAnimated]="true"
+      <input [(ngModel)]="selectedNameSearch"
+             [typeahead]="nameList"
              placeholder="Otsi..."
-             class="form-control doc-text-search">
+             class="form-control">
     </div>
   </div>
 
-  <div *ngIf="filterWeekSelect" [ngClass]="{'filter-left-margin': filterWeekSelect}" class="week-select">
-    <div class="btn-group" dropdown>
-      <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
-              aria-controls="dropdown-animated">
-        {{"1. Muutuja ja avaldis"}} <span class="caret"></span>
-      </button>
-      <ul *dropdownMenu class="dropdown-menu"
-          role="menu" aria-labelledby="button-animated">
-        <li role="menuitem"><a class="dropdown-item">2. Funktsioonid</a></li>
-        <li role="menuitem"><a class="dropdown-item">3. Mingid teema</a></li>
-        <li role="menuitem"><a class="dropdown-item">4. Mingi hästi keeruline teema hästi pika nimega</a></li>
-      </ul>
+  <div *ngIf="filterCourseSelect" [ngClass]="{'filter-left-margin': filterCourseSelect}">
+    <div class="btn-group course-select">
+      <ngx-select
+        [items]="courseList"
+        [(ngModel)]="selectedCourseName"
+        [allowClear]="true"
+        [multiple]="false"
+        placeholder="Vali kursus"
+      ></ngx-select>
     </div>
   </div>
 
@@ -49,6 +41,7 @@
       [settings]="dropdownSettings"
       [data]="labelList"
       [(ngModel)]="selectedLabels"
+
     ></ng-multiselect-dropdown>
   </div>
 

@@ -31,6 +31,8 @@ import {AlertComponent} from "./alert/alert.component";
 import {LoaderComponent} from './components/loader/loader.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {LoaderInterceptor} from "../core/loader.interceptor";
+import {TagInputModule} from "ngx-chips";
+import {NgxSelectModule} from "ngx-select-ex";
 
 @NgModule({
   declarations: [
@@ -47,26 +49,28 @@ import {LoaderInterceptor} from "../core/loader.interceptor";
     AlertComponent,
     LoaderComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        CollapseModule,
-        FontAwesomeModule,
-        TabsModule,
-        AccordionModule,
-        FormsModule,
-        ReactiveFormsModule,
-        EditorModule,
-        BsDropdownModule,
-        TypeaheadModule,
-        ModalModule.forRoot(),
-        MatSelectModule,
-        NgMultiSelectDropDownModule.forRoot(),
-        HttpClientModule,
-        AlertModule,
-        MatProgressSpinnerModule,
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    CollapseModule,
+    FontAwesomeModule,
+    TabsModule,
+    AccordionModule,
+    FormsModule,
+    ReactiveFormsModule,
+    EditorModule,
+    BsDropdownModule,
+    TypeaheadModule,
+    ModalModule.forRoot(),
+    MatSelectModule,
+    NgMultiSelectDropDownModule.forRoot(),
+    HttpClientModule,
+    AlertModule,
+    MatProgressSpinnerModule,
+    TagInputModule,
+    NgxSelectModule,
+  ],
   providers: [
     BsModalService,
     {provide: HTTP_INTERCEPTORS, useClass: HttpMiddleware, multi: true},

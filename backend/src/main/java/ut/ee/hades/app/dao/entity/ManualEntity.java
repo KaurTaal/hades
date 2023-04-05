@@ -12,10 +12,19 @@ public class ManualEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long manualId;
 
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "document_id")
+    @JoinColumn(name = "file_id")
     private FileEntity file;
+
+    @Column(name = "year")
+    private Integer year;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_code")
+    private CourseEntity courseEntity;
+
+
 }

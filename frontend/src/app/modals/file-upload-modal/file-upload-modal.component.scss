@@ -34,3 +34,29 @@
 .form-group.required .control-label:after {
   color: red;
 }
+
+::ng-deep .ng2-tag-input {
+  border-bottom: unset !important;
+  padding: unset !important;
+}
+
+::ng-deep .ng2-tag-input__text-input {
+  background-color: transparent !important;
+}
+
+::ng-deep .tag-ripple {
+  background: unset !important;
+}
+
+::ng-deep .minimal tag {
+  border-radius: 0.3rem !important;
+}
+
+::ng-deep .minimal tag:not(.readonly):not(.tag--editing):focus {
+  background: white !important;
+}
+
+::ng-deep .minimal tag:not(.readonly):not(.tag--editing):active {
+  background: white !important;
+}
+

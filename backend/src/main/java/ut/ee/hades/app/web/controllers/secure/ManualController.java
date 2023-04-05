@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ut.ee.hades.app.exceptions.system.HADESInvalidCourseException;
 import ut.ee.hades.app.web.model.dto.ManualDTO;
 import ut.ee.hades.app.web.services.ManualService;
 
@@ -28,8 +29,8 @@ public class ManualController {
 
 
     @PostMapping(value = "/createManual", consumes = "multipart/form-data")
-    public @ResponseBody ManualDTO saveManual(@RequestParam("file") MultipartFile multipartFile) throws IOException {
-        return manualService.createManual(multipartFile);
+    public @ResponseBody ManualDTO saveManual(@RequestParam("file") MultipartFile multipartFile, @RequestParam("year") Integer year,  @RequestParam("courseCode") String courseCode) throws IOException, HADESInvalidCourseException {
+        return manualService.createManual(multipartFile, year, courseCode);
     }
 
     @DeleteMapping(value = "/deleteManual/{manualId}")

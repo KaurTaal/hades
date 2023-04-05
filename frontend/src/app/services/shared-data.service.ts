@@ -18,7 +18,7 @@ export class SharedDataService {
     this.documentDisplayList.next(documents);
   }
 
-  updateFilteredDocumentList(documents: BaseDocument[]) {
+  updateDocumentDisplayList(documents: BaseDocument[]) {
     this.filteredDocumentList.next(documents);
   }
 

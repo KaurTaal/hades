@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ut.ee.hades.app.exceptions.system.HADESInvalidCourseException;
 import ut.ee.hades.app.web.model.dto.ExerciseDTO;
 import ut.ee.hades.app.web.services.ExerciseService;
 
@@ -26,8 +27,8 @@ public class ExerciseController {
     }
 
     @PostMapping(value = "/createExercise", consumes = "multipart/form-data")
-    public @ResponseBody ExerciseDTO createExercise(@RequestParam("file") MultipartFile multipartFile) throws IOException {
-        return exerciseService.createExercise(multipartFile);
+    public @ResponseBody ExerciseDTO createExercise(@RequestParam("file") MultipartFile multipartFile, @RequestParam("labels") List<String> labels, @RequestParam("year") Integer year, @RequestParam("courseCode") String courseCode) throws IOException, HADESInvalidCourseException {
+        return exerciseService.createExercise(multipartFile, labels, year, courseCode);
     }
 
     @DeleteMapping(value = "/deleteExercise/{exerciseId}")
