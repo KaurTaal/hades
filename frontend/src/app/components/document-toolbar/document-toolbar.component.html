@@ -22,18 +22,15 @@
     </div>
   </div>
 
-  <div *ngIf="filterWeekSelect" [ngClass]="{'filter-left-margin': filterWeekSelect}">
-    <div class="btn-group" dropdown>
-      <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
-              aria-controls="dropdown">
-        {{"1. Muutuja ja avaldis"}} <span class="caret"></span>
-      </button>
-      <ul *dropdownMenu class="dropdown-menu"
-          role="menu" aria-labelledby="button">
-        <li role="menuitem"><a class="dropdown-item">2. Funktsioonid</a></li>
-        <li role="menuitem"><a class="dropdown-item">3. Mingid teema</a></li>
-        <li role="menuitem"><a class="dropdown-item">4. Mingi hästi keeruline teema hästi pika nimega</a></li>
-      </ul>
+  <div *ngIf="filterCourseSelect" [ngClass]="{'filter-left-margin': filterCourseSelect}">
+    <div class="btn-group course-select">
+      <ngx-select
+        [items]="courseList"
+        [(ngModel)]="selectedCourseName"
+        [allowClear]="true"
+        [multiple]="false"
+        placeholder="Vali kursus"
+      ></ngx-select>
     </div>
   </div>
 

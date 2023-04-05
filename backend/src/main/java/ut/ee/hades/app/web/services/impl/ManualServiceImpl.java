@@ -6,10 +6,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import ut.ee.hades.app.dao.entity.CourseEntity;
 import ut.ee.hades.app.dao.entity.FileEntity;
 import ut.ee.hades.app.dao.entity.ManualEntity;
+import ut.ee.hades.app.dao.repository.CourseRepository;
 import ut.ee.hades.app.dao.repository.FileRepository;
 import ut.ee.hades.app.dao.repository.ManualRepository;
+import ut.ee.hades.app.enums.ExceptionCodeEnum;
+import ut.ee.hades.app.exceptions.system.HADESInvalidCourseException;
 import ut.ee.hades.app.util.DocumentUtils;
 import ut.ee.hades.app.web.model.dto.ManualDTO;
 import ut.ee.hades.app.web.services.ManualService;
@@ -25,7 +29,7 @@ public class ManualServiceImpl implements ManualService {
 
     private final FileRepository fileRepository;
     private final ManualRepository manualRepository;
-
+    private final CourseRepository courseRepository;
 
 
     @Override
@@ -36,13 +40,20 @@ public class ManualServiceImpl implements ManualService {
 
 
     @Override
-    public ManualDTO createManual(MultipartFile uploadedFile, Integer year) throws IOException {
+    public ManualDTO createManual(MultipartFile uploadedFile, Integer year, String courseCode) throws IOException, HADESInvalidCourseException {
         DocumentUtils.validateFileType(uploadedFile);
+
+        CourseEntity courseEntity = courseRepository.findByCourseCode(courseCode);
+
+        if (courseEntity == null) {
+            throw new HADESInvalidCourseException(ExceptionCodeEnum.INVALID_COURSE_ERROR.getName());
+        }
 
         ManualEntity manualEntity = new ManualEntity();
         FileEntity fileEntity = DocumentUtils.prepareFileSave(uploadedFile);
         manualEntity.setFile(fileEntity);
         manualEntity.setYear(year);
+        manualEntity.setCourseEntity(courseEntity);
 
         fileRepository.save(fileEntity);
         manualRepository.save(manualEntity);

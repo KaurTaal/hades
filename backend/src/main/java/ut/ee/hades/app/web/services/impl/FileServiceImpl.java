@@ -14,7 +14,7 @@ import ut.ee.hades.app.enums.ExceptionCodeEnum;
 import ut.ee.hades.app.exceptions.system.HADESFileDownloadException;
 import ut.ee.hades.app.exceptions.system.HADESFileSaveException;
 import ut.ee.hades.app.util.DocumentUtils;
-import ut.ee.hades.app.web.services.DocumentService;
+import ut.ee.hades.app.web.services.FileService;
 import ut.ee.hades.app.web.services.DownloadService;
 
 import java.io.IOException;
@@ -24,7 +24,7 @@ import java.util.Optional;
 @Transactional
 @RequiredArgsConstructor
 @Slf4j
-public class DocumentServiceImpl implements DocumentService {
+public class FileServiceImpl implements FileService {
 
     private final FileRepository fileRepository;
     private final DownloadService downloadService;
@@ -45,7 +45,7 @@ public class DocumentServiceImpl implements DocumentService {
 
 
     @Override
-    public ResponseEntity<Resource> downloadDocumentById(Long docId) throws HADESFileDownloadException {
+    public ResponseEntity<Resource> downloadFileById(Long docId) throws HADESFileDownloadException {
         Optional<FileEntity> fileById = fileRepository.findById(docId);
         if (fileById.isPresent()) {
             FileEntity fileEntity = fileById.get();

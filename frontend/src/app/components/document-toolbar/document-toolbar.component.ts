@@ -8,6 +8,7 @@ import {BaseDocument} from "../../classes/BaseDocument";
 import {SharedDataService} from "../../services/shared-data.service";
 import {Exercise} from "../../classes/Exercise";
 import {intersection} from "lodash";
+import {CourseService} from "../../services/course.service";
 
 
 @Component({
@@ -22,7 +23,7 @@ export class DocumentToolbarComponent implements OnInit{
   @Input()
   filterTextSearch?: boolean;
   @Input()
-  filterWeekSelect?: boolean;
+  filterCourseSelect?: boolean;
   @Input()
   filterLabelSelect?: boolean;
 
@@ -30,14 +31,17 @@ export class DocumentToolbarComponent implements OnInit{
   filteredDocumentLabelList: BaseDocument[] = [];
   filteredDocumentNameSearchList: BaseDocument[] = [];
   filteredDocumentYearList: BaseDocument[] = [];
+  filteredDocumentCourseList: BaseDocument[] = [];
 
   nameList: string[] = [];
   labelList: Label[] = [];
   yearList: number[] = [];
+  courseList: string[] = [];
 
   selectedNameSearch: string = '';
   selectedLabels: Label[] = [];
   selectedYear: number = 0;
+  selectedCourseName: string = "";
 
 
   dropdownSettings = {
@@ -54,6 +58,7 @@ export class DocumentToolbarComponent implements OnInit{
 
   constructor(private modalService: BsModalService,
               private labelService: LabelService,
+              private courseService: CourseService,
               private sharedDataService: SharedDataService) {
 
   }
@@ -64,6 +69,7 @@ export class DocumentToolbarComponent implements OnInit{
       this.initDocumentNameList();
       this.initLabelSelect();
       this.initYearSelect();
+      this.initCourseSelect();
     });
   }
 
@@ -74,7 +80,7 @@ export class DocumentToolbarComponent implements OnInit{
       this.filterDocumentsByTextSearch();
       this.filterDocumentsByLabel();
       this.filterDocumentsByYear();
-
+      this.filterDocumentsByCourse();
 
       this.sharedDataService.updateDocumentDisplayList(this.getCommonDocuments());
       this.resetFilteredLists();
@@ -87,6 +93,7 @@ export class DocumentToolbarComponent implements OnInit{
     this.selectedNameSearch = "";
     this.selectedLabels = [];
     this.selectedYear = 0;
+    this.selectedCourseName = "";
 
     this.sharedDataService.updateDocumentDisplayList(this.documentDisplayList);
     this.resetFilteredLists();
@@ -104,6 +111,10 @@ export class DocumentToolbarComponent implements OnInit{
 
   private initYearSelect() {
     this.yearList = Array.from(new Set(this.documentDisplayList.map(document => document.year)));
+  }
+
+  private initCourseSelect() {
+    this.courseList = Array.from(new Set(this.documentDisplayList.map((document) => document.courseDTO.courseName)));
   }
 
   private filterDocumentsByTextSearch() {
@@ -125,6 +136,12 @@ export class DocumentToolbarComponent implements OnInit{
     }
   }
 
+  private filterDocumentsByCourse() {
+    if (this.selectedCourseName !== "") {
+      this.filteredDocumentCourseList = this.documentDisplayList.filter(doc => doc.courseDTO.courseName === this.selectedCourseName);
+    }
+  }
+
   private containsLabel(documentLabels: Label[]): boolean {
     for (let documentLabel of documentLabels) {
       if (this.selectedLabels.find(selectedLabel => selectedLabel.labelId === documentLabel.labelId)) {
@@ -138,12 +155,13 @@ export class DocumentToolbarComponent implements OnInit{
     const noLabelSelected: boolean = this.selectedLabels.length === 0;
     const noNameSearch: boolean = this.selectedNameSearch === '';
     const noYearSelect: boolean = this.selectedYear === 0 || this.selectedYear === null;
+    const noCourseSelect: boolean = this.selectedCourseName === "";
 
-    return noLabelSelected && noNameSearch && noYearSelect;
+    return noLabelSelected && noNameSearch && noYearSelect && noCourseSelect;
   }
 
   private getCommonDocuments(): BaseDocument[] {
-    const filteredLists = [this.filteredDocumentLabelList, this.filteredDocumentNameSearchList, this.filteredDocumentYearList];
+    const filteredLists = [this.filteredDocumentLabelList, this.filteredDocumentNameSearchList, this.filteredDocumentYearList, this.filteredDocumentCourseList];
     const nonEmptyLists = filteredLists.filter(list => list.length > 0);
     if (nonEmptyLists.length > 0) {
       return intersection(...nonEmptyLists);
@@ -155,6 +173,7 @@ export class DocumentToolbarComponent implements OnInit{
     this.filteredDocumentNameSearchList = [];
     this.filteredDocumentLabelList = [];
     this.filteredDocumentYearList = [];
+    this.filteredDocumentCourseList = [];
   }
 
   openFileUploadModal() {

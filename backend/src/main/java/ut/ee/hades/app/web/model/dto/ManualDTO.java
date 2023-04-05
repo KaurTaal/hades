@@ -23,6 +23,7 @@ public class ManualDTO {
     private String contentHtml;
     private String name;
     private Integer year;
+    private CourseDTO courseDTO;
     private final String docType = DocumentTypeEnum.MANUAL.getValue();
 
 
@@ -49,6 +50,7 @@ public class ManualDTO {
         manualDTO.setName(manualEntity.getFile().getName());
         manualDTO.setContentHtml(DocumentUtils.convertToHtml(stream));
         manualDTO.setYear(manualEntity.getYear());
+        manualDTO.setCourseDTO(CourseDTO.map(manualEntity.getCourseEntity()));
         return manualDTO;
     }
 

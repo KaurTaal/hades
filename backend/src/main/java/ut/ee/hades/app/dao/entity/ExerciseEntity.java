@@ -27,4 +27,8 @@ public class ExerciseEntity {
     @Column(name = "year")
     private Integer year;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_code")
+    private CourseEntity courseEntity;
+
 }

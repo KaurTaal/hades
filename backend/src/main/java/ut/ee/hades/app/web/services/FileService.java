@@ -8,11 +8,11 @@ import ut.ee.hades.app.exceptions.system.HADESFileSaveException;
 
 import java.io.IOException;
 
-public interface DocumentService {
+public interface FileService {
 
     void saveEditedFile(Long fileId, MultipartFile modifiedFile) throws IOException, HADESFileSaveException;
 
-    ResponseEntity<Resource> downloadDocumentById(Long docId) throws HADESFileDownloadException;
+    ResponseEntity<Resource> downloadFileById(Long docId) throws HADESFileDownloadException;
 
     byte[] getNewDocx(String modifiedContent) throws IOException;
 

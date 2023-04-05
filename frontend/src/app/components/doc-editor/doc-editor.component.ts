@@ -3,6 +3,7 @@ import {DownloadService} from "../../services/download.service";
 import {DocumentService} from "../../services/document.service";
 import {environment} from "../../../environments/environment";
 import {BaseDocument} from "../../classes/BaseDocument";
+import {Course} from "../../classes/Course";
 
 @Component({
   selector: 'hades-doc-editor',
@@ -15,7 +16,7 @@ export class DocEditorComponent implements OnInit {
   @Output()
   modifiedDocument = new EventEmitter<BaseDocument>();
   @Input()
-  document: BaseDocument = new BaseDocument(-1, "", "", "", -1);
+  document: BaseDocument = new BaseDocument(-1, "", "", "", -1, new Course("", ""));
   editorContent: string = '';
 
   readonly editorConfig = {

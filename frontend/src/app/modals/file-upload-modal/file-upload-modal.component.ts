@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BsModalRef} from "ngx-bootstrap/modal";
 import {DocumentService} from "../../services/document.service";
 import {SharedDataService} from "../../services/shared-data.service";
@@ -10,13 +10,15 @@ import {ManualService} from "../../services/manual.service";
 import {LabelService} from "../../services/label.service";
 import {SuccessResponse} from "../../classes/enums/SuccessResponse";
 import {AlertType} from "../../alert/alert.model";
+import {CourseService} from "../../services/course.service";
+import {Course} from "../../classes/Course";
 
 @Component({
   selector: 'hades-file-upload-modal',
   templateUrl: './file-upload-modal.component.html',
   styleUrls: ['./file-upload-modal.component.scss']
 })
-export class FileUploadModalComponent {
+export class FileUploadModalComponent implements OnInit {
   title = "Faili üleslaadimine";
 
   uploadedFile?: FormData;
@@ -39,6 +41,11 @@ export class FileUploadModalComponent {
     [Validators.required]
   )
 
+  course: FormControl = new FormControl(
+    {value: '', disabled: false},
+    [Validators.required]
+  )
+
   fileTypes?: Array<any> = [
     {
       "type": DocumentType.MANUAL,
@@ -54,6 +61,8 @@ export class FileUploadModalComponent {
     },
   ]
 
+  courseList: Course[] = [];
+
   uploadFormGroup: FormGroup = this.initForm();
 
   constructor(public bsModalRef: BsModalRef,
@@ -62,17 +71,28 @@ export class FileUploadModalComponent {
               private manualService: ManualService,
               private sharedDataService: SharedDataService,
               private labelService: LabelService,
+              private courseService: CourseService,
               private alertBroker: AlertBroker) {
 
   }
 
+  ngOnInit() {
+    this.initCourseList();
+  }
+
+  initCourseList() {
+    this.courseService.getAllCourses().subscribe(res => {
+      this.courseList = res;
+    })
+  }
 
   initForm(): FormGroup {
     return new FormGroup({
       labels: this.labels,
       type: this.type,
       year: this.year,
-      file: this.file
+      file: this.file,
+      course: this.course
     })
   }
 
@@ -89,9 +109,12 @@ export class FileUploadModalComponent {
     this.addMetadata();
   }
 
-  addMetadata() {
-    this.uploadedFile?.append("labels", this.getSelectedLabels().join(","));
-    this.uploadedFile?.append("year", this.getSelectedYear())
+  private addMetadata() {
+    if (this.uploadedFile) {
+      this.uploadedFile.append("labels", this.getSelectedLabels().join(","));
+      this.uploadedFile.append("year", this.getSelectedYear());
+      this.uploadedFile.append("courseCode", this.getSelectedCourse());
+    }
   }
 
   submitFile() {
@@ -112,15 +135,19 @@ export class FileUploadModalComponent {
     return !this.uploadFormGroup.valid;
   }
 
-  getSelectedFileType(): string {
+  private getSelectedFileType(): string {
     return this.uploadFormGroup.get("type")?.value;
   }
 
-  getSelectedYear(): string {
+  private getSelectedYear(): string {
     return this.uploadFormGroup.get("year")?.value;
   }
 
-  getSelectedLabels(): string[] {
+  private getSelectedCourse(): string {
+    return this.uploadFormGroup.get("course")?.value;
+  }
+
+  private getSelectedLabels(): string[] {
     const inputLabels = this.uploadFormGroup.get("labels")?.value;
     if (inputLabels) {
       return inputLabels?.map((inputLabel: any) => inputLabel.value) || [];
