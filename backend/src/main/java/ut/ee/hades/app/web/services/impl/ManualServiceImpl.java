@@ -12,8 +12,8 @@ import ut.ee.hades.app.dao.entity.ManualEntity;
 import ut.ee.hades.app.dao.repository.CourseRepository;
 import ut.ee.hades.app.dao.repository.FileRepository;
 import ut.ee.hades.app.dao.repository.ManualRepository;
-import ut.ee.hades.app.enums.ExceptionCodeEnum;
-import ut.ee.hades.app.exceptions.system.HADESInvalidCourseException;
+import ut.ee.hades.app.enums.UiAlertEnum;
+import ut.ee.hades.app.exceptions.ui.UiAlertWarningException;
 import ut.ee.hades.app.util.DocumentUtils;
 import ut.ee.hades.app.web.model.dto.ManualDTO;
 import ut.ee.hades.app.web.services.ManualService;
@@ -40,13 +40,13 @@ public class ManualServiceImpl implements ManualService {
 
 
     @Override
-    public ManualDTO createManual(MultipartFile uploadedFile, Integer year, String courseCode) throws IOException, HADESInvalidCourseException {
+    public ManualDTO createManual(MultipartFile uploadedFile, Integer year, String courseCode) throws IOException {
         DocumentUtils.validateFileType(uploadedFile);
 
         CourseEntity courseEntity = courseRepository.findByCourseCode(courseCode);
 
         if (courseEntity == null) {
-            throw new HADESInvalidCourseException(ExceptionCodeEnum.INVALID_COURSE_ERROR.getName());
+            throw new UiAlertWarningException(UiAlertEnum.INVALID_COURSE_ERROR.getName());
         }
 
         ManualEntity manualEntity = new ManualEntity();

@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 import ut.ee.hades.app.dao.entity.ExerciseEntity;
 import ut.ee.hades.app.enums.DocumentTypeEnum;
 import ut.ee.hades.app.enums.ExceptionCodeEnum;
+import ut.ee.hades.app.enums.UiAlertEnum;
 import ut.ee.hades.app.exceptions.system.HADESConvertException;
+import ut.ee.hades.app.exceptions.ui.UiAlertDangerException;
 import ut.ee.hades.app.util.DocumentUtils;
 
 import java.io.IOException;
@@ -35,7 +37,7 @@ public class ExerciseDTO  {
             try {
                 exerciseDTOS.add(ExerciseDTO.map(exercise, DocumentUtils.getInputStream(exercise.getFile().getContent())));
             } catch (IOException e) {
-                throw new HADESConvertException(ExceptionCodeEnum.CONTENT_CONVERT_ERROR.getName());
+                throw new UiAlertDangerException(UiAlertEnum.CONTENT_CONVERSION_ERROR.getName());
             }
         });
 

@@ -9,7 +9,9 @@ import org.springframework.web.multipart.MultipartFile;
 import ut.ee.hades.app.dao.entity.*;
 import ut.ee.hades.app.dao.repository.*;
 import ut.ee.hades.app.enums.ExceptionCodeEnum;
+import ut.ee.hades.app.enums.UiAlertEnum;
 import ut.ee.hades.app.exceptions.system.HADESInvalidCourseException;
+import ut.ee.hades.app.exceptions.ui.UiAlertWarningException;
 import ut.ee.hades.app.util.DocumentUtils;
 import ut.ee.hades.app.web.model.dto.ExerciseDTO;
 import ut.ee.hades.app.web.services.ExerciseService;
@@ -47,7 +49,7 @@ public class ExerciseServiceImpl implements ExerciseService {
 
         CourseEntity courseEntity = courseRepository.findByCourseCode(courseCode);
         if (courseEntity == null) {
-            throw new HADESInvalidCourseException(ExceptionCodeEnum.INVALID_COURSE_ERROR.getName());
+            throw new UiAlertWarningException(UiAlertEnum.INVALID_COURSE_ERROR.getName());
         }
 
         ExerciseEntity exerciseEntity = new ExerciseEntity();

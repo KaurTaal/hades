@@ -42,7 +42,7 @@
 
     <div class="form-group">
       <label for="documentFile" [ngClass]="{'text-danger': documentFile.touched && !documentFile.valid}">Fail*</label>
-      <input type="file" class="form-control" id="documentFile" formControlName="file" (change)="documentFileSelected($event)" accept=".docx, .py" />
+      <input type="file" class="form-control" id="documentFile" formControlName="file" (change)="documentFileSelected($event)" accept=".docx" />
     </div>
 
     <div *ngIf="isFileExercise()" class="form-group">

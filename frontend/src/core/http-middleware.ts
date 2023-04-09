@@ -14,8 +14,7 @@ export class HttpMiddleware implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req)
       .pipe(catchError((error) => {
-        console.log(error)
-        this.alertBroker.add("Oops!", AlertType.DANGER);
+        this.alertBroker.add("Serveri sisene viga!", AlertType.DANGER);
         return throwError(() => error);
       }))
       .pipe(tap((response) => {
@@ -23,7 +22,6 @@ export class HttpMiddleware implements HttpInterceptor {
           if (response?.body?.responseType === 'ui-exception') {
             // @ts-ignore
             this.alertBroker.add(response.body.message, AlertType[response.body.type]);
-
             throw new Error("Interceptor consumed error");
           }
         }

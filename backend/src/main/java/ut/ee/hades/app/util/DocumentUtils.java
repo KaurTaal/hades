@@ -8,6 +8,7 @@ import org.jsoup.select.Elements;
 import org.springframework.web.multipart.MultipartFile;
 import org.zwobble.mammoth.DocumentConverter;
 import ut.ee.hades.app.dao.entity.FileEntity;
+import ut.ee.hades.app.enums.UiAlertEnum;
 import ut.ee.hades.app.exceptions.ui.UiAlertWarningException;
 
 import java.io.*;
@@ -31,7 +32,7 @@ public class DocumentUtils {
 
     public static void validateFileType(MultipartFile file) {
         if (AllowedMimeUtils.mimeMap.get(file.getContentType()) == null) {
-            throw new UiAlertWarningException("ExceptionCodeEnum.NOT_ALLOWED_FILE_TYPE");
+            throw new UiAlertWarningException(UiAlertEnum.NOT_ALLOWED_FILE_TYPE.getName());
         }
     }
 

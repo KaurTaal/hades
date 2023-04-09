@@ -121,11 +121,16 @@ export class FileUploadModalComponent implements OnInit {
   submitFile() {
     this.addData();
     if (DocumentType.MANUAL === this.getSelectedFileType()) {
-      this.manualService.createManual(this.formData).subscribe(res => this.sharedDataService.setUploadedManual(res));
-      this.alertBroker.add(SuccessResponse.MANUAL_SAVE_SUCCESS, AlertType.SUCCESS);
+      this.manualService.createManual(this.formData).subscribe(res => {
+        this.sharedDataService.setUploadedManual(res)
+        this.alertBroker.add(SuccessResponse.MANUAL_SAVE_SUCCESS, AlertType.SUCCESS);
+      });
     } else if (DocumentType.EXERCISE === this.getSelectedFileType()) {
-      this.exerciseService.createExercise(this.formData).subscribe(res => this.sharedDataService.setUploadedExercise(res));
-      this.alertBroker.add(SuccessResponse.EXERCISE_SAVE_SUCCESS, AlertType.SUCCESS);
+      this.exerciseService.createExercise(this.formData).subscribe(res => {
+          this.sharedDataService.setUploadedExercise(res)
+          this.alertBroker.add(SuccessResponse.EXERCISE_SAVE_SUCCESS, AlertType.SUCCESS);
+        }
+      );
     }
     this.bsModalRef.hide();
   }
