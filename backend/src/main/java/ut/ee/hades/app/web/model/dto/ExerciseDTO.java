@@ -25,6 +25,7 @@ public class ExerciseDTO  {
     private List<LabelDTO> labelDTOList;
     private Integer year;
     private CourseDTO courseDTO;
+    private SolutionDTO solutionDTO;
     private final String docType = DocumentTypeEnum.EXERCISE.getValue();
 
     public static List<ExerciseDTO> mapList (List<ExerciseEntity> exerciseEntities) {
@@ -46,10 +47,11 @@ public class ExerciseDTO  {
         exerciseDTO.setExerciseId(exerciseEntity.getExerciseId());
         exerciseDTO.setFileId(exerciseEntity.getFile().getFileId());
         exerciseDTO.setName(exerciseEntity.getFile().getName());
-        exerciseDTO.setContentHtml(DocumentUtils.convertToHtml(stream));
+        exerciseDTO.setContentHtml(DocumentUtils.convertDocumentContentToHtml(stream));
         exerciseDTO.setLabelDTOList(LabelDTO.mapList(exerciseEntity.getLabelEntityList()));
         exerciseDTO.setYear(exerciseEntity.getYear());
         exerciseDTO.setCourseDTO(CourseDTO.map(exerciseEntity.getCourseEntity()));
+        exerciseDTO.setSolutionDTO(SolutionDTO.map(exerciseEntity.getSolutionEntity()));
         return exerciseDTO;
     }
 }

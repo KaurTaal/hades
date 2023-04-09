@@ -11,7 +11,7 @@ public interface ExerciseService {
 
     List<ExerciseDTO> getAllExercises();
 
-    ExerciseDTO createExercise(MultipartFile uploadedFile, List<String> labels, Integer year, String courseCode) throws IOException, HADESInvalidCourseException;
+    ExerciseDTO createExercise(MultipartFile documentFile, List<String> labels, Integer year, String courseCode, MultipartFile solutionFile) throws IOException, HADESInvalidCourseException;
 
     void deleteExerciseById(Long exerciseId) throws IOException;
 

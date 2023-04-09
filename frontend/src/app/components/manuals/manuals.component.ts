@@ -69,7 +69,7 @@ export class ManualsComponent implements OnInit {
   }
 
   onDocumentSave(modifiedManual: Manual) {
-    this.documentService.getNewDocx(modifiedManual.contentHtml).subscribe(res => {
+    this.documentService.getNewDocxFile(modifiedManual.contentHtml).subscribe(res => {
       if (res.body) {
         let file = new File([res.body], modifiedManual.name, {type: MimeType.DOCX});
         let formData = new FormData();

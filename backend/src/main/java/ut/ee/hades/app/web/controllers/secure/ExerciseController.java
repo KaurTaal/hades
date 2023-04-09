@@ -27,8 +27,13 @@ public class ExerciseController {
     }
 
     @PostMapping(value = "/createExercise", consumes = "multipart/form-data")
-    public @ResponseBody ExerciseDTO createExercise(@RequestParam("file") MultipartFile multipartFile, @RequestParam("labels") List<String> labels, @RequestParam("year") Integer year, @RequestParam("courseCode") String courseCode) throws IOException, HADESInvalidCourseException {
-        return exerciseService.createExercise(multipartFile, labels, year, courseCode);
+    public @ResponseBody ExerciseDTO createExercise(@RequestParam("documentFile") MultipartFile documentFile,
+                                                    @RequestParam("labels") List<String> labels,
+                                                    @RequestParam("year") Integer year,
+                                                    @RequestParam("courseCode") String courseCode,
+                                                    @RequestParam(value = "solutionFile", required = false) MultipartFile solutionFile)
+            throws IOException, HADESInvalidCourseException {
+        return exerciseService.createExercise(documentFile, labels, year, courseCode, solutionFile);
     }
 
     @DeleteMapping(value = "/deleteExercise/{exerciseId}")

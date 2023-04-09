@@ -3,5 +3,5 @@
 export class DocumentType {
   static readonly MANUAL = "Juhend";
   static readonly EXERCISE = "Ülesanne";
-  static readonly PROGRAM = "Programm";
+  static readonly SOLUTION = "Näidislahendus";
 }

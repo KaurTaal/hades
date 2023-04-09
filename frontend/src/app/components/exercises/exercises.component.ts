@@ -8,6 +8,7 @@ import {SuccessResponse} from "../../classes/enums/SuccessResponse";
 import {DocumentToolbarComponent} from "../document-toolbar/document-toolbar.component";
 import {MimeType} from "../../classes/enums/MimeType";
 import {ExerciseService} from "../../services/exercise.service";
+import {Solution} from "../../classes/Solution";
 
 @Component({
   selector: 'hades-exercises',
@@ -69,16 +70,8 @@ export class ExercisesComponent implements OnInit {
   }
 
   onDocumentSave(modifiedExercise: Exercise) {
-    this.documentService.getNewDocx(modifiedExercise.contentHtml).subscribe(res => {
-      if (res.body) {
-        let file = new File([res.body], modifiedExercise.name, {type: MimeType.DOCX});
-        let formData = new FormData();
-        formData.append("file", file);
-        this.documentService.saveEditedFile(modifiedExercise.fileId, formData).subscribe(() => {
-          this.alertBroker.add(SuccessResponse.EXERCISE_EDIT_SUCCESS, AlertType.SUCCESS);
-        })
-      }
-    });
+    this.saveNewExerciseContent(modifiedExercise);
+    this.saveNewSolutionContent(modifiedExercise.solutionDTO);
   }
 
 
@@ -90,4 +83,29 @@ export class ExercisesComponent implements OnInit {
   }
 
 
+  private saveNewSolutionContent(solution: Solution) {
+    this.documentService.getNewPythonFile(solution.contentHtml).subscribe(res => {
+      if (res.body) {
+        let file = new File([res.body], solution.name, {type: MimeType.PYTHON});
+        let formData = new FormData();
+        formData.append("file", file);
+        this.documentService.saveEditedFile(solution.fileId, formData).subscribe(() => {
+          this.alertBroker.add(SuccessResponse.SOLUTION_EDIT_SUCCESS, AlertType.SUCCESS);
+        })
+      }
+    })
+  }
+
+  private saveNewExerciseContent(modifiedExercise: Exercise) {
+    this.documentService.getNewDocxFile(modifiedExercise.contentHtml).subscribe(res => {
+      if (res.body) {
+        let file = new File([res.body], modifiedExercise.name, {type: MimeType.DOCX});
+        let formData = new FormData();
+        formData.append("file", file);
+        this.documentService.saveEditedFile(modifiedExercise.fileId, formData).subscribe(() => {
+          this.alertBroker.add(SuccessResponse.EXERCISE_EDIT_SUCCESS, AlertType.SUCCESS);
+        })
+      }
+    });
+  }
 }

@@ -14,8 +14,15 @@ export class DocumentService {
     return this.http.put(`api/saveEditedFile/${fileId}`, file);
   }
 
-  getNewDocx(newContent: string): Observable<HttpResponse<Blob>> {
+  getNewDocxFile(newContent: string): Observable<HttpResponse<Blob>> {
     return this.http.post<Blob>(`api/getNewDocx`, newContent, {
+      observe: 'response',
+      responseType: 'blob' as 'json'
+    })
+  }
+
+  getNewPythonFile(newContent: string): Observable<HttpResponse<Blob>> {
+    return this.http.post<Blob>(`api/getNewPython`, newContent, {
       observe: 'response',
       responseType: 'blob' as 'json'
     })

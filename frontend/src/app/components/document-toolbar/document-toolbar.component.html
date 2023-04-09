@@ -1,6 +1,6 @@
 <div class="tool-bar-container">
   <div *ngIf="filterYearSelect" [ngClass]="{'filter-left-margin': filterYearSelect}" class="year-select">
-    <div class="btn-group year-select">
+    <div class="btn-group year-select ">
       <ngx-select
         [items]="yearList"
         [(ngModel)]="selectedYear"
@@ -41,16 +41,15 @@
       [settings]="dropdownSettings"
       [data]="labelList"
       [(ngModel)]="selectedLabels"
-
     ></ng-multiselect-dropdown>
   </div>
 
   <div class="action-btn-container">
     <div class="filter-left-margin">
-      <button class="btn btn-primary filter-btn" (click)="applyFilter()">
+      <button *ngIf="!isFilterActive" class="btn btn-primary filter-btn" (click)="applyFilter()">
         <i class="fa-solid fa-filter"></i>
       </button>
-      <button class="btn btn-primary filter-btn" (click)="emptyFilter()">
+      <button *ngIf="isFilterActive" class="btn btn-primary filter-btn" (click)="emptyFilter()">
         <i class="fa-solid fa-filter-circle-xmark"></i>
       </button>
     </div>

@@ -48,7 +48,7 @@ public class ManualDTO {
         manualDTO.setManualId(manualEntity.getManualId());
         manualDTO.setFileId(manualEntity.getFile().getFileId());
         manualDTO.setName(manualEntity.getFile().getName());
-        manualDTO.setContentHtml(DocumentUtils.convertToHtml(stream));
+        manualDTO.setContentHtml(DocumentUtils.convertDocumentContentToHtml(stream));
         manualDTO.setYear(manualEntity.getYear());
         manualDTO.setCourseDTO(CourseDTO.map(manualEntity.getCourseEntity()));
         return manualDTO;

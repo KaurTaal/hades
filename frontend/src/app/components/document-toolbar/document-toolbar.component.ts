@@ -55,6 +55,7 @@ export class DocumentToolbarComponent implements OnInit{
     noDataAvailablePlaceholderText: "Märksõnad on lisamata"
   };
 
+  isFilterActive: boolean = false;
 
   constructor(private modalService: BsModalService,
               private labelService: LabelService,
@@ -76,7 +77,7 @@ export class DocumentToolbarComponent implements OnInit{
 
 
   applyFilter() {
-    if (!this.isEmptyFilters()) {
+    if (!this.isFilterActive && !this.isEmptyFilters()) {
       this.filterDocumentsByTextSearch();
       this.filterDocumentsByLabel();
       this.filterDocumentsByYear();
@@ -84,8 +85,7 @@ export class DocumentToolbarComponent implements OnInit{
 
       this.sharedDataService.updateDocumentDisplayList(this.getCommonDocuments());
       this.resetFilteredLists();
-    } else {
-      this.emptyFilter();
+      this.isFilterActive = true;
     }
   }
 
@@ -97,6 +97,16 @@ export class DocumentToolbarComponent implements OnInit{
 
     this.sharedDataService.updateDocumentDisplayList(this.documentDisplayList);
     this.resetFilteredLists();
+    this.isFilterActive = false;
+  }
+
+  private isEmptyFilters(): boolean {
+    const noLabelSelected: boolean = this.selectedLabels.length === 0;
+    const noNameSearch: boolean = this.selectedNameSearch === '';
+    const noYearSelect: boolean = this.selectedYear === 0 || this.selectedYear === null;
+    const noCourseSelect: boolean = this.selectedCourseName === "";
+
+    return noLabelSelected && noNameSearch && noYearSelect && noCourseSelect;
   }
 
   private initDocumentNameList() {
@@ -149,15 +159,6 @@ export class DocumentToolbarComponent implements OnInit{
       }
     }
     return false;
-  }
-
-  private isEmptyFilters(): boolean {
-    const noLabelSelected: boolean = this.selectedLabels.length === 0;
-    const noNameSearch: boolean = this.selectedNameSearch === '';
-    const noYearSelect: boolean = this.selectedYear === 0 || this.selectedYear === null;
-    const noCourseSelect: boolean = this.selectedCourseName === "";
-
-    return noLabelSelected && noNameSearch && noYearSelect && noCourseSelect;
   }
 
   private getCommonDocuments(): BaseDocument[] {

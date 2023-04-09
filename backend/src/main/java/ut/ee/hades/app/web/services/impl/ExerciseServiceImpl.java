@@ -6,14 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
-import ut.ee.hades.app.dao.entity.CourseEntity;
-import ut.ee.hades.app.dao.entity.ExerciseEntity;
-import ut.ee.hades.app.dao.entity.FileEntity;
-import ut.ee.hades.app.dao.entity.LabelEntity;
-import ut.ee.hades.app.dao.repository.CourseRepository;
-import ut.ee.hades.app.dao.repository.FileRepository;
-import ut.ee.hades.app.dao.repository.ExerciseRepository;
-import ut.ee.hades.app.dao.repository.LabelRepository;
+import ut.ee.hades.app.dao.entity.*;
+import ut.ee.hades.app.dao.repository.*;
 import ut.ee.hades.app.enums.ExceptionCodeEnum;
 import ut.ee.hades.app.exceptions.system.HADESInvalidCourseException;
 import ut.ee.hades.app.util.DocumentUtils;
@@ -31,6 +25,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Slf4j
 public class ExerciseServiceImpl implements ExerciseService {
+    private final SolutionRepository solutionRepository;
 
     private final FileRepository fileRepository;
 
@@ -47,17 +42,16 @@ public class ExerciseServiceImpl implements ExerciseService {
     }
 
     @Override
-    public ExerciseDTO createExercise(MultipartFile uploadedFile, List<String> labels, Integer year, String courseCode) throws IOException, HADESInvalidCourseException {
-        DocumentUtils.validateFileType(uploadedFile);
+    public ExerciseDTO createExercise(MultipartFile documentFile, List<String> labels, Integer year, String courseCode, MultipartFile solutionFile) throws IOException, HADESInvalidCourseException {
+        DocumentUtils.validateFileType(documentFile);
 
         CourseEntity courseEntity = courseRepository.findByCourseCode(courseCode);
-
         if (courseEntity == null) {
             throw new HADESInvalidCourseException(ExceptionCodeEnum.INVALID_COURSE_ERROR.getName());
         }
 
         ExerciseEntity exerciseEntity = new ExerciseEntity();
-        FileEntity fileEntity = DocumentUtils.prepareFileSave(uploadedFile);
+        FileEntity fileEntity = DocumentUtils.prepareFileSave(documentFile);
         exerciseEntity.setFile(fileEntity);
         exerciseEntity.setYear(year);
         exerciseEntity.setCourseEntity(courseEntity);
@@ -71,7 +65,12 @@ public class ExerciseServiceImpl implements ExerciseService {
         log.info("File {} created", fileEntity);
         log.info("Exercise {} created", exerciseEntity);
 
-        return ExerciseDTO.map(exerciseEntity, uploadedFile.getInputStream());
+
+        if (solutionFile != null) {
+            handleSolutionFileSave(exerciseEntity, solutionFile);
+        }
+
+        return ExerciseDTO.map(exerciseEntity, documentFile.getInputStream());
     }
 
     @Override
@@ -103,4 +102,18 @@ public class ExerciseServiceImpl implements ExerciseService {
         return exerciseLabels;
     }
 
+    private void handleSolutionFileSave(ExerciseEntity exercise, MultipartFile solutionFile) throws IOException {
+        DocumentUtils.validateFileType(solutionFile);
+
+        SolutionEntity solutionEntity = new SolutionEntity();
+        FileEntity fileEntity = DocumentUtils.prepareFileSave(solutionFile);
+
+        solutionEntity.setFile(fileEntity);
+        solutionEntity.setExerciseEntity(exercise);
+        exercise.setSolutionEntity(solutionEntity);
+
+        fileRepository.save(fileEntity);
+        solutionRepository.save(solutionEntity);
+        exerciseRepository.save(exercise);
+    }
 }
