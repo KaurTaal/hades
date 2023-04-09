@@ -29,7 +29,7 @@ public class ManualController {
 
 
     @PostMapping(value = "/createManual", consumes = "multipart/form-data")
-    public @ResponseBody ManualDTO saveManual(@RequestParam("file") MultipartFile multipartFile, @RequestParam("year") Integer year,  @RequestParam("courseCode") String courseCode) throws IOException, HADESInvalidCourseException {
+    public @ResponseBody ManualDTO saveManual(@RequestParam("documentFile") MultipartFile multipartFile, @RequestParam("year") Integer year,  @RequestParam("courseCode") String courseCode) throws IOException, HADESInvalidCourseException {
         return manualService.createManual(multipartFile, year, courseCode);
     }
 

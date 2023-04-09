@@ -11,8 +11,8 @@ public enum DocumentTypeEnum {
 
 
     MANUAL("Juhend"),
-    PROGRAM("Programm"),
-    EXERCISE("Ülesanne");
+    EXERCISE("Ülesanne"),
+    SOLUTION("Näidislahendus");
 
     private final String value;
 

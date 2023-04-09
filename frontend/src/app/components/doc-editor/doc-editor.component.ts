@@ -4,6 +4,8 @@ import {DocumentService} from "../../services/document.service";
 import {environment} from "../../../environments/environment";
 import {BaseDocument} from "../../classes/BaseDocument";
 import {Course} from "../../classes/Course";
+import {DocumentType} from "../../classes/enums/DocumentType";
+import {Exercise} from "../../classes/Exercise";
 
 @Component({
   selector: 'hades-doc-editor',
@@ -18,6 +20,8 @@ export class DocEditorComponent implements OnInit {
   @Input()
   document: BaseDocument = new BaseDocument(-1, "", "", "", -1, new Course("", ""));
   editorContent: string = '';
+  activeEditorTab: DocumentType = DocumentType.EXERCISE;
+  isExerciseDocument: boolean = false;
 
   readonly editorConfig = {
     plugins: 'code link image table codesample autoresize',
@@ -43,11 +47,17 @@ export class DocEditorComponent implements OnInit {
 
 
   ngOnInit() {
-    this.editorContent = this.document.contentHtml!;
+    this.editorContent = this.document.contentHtml;
+    this.isExerciseDocument = this.document.docType === DocumentType.EXERCISE;
   }
 
   saveDocument(document: BaseDocument) {
-    document.contentHtml = this.editorContent;
+    if (DocumentType.SOLUTION === this.activeEditorTab) {
+      const documentAsExercise: Exercise = this.document as Exercise;
+      documentAsExercise.solutionDTO.contentHtml = this.editorContent;
+    } else {
+      this.document.contentHtml = this.editorContent;
+    }
     this.modifiedDocument.emit(document);
   }
 
@@ -55,12 +65,28 @@ export class DocEditorComponent implements OnInit {
     this.deletedDocument.emit(document);
   }
 
-  downloadDocumentByFileId(document: BaseDocument) {
-    if (document.fileId) {
+  downloadDocument(document: BaseDocument) {
+    if (DocumentType.EXERCISE === this.activeEditorTab && document.fileId) {
       this.downloadService.downloadFile(document.fileId);
+    }
+    if (DocumentType.SOLUTION === this.activeEditorTab) {
+      const documentAsExercise: Exercise = this.document as Exercise;
+      if (documentAsExercise.solutionDTO && documentAsExercise.solutionDTO.fileId) {
+        this.downloadService.downloadFile(documentAsExercise.solutionDTO.fileId);
+      }
     }
   }
 
+  toggleSolutionTab() {
+    this.activeEditorTab = DocumentType.SOLUTION;
+    let activeDocument: Exercise = this.document as Exercise;
+    this.editorContent = activeDocument.solutionDTO.contentHtml;
+  }
+
+  toggleExerciseTab() {
+    this.activeEditorTab = DocumentType.EXERCISE;
+    this.editorContent = this.document.contentHtml;
+  }
 
   getEditorAPIKey(): string {
     return environment.EDITOR_API_KEY;

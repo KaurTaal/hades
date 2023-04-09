@@ -21,7 +21,7 @@ import {Course} from "../../classes/Course";
 export class FileUploadModalComponent implements OnInit {
   title = "Faili üleslaadimine";
 
-  uploadedFile?: FormData;
+  formData: FormData = new FormData();
 
   labels: FormControl = new FormControl(
     {value: '', disabled: false}
@@ -36,7 +36,7 @@ export class FileUploadModalComponent implements OnInit {
     {value: this.getCurrentYear(), disabled: false}
   )
 
-  file: FormControl = new FormControl(
+  documentFile: FormControl = new FormControl(
     {value: '', disabled: false},
     [Validators.required]
   )
@@ -44,6 +44,10 @@ export class FileUploadModalComponent implements OnInit {
   course: FormControl = new FormControl(
     {value: '', disabled: false},
     [Validators.required]
+  )
+
+  solutionFile: FormControl = new FormControl(
+    {value: '', disabled: false},
   )
 
   fileTypes?: Array<any> = [
@@ -54,11 +58,7 @@ export class FileUploadModalComponent implements OnInit {
     {
       "type": DocumentType.EXERCISE,
       "description": DocumentType.EXERCISE,
-    },
-    {
-      "type": DocumentType.PROGRAM,
-      "description": DocumentType.PROGRAM,
-    },
+    }
   ]
 
   courseList: Course[] = [];
@@ -91,41 +91,41 @@ export class FileUploadModalComponent implements OnInit {
       labels: this.labels,
       type: this.type,
       year: this.year,
-      file: this.file,
-      course: this.course
+      file: this.documentFile,
+      course: this.course,
+      solutionFile: this.solutionFile,
     })
   }
 
 
-  isFileWithLabels() {
-    return this.getSelectedFileType() === DocumentType.EXERCISE;
+  isFileExercise() {
+    return DocumentType.EXERCISE === this.getSelectedFileType();
   }
 
-  fileSelected(event: any) {
+  solutionFileSelected(event: any) {
     const file: File = event.target.files[0];
-    const formData = new FormData();
-    formData.append('file', file);
-    this.uploadedFile = formData;
-    this.addMetadata();
+    this.formData.append('solutionFile', file);
   }
 
-  private addMetadata() {
-    if (this.uploadedFile) {
-      this.uploadedFile.append("labels", this.getSelectedLabels().join(","));
-      this.uploadedFile.append("year", this.getSelectedYear());
-      this.uploadedFile.append("courseCode", this.getSelectedCourse());
-    }
+  documentFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    this.formData.append('documentFile', file);
+  }
+
+  private addData() {
+    this.formData.append("labels", this.getSelectedLabels().join(","));
+    this.formData.append("year", this.getSelectedYear());
+    this.formData.append("courseCode", this.getSelectedCourse());
   }
 
   submitFile() {
-    if (this.uploadedFile && this.getSelectedFileType) {
-      if (this.getSelectedFileType() === DocumentType.MANUAL) {
-        this.manualService.createManual(this.uploadedFile).subscribe(res => this.sharedDataService.setUploadedManual(res));
-        this.alertBroker.add(SuccessResponse.MANUAL_SAVE_SUCCESS, AlertType.SUCCESS);
-      } else if (this.getSelectedFileType() === DocumentType.EXERCISE) {
-        this.exerciseService.createExercise(this.uploadedFile).subscribe(res => this.sharedDataService.setUploadedExercise(res));
-        this.alertBroker.add(SuccessResponse.EXERCISE_SAVE_SUCCESS, AlertType.SUCCESS);
-      }
+    this.addData();
+    if (DocumentType.MANUAL === this.getSelectedFileType()) {
+      this.manualService.createManual(this.formData).subscribe(res => this.sharedDataService.setUploadedManual(res));
+      this.alertBroker.add(SuccessResponse.MANUAL_SAVE_SUCCESS, AlertType.SUCCESS);
+    } else if (DocumentType.EXERCISE === this.getSelectedFileType()) {
+      this.exerciseService.createExercise(this.formData).subscribe(res => this.sharedDataService.setUploadedExercise(res));
+      this.alertBroker.add(SuccessResponse.EXERCISE_SAVE_SUCCESS, AlertType.SUCCESS);
     }
     this.bsModalRef.hide();
   }

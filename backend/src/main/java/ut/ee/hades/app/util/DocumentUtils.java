@@ -11,6 +11,7 @@ import ut.ee.hades.app.dao.entity.FileEntity;
 import ut.ee.hades.app.exceptions.ui.UiAlertWarningException;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class DocumentUtils {
 
@@ -34,7 +35,7 @@ public class DocumentUtils {
         }
     }
 
-    public static String convertToHtml(InputStream stream) throws IOException {
+    public static String convertDocumentContentToHtml(InputStream stream) throws IOException {
         DocumentConverter converter = new DocumentConverter();
         return converter.convertToHtml(stream).getValue();
     }
@@ -78,5 +79,21 @@ public class DocumentUtils {
             return outputStream.toByteArray();
         }
 
+    }
+
+    public static String convertPythonToHtml(byte[] content) {
+        String python = new String(content, StandardCharsets.UTF_8);
+
+        python = "<pre class=\"language-python\"><code>" + python + "</code></pre>";
+        return python;
+    }
+
+    public static byte[] convertHtmlToPython(String contentHtml) {
+        contentHtml = removeHtmlTags(contentHtml);
+        return contentHtml.getBytes(StandardCharsets.UTF_8);
+    }
+
+    private static String removeHtmlTags(String html) {
+        return html.replaceAll("<[^>]*+>", "");
     }
 }

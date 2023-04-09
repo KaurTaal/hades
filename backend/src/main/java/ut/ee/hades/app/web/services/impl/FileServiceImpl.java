@@ -58,8 +58,13 @@ public class FileServiceImpl implements FileService {
 
 
     @Override
-    public byte[] getNewDocx(String content) throws IOException {
+    public byte[] getNewDocxFile(String content) throws IOException {
         return DocumentUtils.convertHtmlToDocx(content);
+    }
+
+    @Override
+    public byte[] getNewPythonFile(String content) {
+        return DocumentUtils.convertHtmlToPython(content);
     }
 
 

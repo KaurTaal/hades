@@ -26,8 +26,13 @@ public class FileController {
     }
 
     @PostMapping(path = "/getNewDocx")
-    public @ResponseBody byte[] getNewDocx(@RequestBody String modifiedContent) throws IOException {
-        return fileService.getNewDocx(modifiedContent);
+    public @ResponseBody byte[] getNewDocxFile(@RequestBody String modifiedContent) throws IOException {
+        return fileService.getNewDocxFile(modifiedContent);
+    }
+
+    @PostMapping(path = "/getNewPython")
+    public @ResponseBody byte[] getNewPythonFile(@RequestBody String modifiedContent) {
+        return fileService.getNewPythonFile(modifiedContent);
     }
 
     @PutMapping(path = "/saveEditedFile/{fileId}", consumes = "multipart/form-data")

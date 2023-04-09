@@ -20,7 +20,7 @@
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
 
   button {
     background-color: transparent;
@@ -120,19 +120,22 @@ button {
 
 /* Label select */
 .label-select {
-  background-color: white;
   border-radius: 0.3rem;
+  min-width: 15rem;
+
   &:hover {
     box-shadow: $hover-effect;
     transition: $hover-effect-transition;
   }
 }
 :host ::ng-deep .multiselect-dropdown .dropdown-btn {
-  border: unset !important;
   padding: 6px 24px 6px 12px !important;
+  background-color: whitesmoke !important;
+  border-color: #ced4da !important;
 }
 
 ::ng-deep .mat-typography {
   font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: unset;
+  color: #6c757d;
 }

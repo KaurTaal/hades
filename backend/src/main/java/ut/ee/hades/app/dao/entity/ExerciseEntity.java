@@ -31,4 +31,8 @@ public class ExerciseEntity {
     @JoinColumn(name = "course_code")
     private CourseEntity courseEntity;
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JoinColumn(name = "solution_id")
+    private SolutionEntity solutionEntity;
+
 }

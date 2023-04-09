@@ -14,6 +14,8 @@ public interface FileService {
 
     ResponseEntity<Resource> downloadFileById(Long docId) throws HADESFileDownloadException;
 
-    byte[] getNewDocx(String modifiedContent) throws IOException;
+    byte[] getNewDocxFile(String modifiedContent) throws IOException;
+
+    byte[] getNewPythonFile(String modifiedContent);
 
 }
