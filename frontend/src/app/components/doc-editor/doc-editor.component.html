@@ -1,27 +1,58 @@
 <div class="document-editor-container">
 
   <div class=" btn-container">
-    <div *ngIf="isExerciseDocument"  class="type-select">
+    <div *ngIf="isExerciseDocument" class="type-select">
       <tabset type="pills">
         <tab heading="Ülesanne" (selectTab)="toggleExerciseTab()"></tab>
         <tab heading="Näidislahendus" (selectTab)="toggleSolutionTab()"></tab>
-        <tab heading="Automaatkontroll"></tab>
+        <tab heading="Automaatkontroll" (selectTab)="toggleTestSuiteTab()"></tab>
       </tabset>
     </div>
 
     <div class="action-btn-group">
-      <button class="btn btn-primary save-btn" (click)="saveDocument(document)">Salvesta <i class="fa-solid fa-floppy-disk"></i></button>
-      <button class="btn btn-primary export-btn" (click)="downloadDocument(document)">Lae alla <i class="fa-solid fa-file-export"></i></button>
-      <button class="btn btn-primary delete-btn" (click)="deleteDocument(document)">Kustuta <i class="fa-solid fa-trash"></i></button>
+      <button *ngIf="isTestSuiteTabActive" class="btn btn-primary add-btn" (click)="newTestSuite(document)">Lisa uus <i
+        class="fa-solid fa-plus"></i></button>
+      <button class="btn btn-primary save-btn" (click)="saveDocument(document)">Salvesta <i
+        class="fa-solid fa-floppy-disk"></i></button>
+      <button class="btn btn-primary export-btn" (click)="downloadDocument(document)">Lae alla <i
+        class="fa-solid fa-file-export"></i></button>
+      <button class="btn btn-primary delete-btn" (click)="deleteDocument(document)">Kustuta <i
+        class="fa-solid fa-trash"></i></button>
     </div>
 
   </div>
 
+  <hr>
 
-  <editor
-    [(ngModel)]="editorContent"
-    [init]="editorConfig"
-    apiKey="{{getEditorAPIKey()}}"
-  ></editor>
+  <ng-container *ngIf="isMainTabActive">
+    <editor
+      [(ngModel)]="document.contentHtml"
+      [init]="mainTabEditorConfig"
+      apiKey="{{getEditorAPIKey()}}"
+    ></editor>
+  </ng-container>
+
+  <ng-container *ngIf="isSolutionTabActive">
+    <editor
+      [(ngModel)]="documentAsExercise.solutionDTO.contentHtml"
+      [init]="solutionAndTestSuiteEditorConfig"
+      apiKey="{{getEditorAPIKey()}}"
+    ></editor>
+  </ng-container>
+
+  <ng-container *ngIf="isTestSuiteTabActive">
+    <div class="test-suite-container" *ngFor="let testSuite of documentAsExercise.testSuiteDTOList">
+      <div class="test-suite-btn-group">
+        <button *ngIf="isTestSuiteTabActive" class="btn btn-primary add-btn">Kustuta kontroll <i class="fa-solid fa-trash"></i></button>
+      </div>
+      <editor
+        [(ngModel)]="testSuite.contentHtml"
+        [init]="solutionAndTestSuiteEditorConfig"
+        apiKey="{{getEditorAPIKey()}}"
+      ></editor>
+      <br>
+    </div>
+  </ng-container>
+
 
 </div>

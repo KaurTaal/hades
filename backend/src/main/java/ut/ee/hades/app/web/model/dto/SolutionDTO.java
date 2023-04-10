@@ -19,12 +19,15 @@ public class SolutionDTO {
 
 
     public static SolutionDTO map(SolutionEntity solutionEntity) {
-        SolutionDTO solutionDTO = new SolutionDTO();
-        solutionDTO.setSolutionId(solutionEntity.getSolutionId());
-        solutionDTO.setExerciseId(solutionEntity.getExerciseEntity().getExerciseId());
-        solutionDTO.setFileId(solutionEntity.getFile().getFileId());
-        solutionDTO.setContentHtml(DocumentUtils.convertPythonToHtml(solutionEntity.getFile().getContent()));
-        solutionDTO.setName(solutionEntity.getFile().getName());
-        return solutionDTO;
+        if (solutionEntity != null) {
+            SolutionDTO solutionDTO = new SolutionDTO();
+            solutionDTO.setSolutionId(solutionEntity.getSolutionId());
+            solutionDTO.setExerciseId(solutionEntity.getExerciseEntity().getExerciseId());
+            solutionDTO.setFileId(solutionEntity.getFile().getFileId());
+            solutionDTO.setContentHtml(DocumentUtils.convertPythonToHtml(solutionEntity.getFile().getContent()));
+            solutionDTO.setName(solutionEntity.getFile().getName());
+            return solutionDTO;
+        }
+        return new SolutionDTO();
     }
 }

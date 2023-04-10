@@ -36,6 +36,7 @@ public class FileServiceImpl implements FileService {
             FileEntity fileEntity = fileById.get();
             fileEntity.setContent(modifiedFile.getBytes());
             fileEntity.setSize(modifiedFile.getSize());
+            fileEntity.setName(modifiedFile.getOriginalFilename());
             fileRepository.save(fileEntity);
         } else {
             throw new UiAlertDangerException(UiAlertEnum.FILE_SAVE_ERROR.getName());

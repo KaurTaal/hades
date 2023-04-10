@@ -50,7 +50,11 @@ export class FileUploadModalComponent implements OnInit {
     {value: '', disabled: false},
   )
 
-  fileTypes?: Array<any> = [
+  testSuiteFiles: FormControl = new FormControl(
+    {value: '', disabled: false}
+  )
+
+  fileTypes: Array<any> = [
     {
       "type": DocumentType.MANUAL,
       "description": DocumentType.MANUAL,
@@ -94,12 +98,20 @@ export class FileUploadModalComponent implements OnInit {
       file: this.documentFile,
       course: this.course,
       solutionFile: this.solutionFile,
+      testSuiteFiles: this.testSuiteFiles,
     })
   }
 
 
   isFileExercise() {
     return DocumentType.EXERCISE === this.getSelectedFileType();
+  }
+
+  testSuiteFilesSelected(event: any) {
+    const files: File[] = event.target.files;
+    for (let file of files) {
+      this.formData.append("testSuiteFiles[]", file);
+    }
   }
 
   solutionFileSelected(event: any) {

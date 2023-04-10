@@ -6,4 +6,5 @@ export class SuccessResponse {
   static readonly EXERCISE_EDIT_SUCCESS = "Ülesande muudatused salvestatud!";
   static readonly MANUAL_EDIT_SUCCESS = "Juhendi muudatused salvestatud!";
   static readonly SOLUTION_EDIT_SUCCESS = "Näidislahenduse muudatused salvestatud!";
+  static readonly TEST_SUITE_EDIT_SUCCESS = "Automaatkontrolli muudatused salvestatud!";
 }

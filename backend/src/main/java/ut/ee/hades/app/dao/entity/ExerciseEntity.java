@@ -35,4 +35,8 @@ public class ExerciseEntity {
     @JoinColumn(name = "solution_id")
     private SolutionEntity solutionEntity;
 
+    @OneToMany(mappedBy = "exerciseEntity", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<TestSuiteEntity> testSuiteEntityList;
+
+
 }

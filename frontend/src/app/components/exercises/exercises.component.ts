@@ -9,6 +9,7 @@ import {DocumentToolbarComponent} from "../document-toolbar/document-toolbar.com
 import {MimeType} from "../../classes/enums/MimeType";
 import {ExerciseService} from "../../services/exercise.service";
 import {Solution} from "../../classes/Solution";
+import {TestSuite} from "../../classes/TestSuite";
 
 @Component({
   selector: 'hades-exercises',
@@ -72,6 +73,7 @@ export class ExercisesComponent implements OnInit {
   onDocumentSave(modifiedExercise: Exercise) {
     this.saveNewExerciseContent(modifiedExercise);
     this.saveNewSolutionContent(modifiedExercise.solutionDTO);
+    this.saveNewTestSuiteContents(modifiedExercise.testSuiteDTOList);
   }
 
 
@@ -94,6 +96,21 @@ export class ExercisesComponent implements OnInit {
         })
       }
     })
+  }
+
+  private saveNewTestSuiteContents(testSuites: TestSuite[]) {
+    for (let testSuite of testSuites) {
+      this.documentService.getNewPythonFile(testSuite.contentHtml).subscribe(res => {
+        if (res.body) {
+          let file = new File([res.body], testSuite.name, {type: MimeType.PYTHON});
+          let formData = new FormData();
+          formData.append("file", file);
+          this.documentService.saveEditedFile(testSuite.fileId, formData).subscribe(() => {
+            this.alertBroker.add(SuccessResponse.TEST_SUITE_EDIT_SUCCESS, AlertType.SUCCESS);
+          })
+        }
+      })
+    }
   }
 
   private saveNewExerciseContent(modifiedExercise: Exercise) {

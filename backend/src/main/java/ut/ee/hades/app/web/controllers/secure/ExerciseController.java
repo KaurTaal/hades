@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ut.ee.hades.app.exceptions.system.HADESInvalidCourseException;
 import ut.ee.hades.app.web.model.dto.ExerciseDTO;
 import ut.ee.hades.app.web.services.ExerciseService;
 
@@ -27,13 +26,14 @@ public class ExerciseController {
     }
 
     @PostMapping(value = "/createExercise", consumes = "multipart/form-data")
-    public @ResponseBody ExerciseDTO createExercise(@RequestParam("documentFile") MultipartFile documentFile,
-                                                    @RequestParam("labels") List<String> labels,
-                                                    @RequestParam("year") Integer year,
-                                                    @RequestParam("courseCode") String courseCode,
-                                                    @RequestParam(value = "solutionFile", required = false) MultipartFile solutionFile)
-            throws IOException, HADESInvalidCourseException {
-        return exerciseService.createExercise(documentFile, labels, year, courseCode, solutionFile);
+    public @ResponseBody ExerciseDTO createExercise(@RequestParam(value = "documentFile") MultipartFile documentFile,
+                                                    @RequestParam(value = "labels") List<String> labels,
+                                                    @RequestParam(value = "year") Integer year,
+                                                    @RequestParam(value = "courseCode") String courseCode,
+                                                    @RequestParam(value = "solutionFile", required = false) MultipartFile solutionFile,
+                                                    @RequestParam(value = "testSuiteFiles[]", required = false) List<MultipartFile> testSuiteFiles)
+            throws IOException {
+        return exerciseService.createExercise(documentFile, labels, year, courseCode, solutionFile, testSuiteFiles);
     }
 
     @DeleteMapping(value = "/deleteExercise/{exerciseId}")
