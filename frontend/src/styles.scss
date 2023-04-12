@@ -50,3 +50,54 @@ body {
     transition: $hover-effect-transition !important;
   }
 }
+
+
+.heading {
+  padding-top: 0.5rem;
+}
+
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 0.5rem;
+  gap: 1rem;
+}
+
+
+.submit-btn {
+  width: 25%;
+  margin-left: auto;
+  color: $text-color !important;
+  border-color: transparent !important;
+  border-radius: 0.5rem;
+  background-color: $action-btn-bg !important;
+
+  &:hover {
+    background-color: $action-btn-bg;
+    color: $text-color;
+    border-color: transparent;
+    box-shadow: $hover-effect;
+  }
+}
+
+
+.form-group.required .control-label:after {
+  color: red;
+}
+
+
+.name-field {
+  background-color: unset;
+  border: unset;
+  cursor: pointer;
+
+  &:disabled {
+    color: $text-color;
+  }
+
+  &:focus {
+    outline: solid dimgray;
+    border-radius: 0.2rem;
+  }
+}

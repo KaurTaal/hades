@@ -12,6 +12,7 @@ public enum DocumentTypeEnum {
 
     MANUAL("Juhend"),
     EXERCISE("Ülesanne"),
+    TEST_SUITE("Automaatkontroll"),
     SOLUTION("Näidislahendus");
 
     private final String value;

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, HostListener, Input, Output, QueryList, ViewChildren} from '@angular/core';
 import {DocumentType} from "../../classes/enums/DocumentType";
 import {BaseDocument} from "../../classes/BaseDocument";
 import {Manual} from "../../classes/Manual";
@@ -10,6 +10,8 @@ import {Exercise} from "../../classes/Exercise";
   styleUrls: ['./document-list.component.scss']
 })
 export class DocumentListComponent {
+  @ViewChildren("nameInput")
+  nameInputs!: QueryList<ElementRef>;
   @Output()
   modifiedManual = new EventEmitter<Manual>();
   @Output()
@@ -20,15 +22,16 @@ export class DocumentListComponent {
   deletedExercise = new EventEmitter<Exercise>();
   @Input()
   documents?: BaseDocument[];
-  public oneAtATime: boolean = true;
+  oneAtATime: boolean = true;
+  isEditNameDisabled: boolean = true;
 
 
   documentDeleteEvent(deletedDoc: BaseDocument) {
     if (deletedDoc) {
-      if (deletedDoc.docType === DocumentType.MANUAL) {
+      if (DocumentType.MANUAL === deletedDoc.docType) {
         this.deletedManual.emit(deletedDoc as Manual);
       }
-      if (deletedDoc.docType === DocumentType.EXERCISE) {
+      if (DocumentType.EXERCISE === deletedDoc.docType) {
         this.deletedExercise.emit(deletedDoc as Exercise);
       }
     }
@@ -36,11 +39,48 @@ export class DocumentListComponent {
 
   documentSaveEvent(modifiedDoc: BaseDocument) {
     if (modifiedDoc) {
-      if (modifiedDoc.docType === DocumentType.MANUAL) {
+      if (DocumentType.MANUAL === modifiedDoc.docType) {
         this.modifiedManual.emit(modifiedDoc as Manual);
       }
-      if (modifiedDoc.docType === DocumentType.EXERCISE) {
+      if (DocumentType.EXERCISE === modifiedDoc.docType) {
         this.modifiedExercise.emit(modifiedDoc as Exercise);
+      }
+    }
+  }
+
+
+  editDocumentName(event: any, index: number) {
+    event.stopPropagation();
+
+    this.isEditNameDisabled = false;
+    const nameInput = this.nameInputs.toArray()[index].nativeElement as HTMLInputElement;
+    setTimeout(() => nameInput.focus());
+
+    document.addEventListener('click', this.handleClickOutside);
+  }
+
+  handleClickOutside = (event: MouseEvent) => {
+    const nameInputs = this.nameInputs.toArray();
+    for (const element of nameInputs) {
+      const nameInput = element.nativeElement as HTMLInputElement;
+      if (!nameInput.contains(event.target as Node)) {
+        this.isEditNameDisabled = true;
+        nameInput.blur();
+        document.removeEventListener('click', this.handleClickOutside);
+      }
+    }
+  }
+
+  @HostListener('document:keydown.enter')
+  onEnterKey() {
+    const nameInputs = this.nameInputs.toArray();
+    for (const element of nameInputs) {
+      const nameInput = element.nativeElement as HTMLInputElement;
+      if (!nameInput.disabled) {
+        this.isEditNameDisabled = true;
+        nameInput.blur();
+        document.removeEventListener('click', this.handleClickOutside);
+        break;
       }
     }
   }

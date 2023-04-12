@@ -3,6 +3,7 @@ package ut.ee.hades.app.web.model.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.util.CollectionUtils;
 import ut.ee.hades.app.dao.entity.ExerciseEntity;
 import ut.ee.hades.app.dao.entity.LabelEntity;
 import ut.ee.hades.app.util.DocumentUtils;
@@ -22,7 +23,7 @@ public class LabelDTO {
     public static List<LabelDTO> mapList (List<LabelEntity> labelEntityList) {
         List<LabelDTO> labelDTOList = new LinkedList<>();
 
-        if (labelEntityList != null) {
+        if (!CollectionUtils.isEmpty(labelEntityList)) {
             labelEntityList.forEach(label -> labelDTOList.add(LabelDTO.map(label)));
         }
 

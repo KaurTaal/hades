@@ -3,6 +3,8 @@ import {BehaviorSubject, Observable, Subject} from "rxjs";
 import {Exercise} from "../classes/Exercise";
 import {Manual} from "../classes/Manual";
 import {BaseDocument} from "../classes/BaseDocument";
+import {TestSuite} from "../classes/TestSuite";
+import {Solution} from "../classes/Solution";
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +14,8 @@ export class SharedDataService {
   private uploadedManual: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   private documentDisplayList: Subject<BaseDocument[]> = new Subject<BaseDocument[]>();
   private filteredDocumentList: BehaviorSubject<BaseDocument[]> = new BehaviorSubject<BaseDocument[]>([]);
+  private addedTestSuite: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  private addedSolution: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
 
   updateDocumentDisplayListForToolbar(documents: BaseDocument[]) {
@@ -58,5 +62,22 @@ export class SharedDataService {
     this.uploadedExercise.subscribe(() => {
       callback();
     });
+  }
+
+
+  setAddedTestSuite(data: TestSuite | null) {
+    this.addedTestSuite.next(data);
+  }
+
+  getAddedTestSuite(): Observable<TestSuite> {
+    return this.addedTestSuite.asObservable();
+  }
+
+  setAddedSolution(data: Solution | null) {
+    this.addedSolution.next(data);
+  }
+
+  getAddedSolution(): Observable<Solution> {
+    return this.addedSolution.asObservable();
   }
 }

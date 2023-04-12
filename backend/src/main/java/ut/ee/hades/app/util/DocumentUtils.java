@@ -8,6 +8,7 @@ import org.jsoup.select.Elements;
 import org.springframework.web.multipart.MultipartFile;
 import org.zwobble.mammoth.DocumentConverter;
 import ut.ee.hades.app.dao.entity.FileEntity;
+import ut.ee.hades.app.enums.UiAlertEnum;
 import ut.ee.hades.app.exceptions.ui.UiAlertWarningException;
 
 import java.io.*;
@@ -31,7 +32,7 @@ public class DocumentUtils {
 
     public static void validateFileType(MultipartFile file) {
         if (AllowedMimeUtils.mimeMap.get(file.getContentType()) == null) {
-            throw new UiAlertWarningException("ExceptionCodeEnum.NOT_ALLOWED_FILE_TYPE");
+            throw new UiAlertWarningException(UiAlertEnum.NOT_ALLOWED_FILE_TYPE.getName());
         }
     }
 
@@ -62,18 +63,24 @@ public class DocumentUtils {
                     XWPFParagraph paragraph = document.createParagraph();
                     XWPFRun run = paragraph.createRun();
                     run.setText(element.text());
-                } else if (element.tagName().equals("table")) {
-                    XWPFTable table = document.createTable();
-                    Elements rows = element.select("tr");
-                    for (Element row : rows) {
-                        XWPFTableRow tableRow = table.createRow();
-                        Elements cells = row.select("td");
-                        for (Element cell : cells) {
-                            tableRow.createCell().setText(cell.text());
-                        }
-                    }
                 }
             }
+
+            Elements rows = parsedHtml.select("tr");
+            XWPFTable table = document.createTable(rows.size(), 2);
+
+            for (int i = 0; i < rows.size(); i++) {
+                Element row = rows.get(i);
+                Elements cells = row.select("td");
+
+                for (int j = 0; j < cells.size(); j++) {
+                    Element cell = cells.get(j);
+                    XWPFParagraph paragraph = table.getRow(i).getCell(j).addParagraph();
+                    XWPFRun run = paragraph.createRun();
+                    run.setText(cell.text());
+                }
+            }
+
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             document.write(outputStream);
             return outputStream.toByteArray();

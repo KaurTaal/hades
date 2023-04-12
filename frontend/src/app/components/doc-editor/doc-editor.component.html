@@ -1,27 +1,81 @@
 <div class="document-editor-container">
 
   <div class=" btn-container">
-    <div *ngIf="isExerciseDocument"  class="type-select">
+    <div *ngIf="isExerciseDocument" class="type-select">
       <tabset type="pills">
         <tab heading="Ülesanne" (selectTab)="toggleExerciseTab()"></tab>
         <tab heading="Näidislahendus" (selectTab)="toggleSolutionTab()"></tab>
-        <tab heading="Automaatkontroll"></tab>
+        <tab heading="Automaatkontroll" (selectTab)="toggleTestSuiteTab()"></tab>
       </tabset>
     </div>
 
     <div class="action-btn-group">
-      <button class="btn btn-primary save-btn" (click)="saveDocument(document)">Salvesta <i class="fa-solid fa-floppy-disk"></i></button>
-      <button class="btn btn-primary export-btn" (click)="downloadDocument(document)">Lae alla <i class="fa-solid fa-file-export"></i></button>
-      <button class="btn btn-primary delete-btn" (click)="deleteDocument(document)">Kustuta <i class="fa-solid fa-trash"></i></button>
+      <button *ngIf="isSolutionTabActive || isTestSuiteTabActive" class="btn btn-primary add-btn"
+              (click)="handleAddNewSubDocument()">Lisa uus <i class="fa-solid fa-plus"></i></button>
+      <button class="btn btn-primary save-btn" (click)="saveDocument()">Salvesta <i
+        class="fa-solid fa-floppy-disk"></i></button>
+      <button class="btn btn-primary export-btn" (click)="downloadDocument()">Lae alla <i
+        class="fa-solid fa-file-export"></i></button>
+      <button class="btn btn-primary delete-btn" (click)="deleteDocument()">Kustuta <i
+        class="fa-solid fa-trash"></i></button>
     </div>
 
   </div>
 
+  <hr>
 
-  <editor
-    [(ngModel)]="editorContent"
-    [init]="editorConfig"
-    apiKey="{{getEditorAPIKey()}}"
-  ></editor>
+  <ng-container *ngIf="isMainTabActive">
+    <editor
+      [(ngModel)]="document.contentHtml"
+      [init]="mainTabEditorConfig"
+      apiKey="{{getEditorAPIKey()}}"
+    ></editor>
+  </ng-container>
+
+  <ng-container *ngIf="isSolutionTabActive">
+    <div *ngFor="let solution of documentAsExercise.solutionDTOList; let i = index">
+      <div class="sub-doc-toolbar">
+
+        <div class="sub-doc-name-container">
+          <input #nameInput class="name-field" type="text" [(ngModel)]="solution.name" [disabled]="isNameEditActive" [size]="solution.name.length || 1">
+          <button class="btn btn-primary float-right pull-right name-edit-btn" (click)="editSubDocumentName($event, i)"><i class="fa-solid fa-pencil"></i></button>
+        </div>
+        <div class="sub-doc-btn-container">
+          <button class="btn btn-primary add-btn" (click)="deleteSolution(solution.solutionId)">Kustuta <i
+            class="fa-solid fa-trash"></i></button>
+        </div>
+      </div>
+      <editor
+        [(ngModel)]="solution.contentHtml"
+        [init]="solutionAndTestSuiteEditorConfig"
+        apiKey="{{getEditorAPIKey()}}"
+      ></editor>
+      <br>
+      <hr>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="isTestSuiteTabActive">
+    <div *ngFor="let testSuite of documentAsExercise.testSuiteDTOList; let i = index">
+      <div class="sub-doc-toolbar">
+        <div class="sub-doc-name-container">
+          <input #nameInput class="name-field" type="text" [(ngModel)]="testSuite.name" [disabled]="isNameEditActive" [size]="testSuite.name.length || 1">
+          <button class="btn btn-primary float-right pull-right name-edit-btn" (click)="editSubDocumentName($event, i)"><i class="fa-solid fa-pencil"></i></button>
+        </div>
+        <div class="sub-doc-btn-container">
+          <button class="btn btn-primary add-btn" (click)="deleteTestSuite(testSuite.testSuiteId)">Kustuta <i
+            class="fa-solid fa-trash"></i></button>
+        </div>
+      </div>
+      <editor
+        [(ngModel)]="testSuite.contentHtml"
+        [init]="solutionAndTestSuiteEditorConfig"
+        apiKey="{{getEditorAPIKey()}}"
+      ></editor>
+      <br>
+      <hr>
+    </div>
+  </ng-container>
+
 
 </div>

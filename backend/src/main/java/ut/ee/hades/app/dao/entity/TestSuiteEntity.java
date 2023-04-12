@@ -1,18 +1,19 @@
 package ut.ee.hades.app.dao.entity;
 
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+@Table(name = "test_suite")
 @Entity
-@Table(name = "solution")
 @Getter
 @Setter
-public class SolutionEntity {
+public class TestSuiteEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long solutionId;
+    private Long testSuiteId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exercise_id", referencedColumnName = "exerciseId")

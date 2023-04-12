@@ -37,17 +37,22 @@
 
     <div class="form-group">
       <label for="year">Õppeaasta</label>
-      <input id="year" class="form-control" formControlName="year" type="number" min="2015" [max]="getCurrentYear()" step="1" [value]="getCurrentYear()" />
+      <input id="year" class="form-control" formControlName="year" type="number" min="2000" [max]="getCurrentYear()" step="1" [value]="getCurrentYear()" />
     </div>
 
     <div class="form-group">
       <label for="documentFile" [ngClass]="{'text-danger': documentFile.touched && !documentFile.valid}">Fail*</label>
-      <input type="file" class="form-control" id="documentFile" formControlName="file" (change)="documentFileSelected($event)" accept=".docx, .py" />
+      <input type="file" class="form-control" id="documentFile" formControlName="file" (change)="documentFileSelected($event)" accept=".docx" />
     </div>
 
     <div *ngIf="isFileExercise()" class="form-group">
-      <label for="solutionFile" [ngClass]="{'text-danger': solutionFile.touched && !solutionFile.valid}">Näidislahendus</label>
-      <input type="file" class="form-control" id="solutionFile" formControlName="solutionFile" (change)="solutionFileSelected($event)" accept=".py" />
+      <label for="solutionFile" [ngClass]="{'text-danger': solutionFiles.touched && !solutionFiles.valid}">Näidislahendus</label>
+      <input type="file" class="form-control" id="solutionFile" formControlName="solutionFile" (change)="solutionFileSelected($event)" accept=".py" multiple />
+    </div>
+
+    <div *ngIf="isFileExercise()" class="form-group">
+      <label for="testSuiteFiles" [ngClass]="{'text-danger': testSuiteFiles.touched && !testSuiteFiles.valid}">Automaatkontrollid</label>
+      <input type="file" class="form-control" id="testSuiteFiles" formControlName="testSuiteFiles" (change)="testSuiteFilesSelected($event)" accept=".py" multiple />
     </div>
 
     <button [disabled]="isFormValid()" (click)="submitFile()" class="btn btn-primary submit-btn" type="submit">Salvesta</button>

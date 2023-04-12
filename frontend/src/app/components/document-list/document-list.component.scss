@@ -1,7 +1,6 @@
 @import 'src/assets/scss/variables';
 
 
-
 .document-list-container {
   display: flex;
   flex-direction: column;
@@ -29,9 +28,52 @@ accordion-group {
         }
       }
     }
+
     .card {
       background-color: $body-bg;
       border: unset;
     }
+
+    .card-body {
+      padding: 0 1rem 0 1rem;
+    }
   }
+}
+
+.card-icons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 1rem;
+
+  a {
+    color: black;
+    z-index: 1000;
+  }
+
+  button {
+    color: $text-color;
+    border-color: transparent;
+    border-radius: 0.5rem;
+    background-color: transparent;
+
+    &:hover {
+      background-color: transparent;
+      color: $text-color;
+      border-color: transparent;
+      box-shadow: $hover-effect;
+    }
+  }
+}
+
+
+
+.card-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 3rem;
+  padding-left: unset;
+  width: 100%;
 }
