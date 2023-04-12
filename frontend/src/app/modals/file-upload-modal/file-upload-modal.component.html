@@ -46,8 +46,8 @@
     </div>
 
     <div *ngIf="isFileExercise()" class="form-group">
-      <label for="solutionFile" [ngClass]="{'text-danger': solutionFile.touched && !solutionFile.valid}">Näidislahendus</label>
-      <input type="file" class="form-control" id="solutionFile" formControlName="solutionFile" (change)="solutionFileSelected($event)" accept=".py" />
+      <label for="solutionFile" [ngClass]="{'text-danger': solutionFiles.touched && !solutionFiles.valid}">Näidislahendus</label>
+      <input type="file" class="form-control" id="solutionFile" formControlName="solutionFile" (change)="solutionFileSelected($event)" accept=".py" multiple />
     </div>
 
     <div *ngIf="isFileExercise()" class="form-group">

@@ -31,11 +31,10 @@ public class ExerciseEntity {
     @JoinColumn(name = "course_code")
     private CourseEntity courseEntity;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @JoinColumn(name = "solution_id")
-    private SolutionEntity solutionEntity;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "exerciseEntity", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<SolutionEntity> solutionEntityList;
 
-    @OneToMany(mappedBy = "exerciseEntity", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "exerciseEntity", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<TestSuiteEntity> testSuiteEntityList;
 
 

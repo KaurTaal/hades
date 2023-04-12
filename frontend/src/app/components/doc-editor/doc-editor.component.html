@@ -10,13 +10,13 @@
     </div>
 
     <div class="action-btn-group">
-      <button *ngIf="isTestSuiteTabActive" class="btn btn-primary add-btn" (click)="newTestSuite(document)">Lisa uus <i
-        class="fa-solid fa-plus"></i></button>
-      <button class="btn btn-primary save-btn" (click)="saveDocument(document)">Salvesta <i
+      <button *ngIf="isSolutionTabActive || isTestSuiteTabActive" class="btn btn-primary add-btn"
+              (click)="handleAddNewSubDocument()">Lisa uus <i class="fa-solid fa-plus"></i></button>
+      <button class="btn btn-primary save-btn" (click)="saveDocument()">Salvesta <i
         class="fa-solid fa-floppy-disk"></i></button>
-      <button class="btn btn-primary export-btn" (click)="downloadDocument(document)">Lae alla <i
+      <button class="btn btn-primary export-btn" (click)="downloadDocument()">Lae alla <i
         class="fa-solid fa-file-export"></i></button>
-      <button class="btn btn-primary delete-btn" (click)="deleteDocument(document)">Kustuta <i
+      <button class="btn btn-primary delete-btn" (click)="deleteDocument()">Kustuta <i
         class="fa-solid fa-trash"></i></button>
     </div>
 
@@ -33,17 +33,39 @@
   </ng-container>
 
   <ng-container *ngIf="isSolutionTabActive">
-    <editor
-      [(ngModel)]="documentAsExercise.solutionDTO.contentHtml"
-      [init]="solutionAndTestSuiteEditorConfig"
-      apiKey="{{getEditorAPIKey()}}"
-    ></editor>
+    <div *ngFor="let solution of documentAsExercise.solutionDTOList; let i = index">
+      <div class="sub-doc-toolbar">
+
+        <div class="sub-doc-name-container">
+          <input #nameInput class="name-field" type="text" [(ngModel)]="solution.name" [disabled]="isNameEditActive" [size]="solution.name.length || 1">
+          <button class="btn btn-primary float-right pull-right name-edit-btn" (click)="editSubDocumentName($event, i)"><i class="fa-solid fa-pencil"></i></button>
+        </div>
+        <div class="sub-doc-btn-container">
+          <button class="btn btn-primary add-btn" (click)="deleteSolution(solution.solutionId)">Kustuta <i
+            class="fa-solid fa-trash"></i></button>
+        </div>
+      </div>
+      <editor
+        [(ngModel)]="solution.contentHtml"
+        [init]="solutionAndTestSuiteEditorConfig"
+        apiKey="{{getEditorAPIKey()}}"
+      ></editor>
+      <br>
+      <hr>
+    </div>
   </ng-container>
 
   <ng-container *ngIf="isTestSuiteTabActive">
-    <div class="test-suite-container" *ngFor="let testSuite of documentAsExercise.testSuiteDTOList">
-      <div class="test-suite-btn-group">
-        <button *ngIf="isTestSuiteTabActive" class="btn btn-primary add-btn">Kustuta kontroll <i class="fa-solid fa-trash"></i></button>
+    <div *ngFor="let testSuite of documentAsExercise.testSuiteDTOList; let i = index">
+      <div class="sub-doc-toolbar">
+        <div class="sub-doc-name-container">
+          <input #nameInput class="name-field" type="text" [(ngModel)]="testSuite.name" [disabled]="isNameEditActive" [size]="testSuite.name.length || 1">
+          <button class="btn btn-primary float-right pull-right name-edit-btn" (click)="editSubDocumentName($event, i)"><i class="fa-solid fa-pencil"></i></button>
+        </div>
+        <div class="sub-doc-btn-container">
+          <button class="btn btn-primary add-btn" (click)="deleteTestSuite(testSuite.testSuiteId)">Kustuta <i
+            class="fa-solid fa-trash"></i></button>
+        </div>
       </div>
       <editor
         [(ngModel)]="testSuite.contentHtml"
@@ -51,6 +73,7 @@
         apiKey="{{getEditorAPIKey()}}"
       ></editor>
       <br>
+      <hr>
     </div>
   </ng-container>
 

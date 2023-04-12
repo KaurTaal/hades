@@ -1,10 +1,17 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren} from '@angular/core';
 import {DownloadService} from "../../services/download.service";
 import {DocumentService} from "../../services/document.service";
 import {environment} from "../../../environments/environment";
 import {BaseDocument} from "../../classes/BaseDocument";
 import {DocumentType} from "../../classes/enums/DocumentType";
 import {Exercise} from "../../classes/Exercise";
+import {BsModalService} from "ngx-bootstrap/modal";
+import {AddFileUploadComponent} from "../../modals/add-file-upload/add-file-upload.component";
+import {SharedDataService} from "../../services/shared-data.service";
+import {ExerciseService} from "../../services/exercise.service";
+import {AlertBroker} from "../../alert/alert-broker";
+import {SuccessResponse} from "../../classes/enums/SuccessResponse";
+import {AlertType} from "../../alert/alert.model";
 
 @Component({
   selector: 'hades-doc-editor',
@@ -12,18 +19,20 @@ import {Exercise} from "../../classes/Exercise";
   styleUrls: ['./doc-editor.component.scss']
 })
 export class DocEditorComponent implements OnInit {
-  @Output()
-  addNewTestSuite = new EventEmitter<BaseDocument>();
+  @ViewChildren("nameInput")
+  nameInputs!: QueryList<ElementRef>;
+
   @Output()
   deletedDocument = new EventEmitter<BaseDocument>();
   @Output()
   modifiedDocument = new EventEmitter<BaseDocument>();
+
   @Input()
   document!: BaseDocument;
   documentAsExercise!: Exercise;
   activeEditorTab!: DocumentType;
   isExerciseDocument: boolean = false;
-
+  isNameEditActive: boolean = false;
 
   isTestSuiteTabActive: boolean = false;
   isSolutionTabActive: boolean = false;
@@ -64,7 +73,11 @@ export class DocEditorComponent implements OnInit {
   }
 
   constructor(private documentService: DocumentService,
-              private downloadService: DownloadService) {
+              private downloadService: DownloadService,
+              private modalService: BsModalService,
+              private exerciseService: ExerciseService,
+              private alertBroker: AlertBroker,
+              private sharedDataService: SharedDataService,) {
   }
 
 
@@ -77,25 +90,77 @@ export class DocEditorComponent implements OnInit {
     }
   }
 
-  newTestSuite(document: BaseDocument) {
-    console.log(document)
+  handleAddNewSubDocument() {
+    if (this.isSolutionTabActive) {
+      this.addNewSolution();
+    }
+    if (this.isTestSuiteTabActive) {
+      this.addNewTestSuite();
+    }
   }
 
-  saveDocument(document: BaseDocument) {
-    this.modifiedDocument.emit(document);
+  addNewTestSuite() {
+    const initialState = {
+      parentExerciseId: this.documentAsExercise.exerciseId,
+      isTestSuiteUpload: true,
+    }
+    let bsModalRef = this.modalService.show(AddFileUploadComponent, {initialState});
+
+    bsModalRef.onHide?.subscribe(() => {
+      this.sharedDataService.getAddedTestSuite().subscribe((addedTestSuite) => {
+        if (addedTestSuite) {
+          this.documentAsExercise.testSuiteDTOList.push(addedTestSuite);
+          this.sharedDataService.setAddedTestSuite(null);
+        }
+      })
+    })
   }
 
-  deleteDocument(document: BaseDocument) {
-    this.deletedDocument.emit(document);
+  addNewSolution() {
+    const initialState = {
+      parentExerciseId: this.documentAsExercise.exerciseId,
+      isSolutionUpload: true,
+    }
+    let bsModalRef = this.modalService.show(AddFileUploadComponent, {initialState});
+    bsModalRef.onHide?.subscribe(() => {
+      this.sharedDataService.getAddedSolution().subscribe((addedSolution) => {
+        if (addedSolution) {
+          this.documentAsExercise.solutionDTOList.push(addedSolution);
+          this.sharedDataService.setAddedTestSuite(null);
+        }
+      })
+    })
   }
 
-  downloadDocument(document: BaseDocument) {
-    if ((DocumentType.EXERCISE === this.activeEditorTab || DocumentType.MANUAL === this.activeEditorTab) && document.fileId) {
-      this.downloadService.downloadFile(document.fileId);
+  deleteTestSuite(testSuiteId: number) {
+    this.exerciseService.deleteTestSuiteById(testSuiteId).subscribe(() => {
+      this.documentAsExercise.testSuiteDTOList = this.documentAsExercise.testSuiteDTOList.filter(testSuite => testSuite.testSuiteId !== testSuiteId);
+      this.alertBroker.add(SuccessResponse.TEST_SUITE_DELETE_SUCCESS, AlertType.SUCCESS);
+    });
+  }
+
+  deleteSolution(solutionId: number) {
+    this.exerciseService.deleteSolutionById(solutionId).subscribe(() => {
+      this.documentAsExercise.solutionDTOList = this.documentAsExercise.solutionDTOList.filter(solution => solution.solutionId !== solutionId);
+      this.alertBroker.add(SuccessResponse.SOLUTION_DELETE_SUCCESS, AlertType.SUCCESS);
+    })
+  }
+
+  saveDocument() {
+    this.modifiedDocument.emit(this.document);
+  }
+
+  deleteDocument() {
+    this.deletedDocument.emit(this.document);
+  }
+
+  downloadDocument() {
+    if ((DocumentType.EXERCISE === this.activeEditorTab || DocumentType.MANUAL === this.activeEditorTab) && this.document.fileId) {
+      this.downloadService.downloadFile(this.document.fileId);
     }
     if (DocumentType.SOLUTION === this.activeEditorTab) {
-      if (this.documentAsExercise.solutionDTO && this.documentAsExercise.solutionDTO.fileId) {
-        this.downloadService.downloadFile(this.documentAsExercise.solutionDTO.fileId);
+      if (this.documentAsExercise.solutionDTOList) {
+        this.documentAsExercise.solutionDTOList.forEach(solution => this.downloadService.downloadFile(solution.fileId));
       }
     }
     if (DocumentType.TEST_SUITE === this.activeEditorTab) {
@@ -123,6 +188,28 @@ export class DocEditorComponent implements OnInit {
 
   getEditorAPIKey(): string {
     return environment.EDITOR_API_KEY;
+  }
+
+
+  editSubDocumentName(event: any, index: number) {
+
+    this.isNameEditActive = false;
+    const nameInput = this.nameInputs.toArray()[index].nativeElement as HTMLInputElement;
+    setTimeout(() => nameInput.focus());
+
+    document.addEventListener('click', this.handleClickOutside);
+  }
+
+  handleClickOutside = (event: MouseEvent) => {
+    const nameInputs = this.nameInputs.toArray();
+    for (const element of nameInputs) {
+      const nameInput = element.nativeElement as HTMLInputElement;
+      if (!nameInput.contains(event.target as Node)) {
+        this.isNameEditActive = false;
+        nameInput.blur();
+        document.removeEventListener('click', this.handleClickOutside);
+      }
+    }
   }
 
 

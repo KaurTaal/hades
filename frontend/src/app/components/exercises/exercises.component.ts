@@ -72,8 +72,14 @@ export class ExercisesComponent implements OnInit {
 
   onDocumentSave(modifiedExercise: Exercise) {
     this.saveNewExerciseContent(modifiedExercise);
-    this.saveNewSolutionContent(modifiedExercise.solutionDTO);
-    this.saveNewTestSuiteContents(modifiedExercise.testSuiteDTOList);
+
+    if (modifiedExercise.solutionDTOList.length > 0) {
+      this.saveNewSolutionContents(modifiedExercise.solutionDTOList);
+    }
+
+    if (modifiedExercise.testSuiteDTOList.length > 0) {
+      this.saveNewTestSuiteContents(modifiedExercise.testSuiteDTOList);
+    }
   }
 
 
@@ -85,28 +91,36 @@ export class ExercisesComponent implements OnInit {
   }
 
 
-  private saveNewSolutionContent(solution: Solution) {
-    this.documentService.getNewPythonFile(solution.contentHtml).subscribe(res => {
-      if (res.body) {
-        let file = new File([res.body], solution.name, {type: MimeType.PYTHON});
-        let formData = new FormData();
-        formData.append("file", file);
-        this.documentService.saveEditedFile(solution.fileId, formData).subscribe(() => {
-          this.alertBroker.add(SuccessResponse.SOLUTION_EDIT_SUCCESS, AlertType.SUCCESS);
-        })
-      }
-    })
+  private saveNewSolutionContents(solutions: Solution[]) {
+
+    for (let i = 0; i < solutions.length; i++) {
+      this.documentService.getNewPythonFile(solutions[i].contentHtml).subscribe(res => {
+        if (res.body) {
+          let file = new File([res.body], solutions[i].name, {type: MimeType.PYTHON});
+          let formData = new FormData();
+          formData.append("file", file);
+          this.documentService.saveEditedFile(solutions[i].fileId, formData).subscribe(() => {
+            if (i === solutions.length - 1) {
+              this.alertBroker.add(SuccessResponse.SOLUTION_EDIT_SUCCESS, AlertType.SUCCESS);
+            }
+          })
+        }
+      })
+    }
   }
 
   private saveNewTestSuiteContents(testSuites: TestSuite[]) {
-    for (let testSuite of testSuites) {
-      this.documentService.getNewPythonFile(testSuite.contentHtml).subscribe(res => {
+
+    for (let i = 0; i < testSuites.length; i++) {
+      this.documentService.getNewPythonFile(testSuites[i].contentHtml).subscribe(res => {
         if (res.body) {
-          let file = new File([res.body], testSuite.name, {type: MimeType.PYTHON});
+          let file = new File([res.body], testSuites[i].name, {type: MimeType.PYTHON});
           let formData = new FormData();
           formData.append("file", file);
-          this.documentService.saveEditedFile(testSuite.fileId, formData).subscribe(() => {
-            this.alertBroker.add(SuccessResponse.TEST_SUITE_EDIT_SUCCESS, AlertType.SUCCESS);
+          this.documentService.saveEditedFile(testSuites[i].fileId, formData).subscribe(() => {
+            if (i === testSuites.length - 1) {
+              this.alertBroker.add(SuccessResponse.TEST_SUITE_EDIT_SUCCESS, AlertType.SUCCESS);
+            }
           })
         }
       })

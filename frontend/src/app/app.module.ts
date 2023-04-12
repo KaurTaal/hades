@@ -33,6 +33,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {LoaderInterceptor} from "../core/loader.interceptor";
 import {TagInputModule} from "ngx-chips";
 import {NgxSelectModule} from "ngx-select-ex";
+import { AddFileUploadComponent } from './modals/add-file-upload/add-file-upload.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import {NgxSelectModule} from "ngx-select-ex";
     ExercisesComponent,
     AlertComponent,
     LoaderComponent,
+    AddFileUploadComponent,
   ],
   imports: [
     BrowserModule,

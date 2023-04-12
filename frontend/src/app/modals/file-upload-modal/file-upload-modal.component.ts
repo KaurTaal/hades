@@ -46,7 +46,7 @@ export class FileUploadModalComponent implements OnInit {
     [Validators.required]
   )
 
-  solutionFile: FormControl = new FormControl(
+  solutionFiles: FormControl = new FormControl(
     {value: '', disabled: false},
   )
 
@@ -97,7 +97,7 @@ export class FileUploadModalComponent implements OnInit {
       year: this.year,
       file: this.documentFile,
       course: this.course,
-      solutionFile: this.solutionFile,
+      solutionFile: this.solutionFiles,
       testSuiteFiles: this.testSuiteFiles,
     })
   }
@@ -115,8 +115,10 @@ export class FileUploadModalComponent implements OnInit {
   }
 
   solutionFileSelected(event: any) {
-    const file: File = event.target.files[0];
-    this.formData.append('solutionFile', file);
+    const files: File[] = event.target.files;
+    for (let file of files) {
+      this.formData.append('solutionFiles[]', file);
+    }
   }
 
   documentFileSelected(event: any) {

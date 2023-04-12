@@ -14,8 +14,8 @@ public class SolutionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long solutionId;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "exercise_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "exercise_id", referencedColumnName = "exerciseId")
     private ExerciseEntity exerciseEntity;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)

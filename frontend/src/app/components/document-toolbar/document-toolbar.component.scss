@@ -139,3 +139,8 @@ button {
   font-size: unset;
   color: #6c757d;
 }
+
+::ng-deep .dropdown-item.active, .dropdown-item:active {
+  color: black;
+  background-color: rgba(52, 62, 82, 0.15);
+}

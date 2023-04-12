@@ -5,7 +5,7 @@
         <button
           class="btn card-btn"
           accordion-heading type="button">
-          <input #nameInput class="pull-left float-left name-field" type="text" [(ngModel)]="doc.name" [disabled]="isEditNameDisabled" [size]="doc.name.length || 1">
+          <input #nameInput class="name-field" type="text" [(ngModel)]="doc.name" [disabled]="isEditNameDisabled" [size]="doc.name.length || 1">
 
           <div class="card-icons">
             <button class="btn btn-primary float-right pull-right" (click)="editDocumentName($event, i)"><i class="fa-solid fa-pencil"></i></button>

@@ -67,20 +67,6 @@ accordion-group {
   }
 }
 
-.name-field {
-  background-color: unset;
-  border: unset;
-  cursor: pointer;
-
-  &:disabled {
-    color: $text-color;
-  }
-
-  &:focus {
-    outline: solid dimgray;
-    border-radius: 0.2rem;
-  }
-}
 
 
 .card-btn {
@@ -88,5 +74,6 @@ accordion-group {
   justify-content: space-between;
   align-items: center;
   padding-right: 3rem;
+  padding-left: unset;
   width: 100%;
 }

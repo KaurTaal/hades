@@ -27,7 +27,7 @@ public class ExerciseDTO  {
     private List<LabelDTO> labelDTOList;
     private Integer year;
     private CourseDTO courseDTO;
-    private SolutionDTO solutionDTO;
+    private List<SolutionDTO> solutionDTOList;
     private List<TestSuiteDTO> testSuiteDTOList;
     private final String docType = DocumentTypeEnum.EXERCISE.getValue();
 
@@ -54,7 +54,7 @@ public class ExerciseDTO  {
         exerciseDTO.setLabelDTOList(LabelDTO.mapList(exerciseEntity.getLabelEntityList()));
         exerciseDTO.setYear(exerciseEntity.getYear());
         exerciseDTO.setCourseDTO(CourseDTO.map(exerciseEntity.getCourseEntity()));
-        exerciseDTO.setSolutionDTO(SolutionDTO.map(exerciseEntity.getSolutionEntity()));
+        exerciseDTO.setSolutionDTOList(SolutionDTO.mapList(exerciseEntity.getSolutionEntityList()));
         exerciseDTO.setTestSuiteDTOList(TestSuiteDTO.mapList(exerciseEntity.getTestSuiteEntityList()));
         return exerciseDTO;
     }
