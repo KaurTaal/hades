@@ -1,4 +1,4 @@
-package ut.ee.hades.app;
+package ut.ee.hades.app.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Configuration;
