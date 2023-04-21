@@ -1,0 +1,29 @@
+
+
+
+<div class="auth-form">
+  <h1>Registreeri</h1>
+
+  <form class="hades-form" [formGroup]="form" (ngSubmit)="register()">
+    <div class="form-group">
+      <label for="email" [ngClass]="{'text-danger': email.touched && !email.valid}">E-mail</label>
+      <input class="form-control" id="email" type="email" placeholder="E-mail" formControlName="email">
+    </div>
+
+    <div class="form-group">
+      <label for="password" [ngClass]="{'text-danger': password.touched && !password.valid}">Salasõna</label>
+      <input class="form-control" id="password" type="password" placeholder="Salasõna" formControlName="password">
+    </div>
+
+    <div class="form-group">
+      <label for="passwordConfirm" [ngClass]="{'text-danger': passwordConfirm.touched && form.hasError('passwordsNotMatching')}">Korda salasõna</label>
+      <input class="form-control" id="passwordConfirm" type="password" placeholder="Sisesta salasõna uuesti" formControlName="passwordConfirm">
+    </div>
+
+    <div class="action-btn-group">
+      <button class="btn btn-primary submit-btn" [disabled]="isFormValid()" [routerLink]="['../register']" type="submit">Registreeri</button>
+      <button  class="btn btn-primary submit-btn" [routerLink]="['../login']">Tagasi</button>
+    </div>
+  </form>
+
+</div>

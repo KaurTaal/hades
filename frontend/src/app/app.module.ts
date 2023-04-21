@@ -3,75 +3,50 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MenuComponent} from './components/menu/menu.component';
-import {CollapseModule} from "ngx-bootstrap/collapse";
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {NavbarComponent} from './components/navbar/navbar.component';
-import {TabsModule} from "ngx-bootstrap/tabs";
-import {ManualsComponent} from './components/manuals/manuals.component';
-import {AccordionModule} from "ngx-bootstrap/accordion";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {DocEditorComponent} from './components/doc-editor/doc-editor.component';
-import {DocumentListComponent} from './components/document-list/document-list.component';
-import {EditorModule} from "@tinymce/tinymce-angular";
-import {DocumentToolbarComponent} from './components/document-toolbar/document-toolbar.component';
-import {BsDropdownModule} from "ngx-bootstrap/dropdown";
-import {TypeaheadModule} from "ngx-bootstrap/typeahead";
-import {BsModalService, ModalModule} from 'ngx-bootstrap/modal';
-import {FileUploadModalComponent} from './modals/file-upload-modal/file-upload-modal.component';
-import {UsersComponent} from './components/users/users.component';
-import {MatSelectModule} from "@angular/material/select";
-import {NgMultiSelectDropDownModule} from "ng-multiselect-dropdown";
-import {ExercisesComponent} from './components/exercises/exercises.component';
+import {BsModalService} from 'ngx-bootstrap/modal';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {HttpMiddleware} from "../core/http-middleware";
-import {AlertModule} from "ngx-bootstrap/alert";
-import {AlertComponent} from "./alert/alert.component";
-import {LoaderComponent} from './components/loader/loader.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {LoaderInterceptor} from "../core/loader.interceptor";
-import {TagInputModule} from "ngx-chips";
-import {NgxSelectModule} from "ngx-select-ex";
-import { AddFileUploadComponent } from './modals/add-file-upload/add-file-upload.component';
+import {ProtectedModule} from "./protected/protected.module";
+import {LoaderComponent} from "./protected/components/loader/loader.component";
+import {AlertComponent} from "./alert/alert.component";
+import {NavbarComponent} from "./protected/components/navbar/navbar.component";
+import {MenuComponent} from "./protected/components/menu/menu.component";
+import {PublicModule} from "./public/public.module";
+import {AlertModule} from "ngx-bootstrap/alert";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {JwtModule} from "@auth0/angular-jwt";
+
+export function tokenGetter() {
+  return localStorage.getItem("hades_token");
+}
 
 @NgModule({
   declarations: [
     AppComponent,
-    MenuComponent,
-    NavbarComponent,
-    ManualsComponent,
-    DocEditorComponent,
-    DocumentListComponent,
-    DocumentToolbarComponent,
-    FileUploadModalComponent,
-    UsersComponent,
-    ExercisesComponent,
-    AlertComponent,
     LoaderComponent,
-    AddFileUploadComponent,
+    AlertComponent,
+    NavbarComponent,
+    MenuComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
-    CollapseModule,
+    AppRoutingModule,
     FontAwesomeModule,
-    TabsModule,
-    AccordionModule,
-    FormsModule,
-    ReactiveFormsModule,
-    EditorModule,
-    BsDropdownModule,
-    TypeaheadModule,
-    ModalModule.forRoot(),
-    MatSelectModule,
-    NgMultiSelectDropDownModule.forRoot(),
+    MatProgressSpinnerModule,
+    ProtectedModule,
     HttpClientModule,
     AlertModule,
-    MatProgressSpinnerModule,
-    TagInputModule,
-    NgxSelectModule,
+    PublicModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ["localhost:4200"]
+      }
+    })
   ],
   providers: [
     BsModalService,

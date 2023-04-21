@@ -1,18 +1,22 @@
 package ut.ee.hades.app.enums;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
 public enum UiAlertEnum {
-
-    CONTENT_CONVERSION_ERROR("Sisu teisendamine ebaõnnestus!"),
-    FILE_SAVE_ERROR("Faili muudatuste salvestamine ebaõnnestus!"),
+    HADES_USER_ALREADY_DEACTIVATED("Kasutaja on juba deaktiveeritud"),
+    HADES_USER_ALREADY_ACTIVATED("Kasutaja on juba aktiveeritud"),
+    HADES_USER_NOT_FOUND("Kasutajat ei leitud"),
+    HADES_USER_NOT_ACTIVATED("Kasutaja pole hetkel aktiveeritud"),
+    HADES_USER_EXISTS_ERROR("Selle e-mailiga kasutaja on juba loodud"),
+    BAD_CREDENTIALS_ERROR("Viga e-mailis või paroolis"),
+    CONTENT_CONVERSION_ERROR("Sisu teisendamine ebaõnnestus"),
+    FILE_SAVE_ERROR("Faili muudatuste salvestamine ebaõnnestus"),
     FILE_DOWNLOAD_ERROR("Faili allalaadimine ebaõnnestus"),
-    NOT_ALLOWED_FILE_TYPE("Failitüüpi pole süsteemi veel lisatud!"),
-    INVALID_COURSE_ERROR("Kursust pole süsteemi lisatud!");
+    NOT_ALLOWED_FILE_TYPE("Failitüüpi pole süsteemi veel lisatud"),
+    INVALID_COURSE_ERROR("Kursust pole süsteemi lisatud");
 
 
     private final String name;

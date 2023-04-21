@@ -1,0 +1,62 @@
+@import 'src/assets/scss/_variables.scss';
+
+
+/* The sidebar menu */
+.sidebar {
+  height: 100%;
+  position: relative;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 3.75rem;
+  transition: 0.5s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .menu-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 2.5rem;
+    padding: 0;
+  }
+
+  a {
+    padding: 0.5rem 0.5rem 0.5rem 2rem;
+    text-decoration: none;
+    font-size: 1.25rem;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+
+    &:hover {
+      color: #ffffff;
+    }
+  }
+}
+
+@media screen and (max-height: 28rem) {
+  .sidebar {
+    padding-top: 1rem;
+  }
+  .sidebar a {
+    font-size: 1rem;
+  }
+}
+
+.open-menu {
+  width: 14rem;
+}
+
+.close-menu {
+  width: 5rem;
+}
+
+
+.log-out-btn-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5rem;
+}
+

@@ -1,0 +1,10 @@
+<div class="navbar">
+  <div>
+    <a class="nav-link nav-link-fade-up" [ngClass]="{'underline' : isActive(EXERCISES)}" routerLink="protected/exercises">Ülesanded</a>
+    <a class="nav-link nav-link-fade-up" [ngClass]="{'underline' : isActive(MANUALS)}" routerLink="protected/manuals">Juhendid</a>
+    <a *ngIf="isAdmin()" class="nav-link nav-link-fade-up" [ngClass]="{'underline' : isActive(USERS)}" routerLink="protected/users">Kasutajad</a>
+  </div>
+  <div class="active-user">
+    <i class="fa-solid fa-user"></i> {{userEmail}}
+  </div>
+</div>

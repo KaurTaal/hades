@@ -1,0 +1,22 @@
+<div class="container heading">
+  <h1>
+    {{title}}
+  </h1>
+
+  <hr>
+
+  <form [formGroup]="uploadFormGroup" class="hades-form">
+
+    <div *ngIf="isTestSuiteUpload" class="form-group">
+      <label for="testSuiteFile" [ngClass]="{'text-danger': testSuiteFile.touched && !testSuiteFile.valid}">Automaatkontroll*</label>
+      <input type="file" class="form-control" id="testSuiteFile" formControlName="testSuiteFile" (change)="testSuiteFileSelected($event)" accept=".py"/>
+    </div>
+
+    <div *ngIf="isSolutionUpload" class="form-group">
+      <label for="solutionFile" [ngClass]="{'text-danger': solutionFile.touched && !solutionFile.valid}">Näidislahendus*</label>
+      <input type="file" class="form-control" id="solutionFile" formControlName="solutionFile" (change)="solutionFileSelected($event)" accept=".py"/>
+    </div>
+
+    <button [disabled]="isFormValid()" (click)="addFile()" class="btn btn-primary submit-btn" type="submit">Lisa</button>
+  </form>
+</div>

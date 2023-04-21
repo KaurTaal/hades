@@ -1,0 +1,22 @@
+
+<div class="auth-form">
+  <h1>Logi sisse</h1>
+
+  <form class="hades-form" [formGroup]="form" (ngSubmit)="login()">
+    <div class="form-group">
+      <label for="email" [ngClass]="{'text-danger': email.touched && !email.valid}">E-mail</label>
+      <input class="form-control" id="email" type="email" matInput placeholder="E-mail" formControlName="email">
+    </div>
+
+    <div class="form-group">
+      <label for="password" [ngClass]="{'text-danger': password.touched && !password.valid}">Salasõna</label>
+      <input class="form-control" id="password" type="password" matInput placeholder="Salasõna" formControlName="password">
+    </div>
+
+    <div class="action-btn-group">
+      <button class="btn btn-primary submit-btn" type="submit" [disabled]="isFormValid()">Logi sisse</button>
+      <button class="btn btn-primary submit-btn" [routerLink]="['../register']">Loo konto</button>
+    </div>
+  </form>
+
+</div>
