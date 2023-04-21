@@ -1,15 +1,20 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
+import {AuthService} from "./public/services/auth.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit{
+export class AppComponent {
   title = 'hades';
-  currentActiveView: string = '';
 
-  ngOnInit() {
-    this.currentActiveView = '/manuals'
+  constructor(private authService: AuthService) {
   }
+
+  isLoggedIn() {
+    return this.authService.isAuthenticated();
+  }
+
+
 }

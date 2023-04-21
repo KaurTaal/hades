@@ -31,7 +31,7 @@
             ],
             "styles": [
               "src/styles.scss",
-              "src/app/components/document-toolbar/ng-multiselect-dropdown.theme.scss"
+              "src/app/protected/components/document-toolbar/ng-multiselect-dropdown.theme.scss"
             ],
             "scripts": []
           },

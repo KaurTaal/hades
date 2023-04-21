@@ -1,15 +1,23 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { ManualsComponent } from "./components/manuals/manuals.component";
-import {UsersComponent} from "./components/users/users.component";
-import {ExercisesComponent} from "./components/exercises/exercises.component";
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {AuthGuard} from "./guards/auth.guard";
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/manuals', pathMatch: 'full'},
-  { path: 'manuals', component: ManualsComponent},
-  { path: 'exercises', component: ExercisesComponent},
-  { path: 'users', component: UsersComponent},
+  {
+    path: "protected",
+    canActivate: [AuthGuard],
+    loadChildren: () => import("./protected/protected.module").then(m => m.ProtectedModule)
+  },
+  {
+    path: "public",
+    loadChildren: () => import("./public/public.module").then(m => m.PublicModule)
+  },
+  {
+    path: "**",
+    redirectTo: "public",
+    pathMatch: "full"
+  }
 ];
 
 @NgModule({

@@ -1,0 +1,28 @@
+@import 'src/assets/scss/_variables.scss';
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  padding: 8px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.status-cell {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status-cell button {
+  margin-left: 10px;
+
+  &:hover {
+    background-color: #dc3545;
+    border-color: transparent;
+    box-shadow: $hover-effect;
+  }
+}

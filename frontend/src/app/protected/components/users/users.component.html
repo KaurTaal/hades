@@ -1,0 +1,45 @@
+<table style="background-color: white" class="table table-hover table-bordered">
+  <thead class="text-center">
+  <tr>
+    <th class="check">
+      E-mail
+    </th>
+    <th>
+      Roll
+    </th>
+    <th>
+      Staatus
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  <ng-container *ngFor="let user of users">
+    <tr>
+      <td>
+        <div>
+          {{ user.email }}
+        </div>
+      </td>
+
+      <td>
+        <div>
+          {{user.role}}
+        </div>
+      </td>
+
+      <td>
+        <div class="status-cell">
+          <div>
+            {{user.status}}
+          </div>
+          <div class="activate-btn-container">
+            <button [disabled]="user.isActivated" (click)="activateUser(user)" type="button" class="btn submit-btn">Aktiveeri</button>
+            <button [disabled]="!user.isActivated" (click)="deactivateUser(user)" type="button" class="btn btn-danger">Deaktiveeri</button>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </ng-container>
+
+  </tbody>
+</table>

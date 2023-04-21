@@ -1,0 +1,16 @@
+<div [ngClass]="[menuStyle]" class="sidebar">
+  <a class="menu-btn" (click)="toggleMenuBar()"><i class="fa-solid fa-bars"></i></a>
+  <div *ngIf="isCollapsed" class="sidebar-content">
+    <a>About</a>
+    <a>Services</a>
+    <a>Clients</a>
+    <a>Contact</a>
+  </div>
+  <div *ngIf="isCollapsed" class="log-out-btn-container">
+    <div>
+      <button class="btn submit-btn" (click)="logout()"><i class="fa-solid fa-right-from-bracket"></i> Logi välja
+      </button>
+    </div>
+  </div>
+</div>
+

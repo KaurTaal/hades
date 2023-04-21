@@ -1,0 +1,21 @@
+
+.auth-form {
+  background-color: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2em;
+}
+
+
+.action-btn-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 0.5rem;
+
+  .submit-btn {
+    margin: unset;
+  }
+}

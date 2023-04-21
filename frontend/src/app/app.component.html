@@ -1,4 +1,4 @@
-<div class="app-container">
+<div class="app-container" *ngIf="isLoggedIn()">
   <header></header>
   <hades-menu></hades-menu>
   <div class="app-content">
@@ -11,6 +11,10 @@
     </div>
   </footer>
 
+</div>
+
+<div class="auth-container" *ngIf="!isLoggedIn()">
+  <router-outlet></router-outlet>
 </div>
 
 <hades-alert></hades-alert>
