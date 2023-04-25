@@ -39,8 +39,8 @@ export class DocEditorComponent implements OnInit {
   isMainTabActive: boolean = false;
 
   readonly mainTabEditorConfig = {
-    plugins: 'code link image table codesample autoresize',
-    toolbar: 'undo redo | bold italic underline | link table | forecolor backcolor | codesample | code',
+    plugins: 'code link table codesample autoresize',
+    toolbar: 'undo redo | link table | codesample | code',
     branding: false,
     menu: {
       file: {
