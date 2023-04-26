@@ -6,6 +6,7 @@ import {LoginResponseI} from "../../model/login-response.interface";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {Router} from "@angular/router";
 import {RoleType} from "../../protected/classes/enums/RoleType";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class AuthService {
 
 
   login(user: UserI): Observable<LoginResponseI> {
-    return this.http.post<LoginResponseI>(`api/auth/authenticate`, user).pipe(
+    return this.http.post<LoginResponseI>(`${environment.API_BASE_URL}api/auth/authenticate`, user).pipe(
       tap((res) => {
         let tokenExpirationDate = this.jwtService.getTokenExpirationDate(res.accessToken);
         if (tokenExpirationDate) {
