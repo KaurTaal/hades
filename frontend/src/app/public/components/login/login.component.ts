@@ -2,7 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthService} from "../../services/auth.service";
-import {Subscription, throwError} from "rxjs";
+import {Subscription} from "rxjs";
+import {SharedDataService} from "../../services/shared-data.service";
 
 
 @Component({
@@ -19,12 +20,12 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   errorMsg = '';
   successMsg = '';
-  isNotRegistered: boolean = false;
+  isNotActivated: boolean = false;
 
   private routeParamsSub?: Subscription;
 
 
-  constructor(private route: ActivatedRoute, private authService: AuthService, private router: Router) {
+  constructor(private route: ActivatedRoute, private authService: AuthService, private router: Router, private sharedDataService: SharedDataService) {
   }
 
   ngOnInit() {
@@ -69,7 +70,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.router.navigate(["../../protected/exercises"]).then();
         },
         error: () => {
-          this.isNotRegistered = true;
+          this.setIsNotActivated();
         }
       })
     }
@@ -95,6 +96,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   private setErrorMsg(msg: string): void {
     this.errorMsg = msg;
     this.successMsg = "";
+  }
+
+  private setIsNotActivated() {
+    this.isNotActivated = this.sharedDataService.getIsNotActiveUser();
   }
 
 
