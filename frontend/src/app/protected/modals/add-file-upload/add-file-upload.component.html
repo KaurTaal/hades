@@ -9,7 +9,7 @@
 
     <div *ngIf="isTestSuiteUpload" class="form-group">
       <label for="testSuiteFile" [ngClass]="{'text-danger': testSuiteFile.touched && !testSuiteFile.valid}">Automaatkontroll*</label>
-      <input type="file" class="form-control" id="testSuiteFile" formControlName="testSuiteFile" (change)="testSuiteFileSelected($event)" accept=".py"/>
+      <input type="file" class="form-control" id="testSuiteFile" formControlName="testSuiteFile" (change)="testSuiteFileSelected($event)" accept=".py, .sh"/>
     </div>
 
     <div *ngIf="isSolutionUpload" class="form-group">

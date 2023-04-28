@@ -1,0 +1,21 @@
+
+<div class="container dialog-container">
+  <h1>
+    Kas olete kindel?
+  </h1>
+  <hr>
+  <div>
+    <p>{{message}}</p>
+  </div>
+  <div class="dialog-btn-container">
+    <div>
+      <button class="btn-primary btn submit-btn" (click)="onConfirmClick()">{{confirmButtonText}}</button>
+    </div>
+    <div>
+      <button class="btn-primary btn submit-btn" (click)="onCancelClick()">{{cancelButtonText}}</button>
+    </div>
+  </div>
+
+</div>
+
+

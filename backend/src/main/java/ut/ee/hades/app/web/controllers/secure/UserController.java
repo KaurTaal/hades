@@ -32,4 +32,19 @@ public class UserController {
     public UserDTO deactivateUser(@PathVariable Long userId) {
         return userService.deactivateUser(userId);
     }
+
+    @PutMapping(path = "/changeToAdmin/{userId}")
+    public UserDTO changeToAdmin(@PathVariable Long userId) {
+        return userService.changeToAdmin(userId);
+    }
+
+    @PutMapping(path = "/changeToUser/{userId}")
+    public UserDTO changeToUser(@PathVariable Long userId) {
+        return userService.changeToUser(userId);
+    }
+
+    @DeleteMapping(path = "/deleteById/{userId}")
+    public void deleteById(@PathVariable Long userId) {
+        userService.deleteUserById(userId);
+    }
 }

@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public enum UiAlertEnum {
+    HADES_USER_ALREADY_REGULAR_USER("Kasutaja on juba tavakasutaja"),
+    HADES_USER_ALREADY_ADMIN("Kasutaja on juba admin"),
     HADES_USER_ALREADY_DEACTIVATED("Kasutaja on juba deaktiveeritud"),
     HADES_USER_ALREADY_ACTIVATED("Kasutaja on juba aktiveeritud"),
     HADES_USER_NOT_FOUND("Kasutajat ei leitud"),

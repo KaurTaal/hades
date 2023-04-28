@@ -10,6 +10,8 @@
     <th>
       Staatus
     </th>
+    <th>
+    </th>
   </tr>
   </thead>
   <tbody>
@@ -22,20 +24,42 @@
       </td>
 
       <td>
-        <div>
-          {{user.role}}
+        <div class="table-cell">
+          <div>
+            {{user.role}}
+          </div>
+          <div>
+            <div *ngIf="isAdmin(user)">
+              <button  (click)="changeToUser(user)" type="button" class="btn submit-btn">Kasutajaks</button>
+            </div>
+            <div *ngIf="isRegularUser(user)">
+              <button  (click)="changeToAdmin(user)" type="button" class="btn submit-btn">Adminiks</button>
+            </div>
+          </div>
         </div>
       </td>
 
       <td>
-        <div class="status-cell">
+        <div class="table-cell">
           <div>
             {{user.status}}
           </div>
-          <div class="activate-btn-container">
-            <button [disabled]="user.isActivated" (click)="activateUser(user)" type="button" class="btn submit-btn">Aktiveeri</button>
-            <button [disabled]="!user.isActivated" (click)="deactivateUser(user)" type="button" class="btn btn-danger">Deaktiveeri</button>
+          <div>
+            <div *ngIf="isActivated(user)">
+              <button (click)="deactivateUser(user)" type="button" class="btn btn-danger">Deaktiveeri</button>
+            </div>
+            <div *ngIf="isDeactivated(user)">
+              <button (click)="activateUser(user)" type="button" class="btn submit-btn">Aktiveeri</button>
+            </div>
           </div>
+        </div>
+      </td>
+
+      <td>
+        <div style="display: flex; flex-direction: row; justify-content: center">
+          <a style="cursor: pointer" (click)="deleteUser(user)">
+            <i style="color: red" class="fa-solid fa-trash"></i>
+          </a>
         </div>
       </td>
     </tr>

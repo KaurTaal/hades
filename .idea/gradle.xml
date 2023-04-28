@@ -12,15 +12,6 @@
           </set>
         </option>
       </GradleProjectSettings>
-      <GradleProjectSettings>
-        <option name="distributionType" value="DEFAULT_WRAPPED" />
-        <option name="externalProjectPath" value="$USER_HOME$/Downloads/hades (3)/hades" />
-        <option name="modules">
-          <set>
-            <option value="$USER_HOME$/Downloads/hades (3)/hades" />
-          </set>
-        </option>
-      </GradleProjectSettings>
     </option>
   </component>
 </project>

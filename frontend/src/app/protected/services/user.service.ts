@@ -23,4 +23,16 @@ export class UserService {
   deactivateUser(userId: number): Observable<User> {
     return this.http.put<User>(`api/users/deactivateUser/${userId}`, null);
   }
+
+  changeToAdmin(userId: number): Observable<User> {
+    return this.http.put<User>(`api/users/changeToAdmin/${userId}`, null);
+  }
+
+  changeToUser(userId: number): Observable<User> {
+    return this.http.put<User>(`api/users/changeToUser/${userId}`, null);
+  }
+
+  deleteUserById(userId: number) {
+    return this.http.delete(`api/users/deleteById/${userId}`);
+  }
 }

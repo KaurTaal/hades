@@ -22,6 +22,12 @@ import {MatSelectModule} from "@angular/material/select";
 import {NgMultiSelectDropDownModule} from "ng-multiselect-dropdown";
 import {TagInputModule} from "ngx-chips";
 import {NgxSelectModule} from "ngx-select-ex";
+import {AlertModule} from "ngx-bootstrap/alert";
+import {ReportConversionModalComponent} from './modals/report-conversion-modal/report-conversion-modal.component';
+import {DeleteConfirmDialogComponent} from './dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
 
 
 @NgModule({
@@ -34,6 +40,8 @@ import {NgxSelectModule} from "ngx-select-ex";
     UsersComponent,
     ExercisesComponent,
     AddFileUploadComponent,
+    ReportConversionModalComponent,
+    DeleteConfirmDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -51,6 +59,11 @@ import {NgxSelectModule} from "ngx-select-ex";
     NgMultiSelectDropDownModule.forRoot(),
     TagInputModule,
     NgxSelectModule,
+    AlertModule,
+    MatDialogModule,
+    MatIconModule,
+    MatButtonModule,
   ]
 })
-export class ProtectedModule { }
+export class ProtectedModule {
+}

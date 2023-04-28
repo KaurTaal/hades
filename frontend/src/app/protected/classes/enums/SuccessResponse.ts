@@ -14,4 +14,8 @@ export class SuccessResponse {
 
   static readonly USER_ACTIVATED_SUCCESS = "Kasutaja aktiveeritud!";
   static readonly USER_DEACTIVATED_SUCCESS = "Kasutaja deaktiveeritud!";
+  static readonly USER_ROLE_CHANGE_SUCCESS = "Kasutaja roll muudetud!"
+  static readonly USER_DELETE_SUCCESS = "Kasutaja kustutatud!";
+
+  static readonly REPORT_SENT_SUCCESS = "Viga raporteeritud!";
 }

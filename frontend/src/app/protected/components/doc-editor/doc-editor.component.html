@@ -4,8 +4,8 @@
     <div *ngIf="isExerciseDocument" class="type-select">
       <tabset type="pills">
         <tab heading="Ülesanne" (selectTab)="toggleExerciseTab()"></tab>
-        <tab heading="Näidislahendus" (selectTab)="toggleSolutionTab()"></tab>
-        <tab heading="Automaatkontroll" (selectTab)="toggleTestSuiteTab()"></tab>
+        <tab heading="Näidislahendused" (selectTab)="toggleSolutionTab()"></tab>
+        <tab heading="Automaatkontrollid" (selectTab)="toggleTestSuiteTab()"></tab>
       </tabset>
     </div>
 
@@ -16,7 +16,7 @@
         class="fa-solid fa-floppy-disk"></i></button>
       <button class="btn btn-primary export-btn" (click)="downloadDocument()">Laadi alla <i
         class="fa-solid fa-file-export"></i></button>
-      <button class="btn btn-primary delete-btn" (click)="deleteDocument()">Kustuta <i
+      <button class="btn btn-primary delete-btn" (click)="openDialog()">Kustuta <i
         class="fa-solid fa-trash"></i></button>
     </div>
 
@@ -25,6 +25,16 @@
   <hr>
 
   <ng-container *ngIf="isMainTabActive">
+      <alert type="warning">
+        <div class="convert-warning-container">
+          <div>
+            <i class="fa-solid fa-triangle-exclamation"></i> Sisu salvestamisel võib esineda teisendamisvigu! Kui märkate teisendusviga, siis palun teatage sellest ja see kõrvaldatakse esimesel võimalusel. Soovitame esialgu originaal dokumendid alles jätta.
+          </div>
+          <div>
+            <button (click)="sendReport()"><i class="fa-solid fa-bug"></i></button>
+          </div>
+        </div>
+      </alert>
     <editor
       [(ngModel)]="document.contentHtml"
       [init]="mainTabEditorConfig"
@@ -33,48 +43,88 @@
   </ng-container>
 
   <ng-container *ngIf="isSolutionTabActive">
-    <div *ngFor="let solution of documentAsExercise.solutionDTOList; let i = index">
-      <div class="sub-doc-toolbar">
+    <div *ngIf="documentAsExercise.solutionDTOList.length > 0">
+      <alert type="warning">
+        <div class="convert-warning-container">
+          <div>
+            <i class="fa-solid fa-triangle-exclamation"></i> Sisu salvestamisel võib esineda teisendamisvigu! Kui märkate teisendusviga, siis palun teatage sellest ja see kõrvaldatakse esimesel võimalusel. Soovitame esialgu originaal dokumendid alles jätta.
+          </div>
+          <div>
+            <button (click)="sendReport()"><i class="fa-solid fa-bug"></i></button>
+          </div>
+        </div>
+      </alert>
+      <div *ngFor="let solution of documentAsExercise.solutionDTOList; let i = index">
+        <div class="sub-doc-toolbar">
 
-        <div class="sub-doc-name-container">
-          <input #nameInput class="name-field" type="text" [(ngModel)]="solution.name" [disabled]="isNameEditActive" [size]="solution.name.length || 1">
-          <button class="btn btn-primary float-right pull-right name-edit-btn" (click)="editSubDocumentName($event, i)"><i class="fa-solid fa-pencil"></i></button>
+          <div class="sub-doc-name-container">
+            <input #nameInput class="name-field" type="text" [(ngModel)]="solution.name" [disabled]="isNameEditActive" [size]="solution.name.length || 1">
+            <button class="btn btn-primary float-right pull-right name-edit-btn" (click)="editSubDocumentName($event, i)"><i class="fa-solid fa-pencil"></i></button>
+          </div>
+          <div class="sub-doc-btn-container">
+            <button class="btn btn-primary add-btn" (click)="deleteSolution(solution.solutionId)">Kustuta <i
+              class="fa-solid fa-trash"></i></button>
+          </div>
         </div>
-        <div class="sub-doc-btn-container">
-          <button class="btn btn-primary add-btn" (click)="deleteSolution(solution.solutionId)">Kustuta <i
-            class="fa-solid fa-trash"></i></button>
-        </div>
+        <editor
+          [(ngModel)]="solution.contentHtml"
+          [init]="solutionAndTestSuiteEditorConfig"
+          apiKey="{{getEditorAPIKey()}}"
+        ></editor>
+        <br>
+        <hr>
       </div>
-      <editor
-        [(ngModel)]="solution.contentHtml"
-        [init]="solutionAndTestSuiteEditorConfig"
-        apiKey="{{getEditorAPIKey()}}"
-      ></editor>
-      <br>
-      <hr>
     </div>
+
+    <div class="no-data-container" *ngIf="documentAsExercise.solutionDTOList.length === 0">
+      <alert type="info">
+        <strong>Ülesandel puuduvad näidislahendused</strong>
+      </alert>
+    </div>
+
+
   </ng-container>
 
   <ng-container *ngIf="isTestSuiteTabActive">
-    <div *ngFor="let testSuite of documentAsExercise.testSuiteDTOList; let i = index">
-      <div class="sub-doc-toolbar">
-        <div class="sub-doc-name-container">
-          <input #nameInput class="name-field" type="text" [(ngModel)]="testSuite.name" [disabled]="isNameEditActive" [size]="testSuite.name.length || 1">
-          <button class="btn btn-primary float-right pull-right name-edit-btn" (click)="editSubDocumentName($event, i)"><i class="fa-solid fa-pencil"></i></button>
+    <div *ngIf="documentAsExercise.testSuiteDTOList.length > 0">
+      <alert type="warning">
+        <div class="convert-warning-container">
+          <div>
+            <i class="fa-solid fa-triangle-exclamation"></i> Sisu salvestamisel võib esineda teisendamisvigu! Kui märkate teisendusviga, siis palun teatage sellest ja see kõrvaldatakse esimesel võimalusel. Soovitame esialgu originaal dokumendid alles jätta.
+          </div>
+          <div>
+            <button (click)="sendReport()"><i class="fa-solid fa-bug"></i></button>
+          </div>
         </div>
-        <div class="sub-doc-btn-container">
-          <button class="btn btn-primary add-btn" (click)="deleteTestSuite(testSuite.testSuiteId)">Kustuta <i
-            class="fa-solid fa-trash"></i></button>
+      </alert>
+      <div *ngFor="let testSuite of documentAsExercise.testSuiteDTOList; let i = index">
+        <div class="sub-doc-toolbar">
+          <div class="sub-doc-name-container">
+            <input #nameInput class="name-field" type="text" [(ngModel)]="testSuite.name" [disabled]="isNameEditActive" [size]="testSuite.name.length || 1">
+            <button class="btn btn-primary float-right pull-right name-edit-btn" (click)="editSubDocumentName($event, i)"><i class="fa-solid fa-pencil"></i></button>
+          </div>
+          <div class="sub-doc-btn-container">
+            <button class="btn btn-primary add-btn" (click)="deleteTestSuite(testSuite.testSuiteId)">Kustuta <i
+              class="fa-solid fa-trash"></i></button>
+          </div>
         </div>
+        <editor
+          [(ngModel)]="testSuite.contentHtml"
+          [init]="solutionAndTestSuiteEditorConfig"
+          apiKey="{{getEditorAPIKey()}}"
+        ></editor>
+        <br>
+        <hr>
       </div>
-      <editor
-        [(ngModel)]="testSuite.contentHtml"
-        [init]="solutionAndTestSuiteEditorConfig"
-        apiKey="{{getEditorAPIKey()}}"
-      ></editor>
-      <br>
-      <hr>
     </div>
+
+    <div class="no-data-container" *ngIf="documentAsExercise.testSuiteDTOList.length === 0">
+      <alert type="info">
+        <strong>Ülesandel puuduvad automaatkontrollid</strong>
+      </alert>
+    </div>
+
+
   </ng-container>
 
 

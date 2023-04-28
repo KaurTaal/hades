@@ -50,6 +50,7 @@ export class DocumentToolbarComponent implements OnInit{
     textField: 'labelName',
     selectAllText: 'Vali kõik',
     unSelectAllText: 'Tühjenda',
+    searchPlaceholderText: "Otsi",
     itemsShowLimit: 3,
     allowSearchFilter: true,
     noDataAvailablePlaceholderText: "Märksõnad on lisamata"
@@ -114,8 +115,17 @@ export class DocumentToolbarComponent implements OnInit{
   }
 
   private initLabelSelect() {
-    this.labelService.getAllLabels().subscribe(res => {
+    this.labelService.getAllLabels().subscribe((res) => {
       this.labelList = res;
+      this.labelList.sort((a, b) => {
+        if (a.labelName < b.labelName) {
+          return -1;
+        }
+        if (a.labelName > b.labelName) {
+          return 1;
+        }
+        return 0;
+      });
     });
   }
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {UserI} from "../../model/user.interface";
-import {delay, Observable, of, Subscription, tap} from "rxjs";
+import {catchError, delay, Observable, of, Subscription, tap, throwError} from "rxjs";
 import {LoginResponseI} from "../../model/login-response.interface";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {Router} from "@angular/router";
@@ -37,6 +37,10 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     return !this.jwtService.isTokenExpired();
+  }
+
+  isRegistered(user: UserI): Observable<boolean> {
+    return this.http.post<boolean>(`api/auth/isRegistered`, user);
   }
 
   isAdmin(): boolean {

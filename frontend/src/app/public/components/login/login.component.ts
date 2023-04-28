@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthService} from "../../services/auth.service";
-import {Subscription} from "rxjs";
+import {Subscription, throwError} from "rxjs";
 
 
 @Component({
@@ -19,11 +19,13 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   errorMsg = '';
   successMsg = '';
+  isNotRegistered: boolean = false;
 
   private routeParamsSub?: Subscription;
 
 
-  constructor(private route: ActivatedRoute, private authService: AuthService, private router: Router) { }
+  constructor(private route: ActivatedRoute, private authService: AuthService, private router: Router) {
+  }
 
   ngOnInit() {
     this.routeParamsSub = this.route.queryParams.subscribe(
@@ -61,9 +63,14 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.authService.login({
         email: this.email.value,
         password: this.password.value
-      }).subscribe((res) => {
-        localStorage.setItem("hades_token", res.accessToken)
-        this.router.navigate(["../../protected/exercises"]).then();
+      }).subscribe({
+        next: (res) => {
+          localStorage.setItem("hades_token", res.accessToken)
+          this.router.navigate(["../../protected/exercises"]).then();
+        },
+        error: () => {
+          this.isNotRegistered = true;
+        }
       })
     }
   }

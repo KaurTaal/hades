@@ -12,6 +12,9 @@ import {ExerciseService} from "../../services/exercise.service";
 import {AlertBroker} from "../../../alert/alert-broker";
 import {SuccessResponse} from "../../classes/enums/SuccessResponse";
 import {AlertType} from "../../../alert/alert.model";
+import {ReportConversionModalComponent} from "../../modals/report-conversion-modal/report-conversion-modal.component";
+import {MatDialog} from "@angular/material/dialog";
+import {DeleteConfirmDialogComponent} from "../../dialogs/delete-confirm-dialog/delete-confirm-dialog.component";
 
 @Component({
   selector: 'hades-doc-editor',
@@ -69,6 +72,7 @@ export class DocEditorComponent implements OnInit {
     codesample_languages: [
       {text: 'Python', value: 'python'},
       {text: 'Java', value: 'java'},
+      { text: 'Shell Script', value: 'shell' },
     ],
   }
 
@@ -77,7 +81,8 @@ export class DocEditorComponent implements OnInit {
               private modalService: BsModalService,
               private exerciseService: ExerciseService,
               private alertBroker: AlertBroker,
-              private sharedDataService: SharedDataService,) {
+              private sharedDataService: SharedDataService,
+              private dialog: MatDialog,) {
   }
 
 
@@ -132,6 +137,10 @@ export class DocEditorComponent implements OnInit {
     })
   }
 
+  sendReport() {
+    this.modalService.show(ReportConversionModalComponent);
+  }
+
   deleteTestSuite(testSuiteId: number) {
     this.exerciseService.deleteTestSuiteById(testSuiteId).subscribe(() => {
       this.documentAsExercise.testSuiteDTOList = this.documentAsExercise.testSuiteDTOList.filter(testSuite => testSuite.testSuiteId !== testSuiteId);
@@ -152,6 +161,21 @@ export class DocEditorComponent implements OnInit {
 
   deleteDocument() {
     this.deletedDocument.emit(this.document);
+  }
+
+  openDialog() {
+    const confirmMessage = this.isExerciseDocument ? "Kustutamisel eemaldatakse ka kõik näidislahendused ja automaatkontrollid" : "";
+    const dialogRef = this.dialog.open(DeleteConfirmDialogComponent, {
+      data: {
+        message: confirmMessage
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.deleteDocument();
+      }
+    });
   }
 
   downloadDocument() {

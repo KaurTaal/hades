@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.util.CollectionUtils;
+import ut.ee.hades.app.dao.entity.FileEntity;
 import ut.ee.hades.app.dao.entity.TestSuiteEntity;
+import ut.ee.hades.app.util.AllowedMimeUtils;
 import ut.ee.hades.app.util.DocumentUtils;
 
 import java.util.LinkedList;
@@ -38,10 +40,20 @@ public class TestSuiteDTO {
             testSuiteDTO.setTestSuiteId(testSuiteEntity.getTestSuiteId());
             testSuiteDTO.setExerciseId(testSuiteEntity.getExerciseEntity().getExerciseId());
             testSuiteDTO.setFileId(testSuiteEntity.getFile().getFileId());
-            testSuiteDTO.setContentHtml(DocumentUtils.convertPythonToHtml(testSuiteEntity.getFile().getContent()));
+
+            if (isShellFile(testSuiteEntity.getFile())) {
+                testSuiteDTO.setContentHtml(DocumentUtils.convertShellToHtml(testSuiteEntity.getFile().getContent()));
+            } else {
+                testSuiteDTO.setContentHtml(DocumentUtils.convertPythonToHtml(testSuiteEntity.getFile().getContent()));
+
+            }
             testSuiteDTO.setName(testSuiteEntity.getFile().getName());
             return testSuiteDTO;
         }
         return new TestSuiteDTO();
+    }
+
+    private static boolean isShellFile(FileEntity fileEntity) {
+        return AllowedMimeUtils.isShellType(fileEntity.getMimeType());
     }
 }

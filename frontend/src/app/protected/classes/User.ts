@@ -6,13 +6,11 @@ export class User {
   email: string;
   role: RoleType;
   status: StatusType;
-  isActivated: boolean;
 
-  constructor(userId: number, email: string, role: RoleType, status: StatusType, isActivated: boolean) {
+  constructor(userId: number, email: string, role: RoleType, status: StatusType) {
     this.userId = userId;
     this.email = email;
     this.role = role;
     this.status = status;
-    this.isActivated = isActivated;
   }
 }

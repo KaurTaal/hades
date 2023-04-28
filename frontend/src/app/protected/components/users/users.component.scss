@@ -11,14 +11,15 @@ td, th {
   vertical-align: middle;
 }
 
-.status-cell {
+.table-cell {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.status-cell button {
+.table-cell button {
   margin-left: 10px;
+  width: 6.5rem;
 
   &:hover {
     background-color: #dc3545;

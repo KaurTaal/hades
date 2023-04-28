@@ -29,4 +29,9 @@ export class NavbarComponent implements OnInit {
   isAdmin(): boolean {
     return this.authService.isAdmin();
   }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(["login"]).then();
+  }
 }

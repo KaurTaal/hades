@@ -9,6 +9,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
+import {AlertModule} from "ngx-bootstrap/alert";
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import {MatButtonModule} from "@angular/material/button";
         MatFormFieldModule,
         MatInputModule,
         MatButtonModule,
+        AlertModule,
     ]
 })
 export class PublicModule { }
