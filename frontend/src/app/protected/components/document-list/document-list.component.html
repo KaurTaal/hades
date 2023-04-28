@@ -16,4 +16,10 @@
       </accordion-group>
     </ng-container>
   </accordion>
+
+  <div *ngIf="isFilteredListEmpty">
+    <alert style="text-align: center" type="success">
+      Ei leitud ühtegi filtrile vastavat dokumenti!
+    </alert>
+  </div>
 </div>

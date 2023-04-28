@@ -84,7 +84,9 @@ export class DocumentToolbarComponent implements OnInit{
       this.filterDocumentsByYear();
       this.filterDocumentsByCourse();
 
-      this.sharedDataService.updateDocumentDisplayList(this.getCommonDocuments());
+      let commonDocuments = this.getCommonDocuments();
+      this.sharedDataService.setIsFilteredListEmpty(commonDocuments.length === 0);
+      this.sharedDataService.updateDocumentDisplayList(commonDocuments);
       this.resetFilteredLists();
       this.isFilterActive = true;
     }
@@ -97,6 +99,7 @@ export class DocumentToolbarComponent implements OnInit{
     this.selectedCourseName = "";
 
     this.sharedDataService.updateDocumentDisplayList(this.documentDisplayList);
+    this.sharedDataService.setIsFilteredListEmpty(false);
     this.resetFilteredLists();
     this.isFilterActive = false;
   }

@@ -16,6 +16,7 @@ export class SharedDataService {
   private filteredDocumentList: BehaviorSubject<BaseDocument[]> = new BehaviorSubject<BaseDocument[]>([]);
   private addedTestSuite: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   private addedSolution: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  private isFilteredListEmpty: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 
   updateDocumentDisplayListForToolbar(documents: BaseDocument[]) {
@@ -34,6 +35,13 @@ export class SharedDataService {
     return this.filteredDocumentList.asObservable();
   }
 
+  setIsFilteredListEmpty(value: boolean) {
+    this.isFilteredListEmpty.next(value);
+  }
+
+  getIsFilteredListEmpty(): Observable<boolean> {
+    return this.isFilteredListEmpty.asObservable();
+  }
 
   setUploadedManual(data: Manual | null) {
     this.uploadedManual.next(data);
