@@ -8,6 +8,17 @@ group = 'ut.ee'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    zip64 = true
+    manifest {
+        attributes('Main-Class': 'ut.ee.hades.BackendApplication')
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
 repositories {
     mavenCentral()
 }
