@@ -91,6 +91,17 @@ public class DocumentUtils {
         return contentHtml.getBytes(StandardCharsets.UTF_8);
     }
 
+    public static String convertShellToHtml(byte[] content) {
+        String shell = new String(content, StandardCharsets.UTF_8);
+        shell = "<pre class=\"language-shell\"><code>" + shell + "</code></pre>";
+        return shell;
+    }
+
+    public static byte[] convertHtmlToShell(String contentHtml) {
+        contentHtml = removeHtmlTags(contentHtml);
+        return contentHtml.getBytes(StandardCharsets.UTF_8);
+    }
+
     private static String removeHtmlTags(String html) {
         return html.replaceAll("<[^>]*+>", "");
     }

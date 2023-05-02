@@ -63,4 +63,9 @@ public class AuthenticationService {
         String token = jwtService.generateToken(userEntity);
         return AuthenticationResponse.builder().accessToken(token).build();
     }
+
+    public Boolean isRegistered(AuthenticationRequest request) {
+        UserEntity userEntity = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new UiAlertWarningException(UiAlertEnum.HADES_USER_NOT_FOUND.getName()));
+        return StatusEnum.REGISTERED.equals(userEntity.getStatus());
+    }
 }

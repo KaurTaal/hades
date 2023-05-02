@@ -19,7 +19,6 @@ public class UserDTO {
     private String email;
     private RoleEnum role;
     private StatusEnum status;
-    private Boolean isActivated;
 
 
     public static List<UserDTO> mapList(List<UserEntity> userEntities) {
@@ -34,7 +33,6 @@ public class UserDTO {
         userDTO.setStatus(userEntity.getStatus());
         userDTO.setRole(userEntity.getRole());
         userDTO.setEmail(userEntity.getEmail());
-        userDTO.setIsActivated(StatusEnum.ACTIVATED.equals(userEntity.getStatus()));
         return userDTO;
     }
 

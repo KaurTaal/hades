@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  backend:
+    image: 'hades-backend-docker-image'
+    build:
+      context: .
+    container_name: hades
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/hades
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=hades-dev
+
+
+  db:
+    image: 'hades-clean-dev-db-image'
+    container_name: db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=hades-dev

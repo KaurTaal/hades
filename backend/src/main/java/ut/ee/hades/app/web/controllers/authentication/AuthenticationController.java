@@ -1,10 +1,7 @@
 package ut.ee.hades.app.web.controllers.authentication;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ut.ee.hades.app.security.security.AuthenticationRequest;
 import ut.ee.hades.app.security.security.AuthenticationResponse;
 import ut.ee.hades.app.security.security.RegisterRequest;
@@ -26,5 +23,10 @@ public class AuthenticationController {
     @PostMapping("/authenticate")
     public AuthenticationResponse authenticate(@RequestBody AuthenticationRequest request) {
         return authenticationService.authenticate(request);
+    }
+
+    @PostMapping("/isRegistered")
+    public Boolean isRegistered(@RequestBody AuthenticationRequest request) {
+        return authenticationService.isRegistered(request);
     }
 }

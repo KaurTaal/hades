@@ -19,4 +19,10 @@
     </div>
   </form>
 
+  <div *ngIf="isNotActivated">
+    <alert type="info">
+      <strong>Teie kasutaja pole aktiveeritud. Palun võtke ühendust Tauno Paltsiga või Reimo Palmiga.</strong>
+    </alert>
+  </div>
+
 </div>

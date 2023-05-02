@@ -1,15 +1,26 @@
-import {Component, ElementRef, EventEmitter, HostListener, Input, Output, QueryList, ViewChildren} from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+  QueryList,
+  ViewChildren
+} from '@angular/core';
 import {DocumentType} from "../../classes/enums/DocumentType";
 import {BaseDocument} from "../../classes/BaseDocument";
 import {Manual} from "../../classes/Manual";
 import {Exercise} from "../../classes/Exercise";
+import {SharedDataService} from "../../services/shared-data.service";
 
 @Component({
   selector: 'hades-document-list',
   templateUrl: './document-list.component.html',
   styleUrls: ['./document-list.component.scss']
 })
-export class DocumentListComponent {
+export class DocumentListComponent implements OnInit {
   @ViewChildren("nameInput")
   nameInputs!: QueryList<ElementRef>;
   @Output()
@@ -24,7 +35,17 @@ export class DocumentListComponent {
   documents?: BaseDocument[];
   oneAtATime: boolean = true;
   isEditNameDisabled: boolean = true;
+  isFilteredListEmpty: boolean = false;
 
+  constructor(private sharedDataService: SharedDataService) {
+  }
+
+  ngOnInit() {
+    this.sharedDataService.getIsFilteredListEmpty().subscribe((res) => {
+      this.isFilteredListEmpty = res;
+      console.log(this.isFilteredListEmpty)
+    })
+  }
 
   documentDeleteEvent(deletedDoc: BaseDocument) {
     if (deletedDoc) {

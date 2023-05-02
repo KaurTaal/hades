@@ -1,0 +1,17 @@
+<div class="container heading">
+  <h1>
+    Raport
+  </h1>
+
+  <hr>
+
+  <form [formGroup]="reportFormGroup" class="hades-form">
+
+    <div class="form-group">
+      <label for="reportText" [ngClass]="{'text-danger': reportText.touched && !reportText.valid}">Probleem*</label>
+      <textarea placeholder="Palun kirjeldage leitud viga võimalikult täpselt"  class="form-control" id="reportText" formControlName="reportText"></textarea>
+    </div>
+
+    <button [disabled]="isFormValid()" (click)="sendReport()" class="btn btn-primary submit-btn" type="submit">Saada</button>
+  </form>
+</div>

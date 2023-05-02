@@ -1,5 +1,5 @@
 
 export class StatusType {
-  static readonly ACTIVATED = "activated";
-  static readonly REGISTERED = "registered";
+  static readonly ACTIVATED = "ACTIVATED";
+  static readonly REGISTERED = "REGISTERED";
 }

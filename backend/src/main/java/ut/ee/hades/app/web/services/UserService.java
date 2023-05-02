@@ -12,4 +12,10 @@ public interface UserService {
     UserDTO activateUser(Long userId);
 
     UserDTO deactivateUser(Long userId);
+
+    UserDTO changeToAdmin(Long userId);
+
+    UserDTO changeToUser(Long userId);
+
+    void deleteUserById(Long userId);
 }
