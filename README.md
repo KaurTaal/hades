@@ -9,40 +9,88 @@ Järgnev juhend aitab ülesseada kõik vajaliku, et rakendus lokaalses arvutis t
 Andmebaasi koostamiseks on vajalik Dockeri olemasolu. Dockeri saab vajadusel alla laadida [siit](https://www.docker.com/products/docker-desktop/).
 
 Andmebaasi koostamiseks: 
-* Avage terminaliaken
-  * Windows - Win + R, otsi "cmd" ja vajuta Enter
-  * Linux, Ubuntu - Ctrl + Alt + T
-  * Mac - Command + tühik, otsi "terminal" ja vajuta Enter
-* Koostage docker image: ``` docker build -t hades-clean-dev-db-image ./ ```
-* Koostage docker konteiner: ``` docker run -d --name my-postgresdb-container -p 6500:5432 hades-clean-dev-db ```
+* Avage terminaliaken kataloogis ```hades/database```
+* Koostage docker image: ```docker build -t hades-db-image .```
+* Koostage docker konteiner: ```docker run -d --name hades-db-container -p 6500:5432 hades-db-image```
 
-Kontrollimiseks, kas andmebaasi loomine õnnestus võite kontrollida Docker Desktopi kaudu, kas "Containers" vaate all on näha konteinerit nimega "hades-dev-container".
+Peale eelnevaid tegevusi peaks töötama andmebaasi konteiner algse struktuuriga. 
+Konteineri kohta saate infot näiteks käsuga ```docker ps``` või avades Docker Desktopi.
+
+Andmebaas sisaldab ühte admin kasutajat:  
+- E-mail: ``taalkaur@gmail.com``
+- parool: ``hB64m,'8XQb+X$C%LC(P3M5;4U"=qj,5``
 
 ## Tagasüsteem (backend)
 
-Tagasüsteemi jooksutamiseks on tarvis seadistada arvuti kasutama Java 17.
+Tagasüsteemi on võimalik käivitada kahte moodi. Esimene variant on käivitada Spring Boot lokaalselt (sobilikum variant arendamiseks) või
+käivitada Spring Boot koos andmebaasiga Dockeris.
 
+### Lokaalselt käivitamine
+
+Tagasüsteemi jooksutamiseks on tarvis seadistada arvuti kasutama Java 17. Java versiooni kontrollimiseks sisestage käsk ``java -version``.
 Kui Java 17 puudub, siis saab selle alla laadida [siit](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html).
-Valige enda operatsioonisüsteemile vastav fail.
 
-### Windows
-Seadistage arvuti kasutama Java 17:
+//TODO kirjelda gradle install
 
-Lõpetage Java 17 installimine. Avage Windows otsing ja otsige "edit the system environment variables".
+Tagasüsteemi käivitamise eelduseks on töötav andmebaas ja korrektne seadistus baasiga ühenduse loomiseks. Kui andmebaas on loodud eelneva peatüki 
+järgi, siis `application.properties` faili sisu võiks olla järgnev:
 
-Kui arvutis pole JAVA_HOME varasemalt seadistatud, siis:
-  * System variables -> New
-      * Variable name = "JAVA_HOME"
-      * Variable value = *installitud Java 17 aadress* (tavaliselt C:\Program Files\Java\jdk-17)
+```
+server.port = 8081
+spring.datasource.url= jdbc:postgresql://localhost:6500/hades
+spring.database.driverClassName=org.postgresql.Driver
+spring.datasource.username = postgres
+spring.datasource.password = hades-dev
+```
 
-Kui arvutis on JAVA_HOME seadistatud, siis:
+Käivitamine:
 
-  * Otsige System variables alt "JAVA_HOME" muutuja
-    * Muutke aadress installitud Java 17 kausta peale (tavaliselt C:\Program Files\Java\jdk-17)
-    
-Selleks, et kontrollida, kas Windows kasutab Java 17 avage terminal ja vaadake süsteemi Java versiooni käsuga ```java -version```
+- Avage terminaliaken kataloogis ``hades/backend``
+- Sisestage käsk ``gradle bootRun``
 
-Väljund võiks olla näiteks: "java version "17.0.6".
+Kui käivitamisel ilmnevad Java versiooni vead, siis tasub kontrollida Gradle poolt kasutatavat Java versiooni käsuga ``gradle -version``.  
+
+Eduka rakenduse käivitumisel on võimalik kontrollida rakenduse töökorras olemist aadressil ``http://localhost:8081/api/health/check``.
+
+### Dockeriga käivitamine
+
+Loo andmebaasi image, kui Te seda pole veel teinud:
+- Kataloogis `hades/database` käsk `docker build -t hades-db-image .`
+
+Loo backendi image, kui Te seda pole veel teinud:
+- Avage terminaliaken kataloogis `hades/backend`
+- Sisestage `gradle clean`
+- Sisestage `gradle bootJar`
+- Sisestage `docker build -t hades-backend-image .`
+- Siestage `docker compose -f docker-compose-be-with-db.yml up -d`
+
+Eduka rakenduse käivitumisel on võimalik kontrollida rakenduse töökorras olemist aadressil `http://localhost:6358/api/health/check`
+
+## Eesliides (frontend)
+
+Eesliidest on samuti võimalik käivitada lokaalselt ja luua sellele docker image. 
+Lokaalselt kasutamiseks tuleks eelistada esimest varianti.
+
+### Lokaalselt käivitamine
+
+Frontendi jooksutamiseks on tarvis installide Node.js. Kui arvutis puudub Node, 
+siis on võimalik seda alla laadida [siit](https://nodejs.org/en/download) (valige "LTS" versioon).
+
+NB! Enne käivitamist tehke kindlaks, et eesliidese `hades/frontend/proxy.config.json` fail kasutaks õiget tagasüsteemi porti.
+Vastavalt juhendi eelnevatele punktidele on see kas `8081` või `6358`.
+
+Käivitamine:  
+- Avage terminaliaken kataloogis `hades/frontend`
+- Sisetage käsk `npm install`
+- Sisestage käsk `npm run start`
+
+Rakendus peaks olema kättesaadav lingil `http://localhost:4200/public/login`
 
 
+### Docker konteineri loomine *production* keskkonna jaoks
 
+- Avage terminaliaken kataloogis `hades/frontend`
+- Sisestage käsk `docker build -t hades-frontend-image .`
+- Sisestage käsk `docker run -d --name hades-frontend-container -p 7500:80 hades-frontend-image`
+
+NB! Enne image-i loomist tehke kindlaks, et `nginx.conf` failis `proxy_pass` on tagasüsteemi päringute puhul seadistatud korrektsele aadressile.

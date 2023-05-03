@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/frontend/frontend.iml" filepath="$PROJECT_DIR$/frontend/frontend.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/hades.iml" filepath="$PROJECT_DIR$/.idea/hades.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ut.ee.hades.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ut.ee.hades.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ut.ee.hades.test.iml" filepath="$PROJECT_DIR$/.idea/modules/ut.ee.hades.test.iml" />
     </modules>
   </component>
 </project>

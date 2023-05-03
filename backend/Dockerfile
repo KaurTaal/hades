@@ -1,6 +1,6 @@
 FROM openjdk:17
 VOLUME /tmp
 EXPOSE 8080
-ARG JAR_FILE=build/libs/hades-0.0.1-SNAPSHOT-plain.jar
+ARG JAR_FILE=build/libs/*.jar
 ADD ${JAR_FILE} app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]

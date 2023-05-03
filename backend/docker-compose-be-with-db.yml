@@ -2,10 +2,12 @@ version: '2'
 
 services:
   backend:
-    image: 'hades-backend-docker-image'
+    image: 'hades-backend-image'
     build:
-      context: .
+      context: ..
     container_name: hades
+    ports:
+      - '6358:8081'
     depends_on:
       - db
     environment:
@@ -15,7 +17,7 @@ services:
 
 
   db:
-    image: 'hades-clean-dev-db-image'
+    image: 'hades-db-image'
     container_name: db
     environment:
       - POSTGRES_USER=postgres
