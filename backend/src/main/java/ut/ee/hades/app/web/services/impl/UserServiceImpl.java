@@ -9,11 +9,13 @@ import ut.ee.hades.app.dao.repository.UserRepository;
 import ut.ee.hades.app.enums.RoleEnum;
 import ut.ee.hades.app.enums.StatusEnum;
 import ut.ee.hades.app.enums.UiAlertEnum;
+import ut.ee.hades.app.exceptions.ui.UiAlertDangerException;
 import ut.ee.hades.app.exceptions.ui.UiAlertWarningException;
 import ut.ee.hades.app.web.model.dto.UserDTO;
 import ut.ee.hades.app.web.services.UserService;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -46,6 +48,10 @@ public class UserServiceImpl implements UserService {
     public UserDTO deactivateUser(Long userId) {
         UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new UiAlertWarningException(UiAlertEnum.HADES_USER_NOT_FOUND.getName()));
 
+        if (isLastSystemAdmin(userId)) {
+            throw new UiAlertDangerException(UiAlertEnum.LAST_SYSTEM_ADMIN.getName());
+        }
+
         if (StatusEnum.REGISTERED.equals(userEntity.getStatus())) {
             throw new UiAlertWarningException(UiAlertEnum.HADES_USER_ALREADY_DEACTIVATED.getName());
         }
@@ -72,6 +78,10 @@ public class UserServiceImpl implements UserService {
     public UserDTO changeToUser(Long userId) {
         UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new UiAlertWarningException(UiAlertEnum.HADES_USER_NOT_FOUND.getName()));
 
+        if (isLastSystemAdmin(userId)) {
+            throw new UiAlertDangerException(UiAlertEnum.LAST_SYSTEM_ADMIN.getName());
+        }
+
         if (RoleEnum.USER.equals(userEntity.getRole())) {
             throw new UiAlertWarningException(UiAlertEnum.HADES_USER_ALREADY_REGULAR_USER.getName());
         }
@@ -84,6 +94,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUserById(Long userId) {
         UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new UiAlertWarningException(UiAlertEnum.HADES_USER_NOT_FOUND.getName()));
+
+        if (isLastSystemAdmin(userId)) {
+            throw new UiAlertDangerException(UiAlertEnum.LAST_SYSTEM_ADMIN.getName());
+        }
+
         userRepository.deleteById(userEntity.getUserId());
     }
+
+    private boolean isLastSystemAdmin(Long userId) {
+        List<UserEntity> allAdmins = userRepository.findAllByRole(RoleEnum.ADMIN);
+        if (allAdmins.size() == 1) {
+            return Objects.equals(allAdmins.get(0).getUserId(), userId);
+        }
+        return false;
+    }
+
 }
