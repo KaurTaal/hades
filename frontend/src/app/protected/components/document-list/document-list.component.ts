@@ -43,7 +43,6 @@ export class DocumentListComponent implements OnInit {
   ngOnInit() {
     this.sharedDataService.getIsFilteredListEmpty().subscribe((res) => {
       this.isFilteredListEmpty = res;
-      console.log(this.isFilteredListEmpty)
     })
   }
 

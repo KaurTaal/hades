@@ -114,7 +114,9 @@ export class DocEditorComponent implements OnInit {
     bsModalRef.onHide?.subscribe(() => {
       this.sharedDataService.getAddedTestSuite().subscribe((addedTestSuite) => {
         if (addedTestSuite) {
-          this.documentAsExercise.testSuiteDTOList.push(addedTestSuite);
+          if (!this.documentAsExercise.testSuiteDTOList.find(test => test.testSuiteId === addedTestSuite.testSuiteId)) {
+            this.documentAsExercise.testSuiteDTOList.push(addedTestSuite);
+          }
           this.sharedDataService.setAddedTestSuite(null);
         }
       })
@@ -126,14 +128,14 @@ export class DocEditorComponent implements OnInit {
       parentExerciseId: this.documentAsExercise.exerciseId,
       isSolutionUpload: true,
     }
-    let bsModalRef = this.modalService.show(AddFileUploadComponent, {initialState});
-    bsModalRef.onHide?.subscribe(() => {
-      this.sharedDataService.getAddedSolution().subscribe((addedSolution) => {
-        if (addedSolution) {
+    this.modalService.show(AddFileUploadComponent, {initialState});
+    this.sharedDataService.getAddedSolution().subscribe((addedSolution) => {
+      if (addedSolution) {
+        if (!this.documentAsExercise.solutionDTOList.find(solution => solution.solutionId === addedSolution.solutionId)) {
           this.documentAsExercise.solutionDTOList.push(addedSolution);
-          this.sharedDataService.setAddedTestSuite(null);
         }
-      })
+        this.sharedDataService.setAddedSolution(null);
+      }
     })
   }
 

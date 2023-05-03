@@ -18,7 +18,6 @@ export class DownloadService {
 
   downloadBlob(resp: any) { //TODO: type is actually resp: HttpResponse<Blob>
     const element = document.createElement('a');
-    console.log(resp.headers)
     // @ts-ignore
     const blob = new Blob([resp.body], {
       type: resp.headers.get('content-type'),

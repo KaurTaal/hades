@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public enum UiAlertEnum {
+    LAST_SYSTEM_ADMIN("Viimast admin kasutajat pole võimalik modifitseerida!"),
     HADES_USER_ALREADY_REGULAR_USER("Kasutaja on juba tavakasutaja"),
     HADES_USER_ALREADY_ADMIN("Kasutaja on juba admin"),
     HADES_USER_ALREADY_DEACTIVATED("Kasutaja on juba deaktiveeritud"),
