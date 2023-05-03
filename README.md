@@ -30,7 +30,8 @@ käivitada Spring Boot koos andmebaasiga Dockeris.
 Tagasüsteemi jooksutamiseks on tarvis seadistada arvuti kasutama Java 17. Java versiooni kontrollimiseks sisestage käsk ``java -version``.
 Kui Java 17 puudub, siis saab selle alla laadida [siit](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html).
 
-//TODO kirjelda gradle install
+Lisaks on tarvis Gradle-t. Gradle jaoks on vajadusel põhjalik juhend installimiseks [siin](https://gradle.org/install/). Juhendist on võimalik
+leida juhiseid nii Windowsi kui ka teiste operatsioonisüsteemide jaoks.
 
 Tagasüsteemi käivitamise eelduseks on töötav andmebaas ja korrektne seadistus baasiga ühenduse loomiseks. Kui andmebaas on loodud eelneva peatüki 
 järgi, siis `application.properties` faili sisu võiks olla järgnev:
