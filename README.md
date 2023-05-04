@@ -1,8 +1,8 @@
 # Progvaramu
 
 
-## Projekti ülesseadmine arendamiseks
-Järgnev juhend aitab ülesseada kõik vajaliku, et rakendus lokaalses arvutis tööle saada. Lokaalselt on võimalik rakendust edasi arendada ja samas ka testida.
+## Projekti üles seadmine arendamiseks
+Järgnev juhend aitab üles seada kõik vajaliku, et rakendus lokaalses arvutis tööle saada. Lokaalselt on võimalik rakendust edasi arendada ja samas ka testida.
 
 ## Andmebaas
 
@@ -74,7 +74,7 @@ Lokaalselt kasutamiseks tuleks eelistada esimest varianti.
 
 ### Lokaalselt käivitamine
 
-Frontendi jooksutamiseks on tarvis installide Node.js. Kui arvutis puudub Node, 
+Frontendi jooksutamiseks on tarvis installida Node.js. Kui arvutis puudub Node, 
 siis on võimalik seda alla laadida [siit](https://nodejs.org/en/download) (valige "LTS" versioon).
 
 NB! Enne käivitamist tehke kindlaks, et eesliidese `hades/frontend/proxy.config.json` fail kasutaks õiget tagasüsteemi porti.
