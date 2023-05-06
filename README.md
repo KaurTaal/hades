@@ -1,7 +1,7 @@
 # Progvaramu
 
 
-## Projekti üles seadmine arendamiseks
+## Projekti ülesseadmine arendamiseks
 Järgnev juhend aitab üles seada kõik vajaliku, et rakendus lokaalses arvutis tööle saada. Lokaalselt on võimalik rakendust edasi arendada ja samas ka testida.
 
 ## Andmebaas
@@ -10,8 +10,8 @@ Andmebaasi koostamiseks on vajalik Dockeri olemasolu. Dockeri saab vajadusel all
 
 Andmebaasi koostamiseks: 
 * Avage terminaliaken kataloogis ```hades/database```
-* Koostage docker image: ```docker build -t hades-db-image .```
-* Koostage docker konteiner: ```docker run -d --name hades-db-container -p 6500:5432 hades-db-image```
+* Koostage Dockeri tõmmis: ```docker build -t hades-db-image .```
+* Koostage Dockeri konteiner: ```docker run -d --name hades-db-container -p 6500:5432 hades-db-image```
 
 Peale eelnevaid tegevusi peaks töötama andmebaasi konteiner algse struktuuriga. 
 Konteineri kohta saate infot näiteks käsuga ```docker ps``` või avades Docker Desktopi.
@@ -30,11 +30,11 @@ käivitada Spring Boot koos andmebaasiga Dockeris.
 Tagasüsteemi jooksutamiseks on tarvis seadistada arvuti kasutama Java 17. Java versiooni kontrollimiseks sisestage käsk ``java -version``.
 Kui Java 17 puudub, siis saab selle alla laadida [siit](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html).
 
-Lisaks on tarvis Gradle-t. Gradle jaoks on vajadusel põhjalik juhend installimiseks [siin](https://gradle.org/install/). Juhendist on võimalik
+Lisaks on tarvis Gradle'it. Gradle'i jaoks on vajadusel põhjalik installimisjuhend [siin](https://gradle.org/install/). Juhendist on võimalik
 leida juhiseid nii Windowsi kui ka teiste operatsioonisüsteemide jaoks.
 
 Tagasüsteemi käivitamise eelduseks on töötav andmebaas ja korrektne seadistus baasiga ühenduse loomiseks. Kui andmebaas on loodud eelneva peatüki 
-järgi, siis `application.properties` faili sisu võiks olla järgnev:
+järgi, siis faili `application.properties` sisu võiks olla järgnev:
 
 ```
 server.port = 8081
@@ -49,16 +49,16 @@ Käivitamine:
 - Avage terminaliaken kataloogis ``hades/backend``
 - Sisestage käsk ``gradle bootRun``
 
-Kui käivitamisel ilmnevad Java versiooni vead, siis tasub kontrollida Gradle poolt kasutatavat Java versiooni käsuga ``gradle -version``.  
+Kui käivitamisel ilmnevad Java versiooni vead, siis tasub kontrollida Gradle'i poolt kasutatavat Java versiooni käsuga ``gradle -version``.  
 
 Eduka rakenduse käivitumisel on võimalik kontrollida rakenduse töökorras olemist aadressil ``http://localhost:8081/api/health/check``.
 
 ### Dockeriga käivitamine
 
-Loo andmebaasi image, kui Te seda pole veel teinud:
+Looge andmebaasi image, kui Te seda pole veel teinud:
 - Kataloogis `hades/database` käsk `docker build -t hades-db-image .`
 
-Loo backendi image, kui Te seda pole veel teinud:
+Looge tagasüsteemi tõmmis, kui Te seda pole veel teinud:
 - Avage terminaliaken kataloogis `hades/backend`
 - Sisestage `gradle clean`
 - Sisestage `gradle bootJar`
@@ -70,14 +70,14 @@ Eduka rakenduse käivitumisel on võimalik kontrollida rakenduse töökorras ole
 ## Eesliides (frontend)
 
 Eesliidest on samuti võimalik käivitada lokaalselt ja luua sellele docker image. 
-Lokaalselt kasutamiseks tuleks eelistada esimest varianti.
+Lokaalselt kasutamiseks tuleks eelistada lokaalselt käivitamise varianti.
 
 ### Lokaalselt käivitamine
 
-Frontendi jooksutamiseks on tarvis installida Node.js. Kui arvutis puudub Node, 
+Eesliidese jooksutamiseks on tarvis installida Node.js. Kui arvutis puudub Node, 
 siis on võimalik seda alla laadida [siit](https://nodejs.org/en/download) (valige "LTS" versioon).
 
-NB! Enne käivitamist tehke kindlaks, et eesliidese `hades/frontend/proxy.config.json` fail kasutaks õiget tagasüsteemi porti.
+NB! Enne käivitamist tehke kindlaks, et eesliidese fail `hades/frontend/proxy.config.json` kasutaks õiget tagasüsteemi porti.
 Vastavalt juhendi eelnevatele punktidele on see kas `8081` või `6358`.
 
 Käivitamine:  
@@ -85,13 +85,13 @@ Käivitamine:
 - Sisetage käsk `npm install`
 - Sisestage käsk `npm run start`
 
-Rakendus peaks olema kättesaadav lingil `http://localhost:4200/public/login`
+Rakendus peaks olema kättesaadav lingil `http://localhost:4200/public/login`.
 
 
-### Docker konteineri loomine *production* keskkonna jaoks
+### Docker konteineri loomine kasutuskeskkonna jaoks
 
 - Avage terminaliaken kataloogis `hades/frontend`
 - Sisestage käsk `docker build -t hades-frontend-image .`
 - Sisestage käsk `docker run -d --name hades-frontend-container -p 7500:80 hades-frontend-image`
 
-NB! Enne image-i loomist tehke kindlaks, et `nginx.conf` failis `proxy_pass` on tagasüsteemi päringute puhul seadistatud korrektsele aadressile.
+NB! Enne tõmmise loomist tehke kindlaks, et failis `nginx.conf` on `proxy_pass` tagasüsteemi päringute puhul seadistatud korrektsele aadressile.
