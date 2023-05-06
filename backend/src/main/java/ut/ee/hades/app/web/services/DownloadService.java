@@ -7,6 +7,12 @@ import ut.ee.hades.app.dao.entity.FileEntity;
 
 public interface DownloadService {
 
+    /**
+     * Handles download request
+     * @param resource - content resource
+     * @param document - downloadable document
+     * @return - resource used to download file
+     */
     ResponseEntity<Resource> downloadDoc(ByteArrayResource resource, FileEntity document);
 
 }

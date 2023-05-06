@@ -6,5 +6,9 @@ import java.util.List;
 
 public interface CourseService {
 
+    /**
+     * Retrieves all courses
+     * @return - all courses
+     */
     List<CourseDTO> getAllCourses();
 }
